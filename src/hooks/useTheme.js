@@ -9,6 +9,7 @@ export function useTheme() {
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const root = window.document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
@@ -17,6 +18,19 @@ export function useTheme() {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const listener = (e) => {
+      const saved = localStorage.getItem('theme');
+      if (saved !== 'dark' && saved !== 'light') {
+        setTheme(e.matches ? 'dark' : 'light');
+      }
+    };
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
