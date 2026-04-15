@@ -1,6 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 
+const BLUE = { r: 59, g: 130, b: 246 };
+const CYAN = { r: 34, g: 211, b: 238 };
+
+function lerpColor(a, b, t) {
+  return {
+    r: Math.round(a.r + (b.r - a.r) * t),
+    g: Math.round(a.g + (b.g - a.g) * t),
+    b: Math.round(a.b + (b.b - a.b) * t),
+  };
+}
+
 export function ParticleCanvas() {
   const canvasRef = useRef(null);
   const isMobile = useMediaQuery('(max-width: 767px)');
@@ -25,19 +36,13 @@ export function ParticleCanvas() {
     resize();
     window.addEventListener('resize', resize);
 
-    const particleCount = isMobile ? 30 : 70;
-    const connectionDistance = 120;
-    const mouseDistance = 150;
+    const particleCount = isMobile ? 35 : 80;
+    const connectionDistance = 130;
+    const mouseDistance = 180;
 
     const mouse = { x: null, y: null };
-    const onMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-    const onLeave = () => {
-      mouse.x = null;
-      mouse.y = null;
-    };
+    const onMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    const onLeave = () => { mouse.x = null; mouse.y = null; };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseleave', onLeave);
 
@@ -45,9 +50,13 @@ export function ParticleCanvas() {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.size = Math.random() * 2.2 + 0.8;
+        // 70% blue, 30% cyan
+        this.colorT = Math.random() < 0.7 ? 0 : 1;
+        const c = lerpColor(BLUE, CYAN, this.colorT);
+        this.color = c;
       }
       update() {
         this.x += this.vx;
@@ -61,16 +70,24 @@ export function ParticleCanvas() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouseDistance) {
             const force = (mouseDistance - dist) / mouseDistance;
-            this.x += dx * force * 0.02;
-            this.y += dy * force * 0.02;
+            this.x += dx * force * 0.05;
+            this.y += dy * force * 0.05;
           }
         }
       }
       draw(isDark) {
+        const alpha = isDark ? 0.8 : 0.6;
+        const { r, g, b } = this.color;
+        const glowSize = isDark ? this.size * 3.5 : this.size * 2.5;
+
+        ctx.save();
+        ctx.shadowBlur = glowSize * 4;
+        ctx.shadowColor = `rgba(${r},${g},${b},${isDark ? 0.9 : 0.5})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = isDark ? 'rgba(59,130,246,0.7)' : 'rgba(37,99,235,0.5)';
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
         ctx.fill();
+        ctx.restore();
       }
     }
 
@@ -79,19 +96,29 @@ export function ParticleCanvas() {
     const animate = () => {
       const isDark = document.documentElement.classList.contains('dark');
       ctx.clearRect(0, 0, width, height);
+
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw(isDark);
+
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDistance) {
+            const t = 1 - dist / connectionDistance;
+            const ci = particles[i].color;
+            const cj = particles[j].color;
+            const grad = ctx.createLinearGradient(
+              particles[i].x, particles[i].y,
+              particles[j].x, particles[j].y
+            );
+            const a = isDark ? t * 0.35 : t * 0.2;
+            grad.addColorStop(0, `rgba(${ci.r},${ci.g},${ci.b},${a})`);
+            grad.addColorStop(1, `rgba(${cj.r},${cj.g},${cj.b},${a})`);
             ctx.beginPath();
-            ctx.strokeStyle = isDark
-              ? `rgba(59,130,246,${0.2 * (1 - dist / connectionDistance)})`
-              : `rgba(37,99,235,${0.15 * (1 - dist / connectionDistance)})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = isDark ? 0.8 : 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Mail, MapPin, Twitter, Github, Linkedin, ArrowUp, CheckCircle } from 'lucide-react';
+import { Mail, MapPin, X, GitFork, Link, ArrowUp, CheckCircle } from 'lucide-react';
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xkgjnqyo';
 
@@ -48,9 +48,9 @@ export function Footer() {
               </li>
             </ul>
             <div className="flex gap-4 mt-6">
-              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><Github className="w-5 h-5" /></a>
-              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><Linkedin className="w-5 h-5" /></a>
+              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><X className="w-5 h-5" /></a>
+              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><GitFork className="w-5 h-5" /></a>
+              <a href="#" className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-brand-100 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><Link className="w-5 h-5" /></a>
             </div>
           </div>
 

@@ -39,24 +39,23 @@ export function Products({ onContact }) {
       },
       { rootMargin: '-40% 0px -40% 0px', threshold: 0 }
     );
-
-    sectionRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
+    sectionRefs.current.forEach((el) => { if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, []);
 
   return (
     <section id="products" className="relative bg-white dark:bg-slate-900 transition-colors">
-      <div className="pt-20 pb-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-50">{t('products.title')}</h2>
+      {/* Section label — small and muted, not a competing title */}
+      <div className="pt-24 pb-4 text-center">
+        <span className="inline-block text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
+          {t('products.title')}
+        </span>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-6">
         {!isMobile && (
-          <aside className="hidden lg:block w-64 shrink-0">
-            <div className="sticky top-24 space-y-2" role="tablist" aria-label="Product categories">
+          <aside className="hidden lg:block w-56 shrink-0">
+            <div className="sticky top-24 space-y-1.5" role="tablist" aria-label="Product categories">
               {categories.map((cat, idx) => (
                 <button
                   key={cat.key}
@@ -64,10 +63,10 @@ export function Products({ onContact }) {
                   aria-selected={activeTab === idx}
                   aria-controls={`product-panel-${idx}`}
                   onClick={() => scrollToCategory(idx)}
-                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                     activeTab === idx
-                      ? 'bg-brand-600 text-white'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700'
+                      ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-sm shadow-brand-500/20'
+                      : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   {cat.title}
@@ -87,10 +86,10 @@ export function Products({ onContact }) {
                   aria-selected={activeTab === idx}
                   aria-controls={`product-panel-${idx}`}
                   onClick={() => scrollToCategory(idx)}
-                  className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     activeTab === idx
-                      ? 'bg-brand-600 text-white'
-                      : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                      ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white'
+                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
                   }`}
                 >
                   {cat.title}
@@ -99,7 +98,7 @@ export function Products({ onContact }) {
             </div>
           )}
 
-          <div className="space-y-8">
+          <div className="space-y-4">
             {categories.map((cat, idx) => (
               <div
                 key={cat.key}
