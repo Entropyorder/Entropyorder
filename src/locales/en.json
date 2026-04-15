@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "ai4ss": "AI4SS4AI",
+    "bench": "BenchWithModel"
+  },
+  "hero": {
+    "slogan": "熵基秩序 · EntropyOrder",
+    "subtitle": "Building High-Quality Data to Power the Future of Intelligence"
+  },
+  "products": {
+    "title": "Products & Services",
+    "categories": {
+      "expert": {
+        "name": "High-Level Expert Datasets",
+        "datasets": [
+          { "name": "HLE Dataset", "desc": "High-difficulty language reasoning evaluation dataset", "scale": "10K+ samples", "tags": ["Chinese/English", "Reasoning"] },
+          { "name": "SFE Dataset", "desc": "Structured financial expert dataset", "scale": "50K+ samples", "tags": ["Finance", "Structured"] },
+          { "name": "MicroVQA Dataset", "desc": "Micro-level visual question answering dataset", "scale": "100K+ samples", "tags": ["Vision", "VQA"] },
+          { "name": "Cross-lingual Dataset", "desc": "Multilingual alignment data covering 20+ languages", "scale": "500K+ samples", "tags": ["Multilingual", "Alignment"] }
+        ]
+      },
+      "multimodal": {
+        "name": "Multimodal Datasets",
+        "datasets": [
+          { "name": "Cross-modal Dataset", "desc": "Video-audio-text tri-modal alignment dataset", "scale": "200K+ samples", "tags": ["Video", "Audio", "Text"] }
+        ]
+      },
+      "agent": {
+        "name": "Agent Datasets",
+        "datasets": [
+          { "name": "Browser Dataset", "desc": "Browser agent trajectory dataset", "scale": "30K+ trajectories", "tags": ["Web", "Agent"] },
+          { "name": "Openclaw Dataset", "desc": "General GUI control agent dataset", "scale": "20K+ trajectories", "tags": ["GUI", "Agent"] }
+        ]
+      }
+    },
+    "card": {
+      "scale": "Scale",
+      "contact": "Contact for Sample"
+    },
+    "modal": {
+      "title": "Request Dataset Sample",
+      "name": "Name",
+      "org": "Organization",
+      "email": "Email",
+      "purpose": "Purpose",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
+  },
+  "ai4ss": {
+    "title": "Understanding Intelligence through Social Science, Driving AGI with Personality Diversity",
+    "steps": [
+      { "title": "Build Personality Library", "desc": "Starting from social science theories, construct a broad personality profile library" },
+      { "title": "Generate Diverse Data", "desc": "Driven by the personality library, generate highly diverse and representative data" },
+      { "title": "Empower AGI", "desc": "Provide a richer, more human-realistic data foundation for the development of AGI" }
+    ]
+  },
+  "footer": {
+    "contactTitle": "Contact Us",
+    "email": "contact@entropyorder.ai",
+    "address": "Zhongguancun, Haidian District, Beijing",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message",
+      "success": "Message sent! We'll get back to you soon.",
+      "error": "Failed to send. Please try again later."
+    },
+    "copyright": "© 2026 熵基秩序 EntropyOrder. All rights reserved.",
+    "backToTop": "Back to Top"
+  }
+}

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply antialiased bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-50;
+    font-family: 'Space Grotesk', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Chinese text falls back to Noto Sans SC */
+  :lang(zh),
+  .font-zh {
+    font-family: 'Noto Sans SC', 'Space Grotesk', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
