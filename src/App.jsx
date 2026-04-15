@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar.jsx';
 import { Hero } from './components/Hero.jsx';
 import { Products } from './components/Products.jsx';
 import { AI4SS4AI } from './components/AI4SS4AI.jsx';
+import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/ContactModal.jsx';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Products onContact={setSelectedDataset} />
         <AI4SS4AI />
       </main>
+      <Footer />
       {selectedDataset && (
         <ContactModal dataset={selectedDataset} onClose={() => setSelectedDataset(null)} />
       )}
