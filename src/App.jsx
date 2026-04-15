@@ -1,5 +1,8 @@
 import { Navbar } from './components/Navbar.jsx';
 import { Hero } from './components/Hero.jsx';
+import { ExpertArtifact } from './components/Artifacts/ExpertArtifact.jsx';
+import { MultimodalArtifact } from './components/Artifacts/MultimodalArtifact.jsx';
+import { AgentArtifact } from './components/Artifacts/AgentArtifact.jsx';
 
 function App() {
   return (
@@ -7,8 +10,11 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <section id="products" className="min-h-screen flex items-center justify-center border-b">Products</section>
-        <section id="ai4ss" className="min-h-screen flex items-center justify-center border-b">AI4SS4AI</section>
+        <section className="py-20 px-4 grid gap-12">
+          <div className="h-64"><ExpertArtifact /></div>
+          <div className="h-64"><MultimodalArtifact /></div>
+          <div className="h-64"><AgentArtifact /></div>
+        </section>
       </main>
     </div>
   );
