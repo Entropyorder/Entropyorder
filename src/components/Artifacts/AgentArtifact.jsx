@@ -13,6 +13,7 @@ function Cluster() {
   }, []);
 
   useFrame((state) => {
+    if (!groupRef.current) return;
     groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.05;
     groupRef.current.rotation.z = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.1;
   });
@@ -31,7 +32,7 @@ function Cluster() {
 export function AgentArtifact() {
   return (
     <div className="w-full h-64 md:h-96">
-      <Canvas camera={{ position: [0, 0, 5] }}>
+      <Canvas camera={{ position: [0, 0, 5] }} dpr={[1, 1.5]}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[2, 2, 2]} intensity={1} />
         <Cluster />
