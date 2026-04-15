@@ -18,14 +18,15 @@ export function DatasetCard({ dataset, onContact }) {
       <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">{dataset.desc}</p>
       <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">{t('products.card.scale')}: {dataset.scale}</p>
       <div className="flex flex-wrap gap-2 mb-4">
-        {dataset.tags.map((tag) => (
-          <span key={tag} className="px-2 py-1 text-xs rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
+        {dataset.tags.map((tag, idx) => (
+          <span key={`${dataset.name}-${idx}`} className="px-2 py-1 text-xs rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300">
             {tag}
           </span>
         ))}
       </div>
       <button
         onClick={() => onContact(dataset)}
+        aria-label={`${t('products.card.contact')} - ${dataset.name}`}
         className="relative z-10 w-full rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-500 transition-colors"
       >
         {t('products.card.contact')}
