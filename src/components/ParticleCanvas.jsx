@@ -11,11 +11,16 @@ export function ParticleCanvas() {
     const ctx = canvas.getContext('2d');
     let animationId;
     let width, height;
-    const isDark = document.documentElement.classList.contains('dark');
+    const dpr = window.devicePixelRatio || 1;
 
     const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize);
@@ -61,7 +66,7 @@ export function ParticleCanvas() {
           }
         }
       }
-      draw() {
+      draw(isDark) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = isDark ? 'rgba(59,130,246,0.7)' : 'rgba(37,99,235,0.5)';
@@ -72,10 +77,11 @@ export function ParticleCanvas() {
     const particles = Array.from({ length: particleCount }, () => new Particle());
 
     const animate = () => {
+      const isDark = document.documentElement.classList.contains('dark');
       ctx.clearRect(0, 0, width, height);
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
-        particles[i].draw();
+        particles[i].draw(isDark);
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
