@@ -21,11 +21,15 @@ export function Navbar() {
   const toggleRef = useRef(null);
   const [activeHash, setActiveHash] = useState(window.location.hash || '#home');
 
-  // Show navbar only after scrolling past the fold
+  // Hysteresis: show after 60px, only hide when back below 10px
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setVisible(y > 60);
+      setVisible((prev) => {
+        if (!prev && y > 60) return true;
+        if (prev && y < 10) return false;
+        return prev;
+      });
       setAtTop(y < 10);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
