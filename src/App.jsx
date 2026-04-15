@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navbar } from './components/Navbar.jsx';
 import { Hero } from './components/Hero.jsx';
 import { Products } from './components/Products.jsx';
+import { AI4SS4AI } from './components/AI4SS4AI.jsx';
 import { ContactModal } from './components/ContactModal.jsx';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <main>
         <Hero />
         <Products onContact={setSelectedDataset} />
-        <section id="ai4ss" className="min-h-screen flex items-center justify-center border-t">AI4SS4AI</section>
+        <AI4SS4AI />
       </main>
       {selectedDataset && (
         <ContactModal dataset={selectedDataset} onClose={() => setSelectedDataset(null)} />
