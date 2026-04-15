@@ -4,7 +4,8 @@ import { Timeline } from './Timeline.jsx';
 
 export function AI4SS4AI() {
   const { t } = useTranslation();
-  const steps = t('ai4ss.steps', { returnObjects: true });
+  const rawSteps = t('ai4ss.steps', { returnObjects: true });
+  const steps = Array.isArray(rawSteps) ? rawSteps : [];
 
   return (
     <section id="ai4ss" className="relative py-24 bg-brand-50 dark:bg-slate-800/50 transition-colors overflow-hidden">
