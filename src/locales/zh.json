@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "主页",
+    "products": "产品",
+    "ai4ss": "AI4SS4AI",
+    "bench": "BenchWithModel"
+  },
+  "hero": {
+    "slogan": "熵基秩序 · EntropyOrder",
+    "subtitle": "构建高质量数据，驱动智能未来"
+  },
+  "products": {
+    "title": "产品与服务",
+    "categories": {
+      "expert": {
+        "name": "高水平专家数据集",
+        "datasets": [
+          { "name": "HLE 数据集", "desc": "高难度语言推理评估数据集", "scale": "10K+ 样本", "tags": ["中英", "推理"] },
+          { "name": "SFE 数据集", "desc": "结构化金融专家数据集", "scale": "50K+ 样本", "tags": ["金融", "结构化"] },
+          { "name": "MicroVQA 数据集", "desc": "微观视觉问答数据集", "scale": "100K+ 样本", "tags": ["视觉", "问答"] },
+          { "name": "跨语言数据集", "desc": "覆盖 20+ 语种的多语言对齐数据", "scale": "500K+ 样本", "tags": ["多语言", "对齐"] }
+        ]
+      },
+      "multimodal": {
+        "name": "多模态数据集",
+        "datasets": [
+          { "name": "跨模态数据集", "desc": "视频-音频-文本三模态对齐数据集", "scale": "200K+ 样本", "tags": ["视频", "音频", "文本"] }
+        ]
+      },
+      "agent": {
+        "name": "Agent 数据集",
+        "datasets": [
+          { "name": "Browser 数据集", "desc": "浏览器操作智能体轨迹数据集", "scale": "30K+ 轨迹", "tags": ["Web", "Agent"] },
+          { "name": "Openclaw 数据集", "desc": "通用操作控制智能体数据集", "scale": "20K+ 轨迹", "tags": ["GUI", "Agent"] }
+        ]
+      }
+    },
+    "card": {
+      "scale": "数据规模",
+      "contact": "联系获取样例"
+    },
+    "modal": {
+      "title": "申请数据集样例",
+      "name": "姓名",
+      "org": "单位",
+      "email": "邮箱",
+      "purpose": "用途说明",
+      "submit": "提交申请",
+      "cancel": "取消"
+    }
+  },
+  "ai4ss": {
+    "title": "以社会科学理解智能，以人格多样性驱动通用人工智能",
+    "steps": [
+      { "title": "构建人格库", "desc": "从社会科学理论出发，构建覆盖广泛的人格画像库" },
+      { "title": "生成多样数据", "desc": "基于人格库驱动，生成具有高多样性、高代表性的数据" },
+      { "title": "助力 AGI", "desc": "为通用人工智能的发展提供更丰富、更贴近人类真实的数据基础" }
+    ]
+  },
+  "footer": {
+    "contactTitle": "联系我们",
+    "email": "contact@entropyorder.ai",
+    "address": "北京市海淀区中关村",
+    "form": {
+      "name": "姓名",
+      "email": "邮箱",
+      "subject": "主题",
+      "message": "留言内容",
+      "submit": "发送邮件",
+      "success": "邮件已发送，我们会尽快与您联系！",
+      "error": "发送失败，请稍后重试。"
+    },
+    "copyright": "© 2026 熵基秩序 EntropyOrder. All rights reserved.",
+    "backToTop": "返回顶部"
+  }
+}

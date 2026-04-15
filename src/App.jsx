@@ -1,9 +1,17 @@
+import { useTranslation } from 'react-i18next';
+
 function App() {
+  const { t, i18n } = useTranslation();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-brand-50 dark:bg-slate-900">
-      <h1 className="text-3xl font-bold text-brand-600 dark:text-brand-400">
-        Tailwind is working
-      </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <h1 className="text-2xl font-bold">{t('hero.slogan')}</h1>
+      <p>{t('hero.subtitle')}</p>
+      <button
+        onClick={() => i18n.changeLanguage(i18n.language === 'zh' ? 'en' : 'zh')}
+        className="px-4 py-2 rounded bg-brand-600 text-white"
+      >
+        Toggle Language
+      </button>
     </div>
   );
 }
