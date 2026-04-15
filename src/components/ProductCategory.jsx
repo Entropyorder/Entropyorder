@@ -28,7 +28,7 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
           <div className="grid gap-5 sm:grid-cols-2">
             {datasets.map((ds, idx) => (
               <motion.div
-                key={ds.name}
+                key={`${ds.name}-${idx}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
