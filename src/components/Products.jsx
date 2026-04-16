@@ -113,6 +113,7 @@ export function Products({ onContact }) {
                   datasets={cat.datasets}
                   direction={idx % 2 === 0 ? 'left' : 'right'}
                   onContact={onContact}
+                  index={idx}
                 />
               </div>
             ))}

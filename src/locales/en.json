@@ -15,23 +15,82 @@
       "expert": {
         "name": "High-Level Expert Datasets",
         "datasets": [
-          { "name": "HLE Dataset", "desc": "High-difficulty language reasoning evaluation dataset", "scale": "10K+ samples", "tags": ["Chinese/English", "Reasoning"] },
-          { "name": "SFE Dataset", "desc": "Structured financial expert dataset", "scale": "50K+ samples", "tags": ["Finance", "Structured"] },
-          { "name": "MicroVQA Dataset", "desc": "Micro-level visual question answering dataset", "scale": "100K+ samples", "tags": ["Vision", "VQA"] },
-          { "name": "Cross-lingual Dataset", "desc": "Multilingual alignment data covering 20+ languages", "scale": "500K+ samples", "tags": ["Multilingual", "Alignment"] }
+          {
+            "name": "HLE Dataset",
+            "desc": "High-difficulty science reasoning benchmark spanning mathematics, physics, chemistry, biology, medicine, CS, engineering, finance, arts, linguistics, astronomy, and geography",
+            "scale": "3K+ samples",
+            "tags": ["Science Reasoning", "Multi-domain", "Benchmark"]
+          },
+          {
+            "name": "SFE Dataset",
+            "desc": "Real problems from scientific research scenarios, collected and annotated by domain scientists from actual research work with strong real-world constraints",
+            "scale": "5K+ samples",
+            "tags": ["Research Scenarios", "Real Problems", "Expert Annotations"]
+          },
+          {
+            "name": "MicroVQA Dataset",
+            "desc": "Specialized multimodal dataset for biological microscopy, featuring visual QA over cell and tissue slice micro-images",
+            "scale": "2K+ samples",
+            "tags": ["Biology", "Microscopy", "Multimodal"]
+          },
+          {
+            "name": "Cross-lingual K12QA Dataset",
+            "desc": "K12 problem dataset covering 20+ languages, collected by local experts from country-specific textbooks and verified for accuracy",
+            "scale": "10K+ samples",
+            "tags": ["Multilingual", "K12", "Verified"]
+          }
         ]
       },
       "multimodal": {
         "name": "Multimodal Datasets",
         "datasets": [
-          { "name": "Cross-modal Dataset", "desc": "Video-audio-text tri-modal alignment dataset", "scale": "200K+ samples", "tags": ["Video", "Audio", "Text"] }
+          {
+            "name": "Tri-modal Alignment Dataset",
+            "desc": "Video-audio-text tri-modal alignment dataset with frame-level temporal annotations and cross-modal semantic mapping",
+            "scale": "2K+ samples",
+            "tags": ["Video", "Audio", "Text Alignment"]
+          },
+          {
+            "name": "Proactive Streaming Video",
+            "desc": "Streaming video active understanding dataset requiring real-time inference and prediction during video playback",
+            "scale": "1K+ samples",
+            "tags": ["Streaming Video", "Active Inference", "Real-time"]
+          },
+          {
+            "name": "Science Video QA Dataset",
+            "desc": "Multimodal QA dataset over science videos (chemistry, biology experiments) covering procedures and phenomenon explanations",
+            "scale": "1K+ samples",
+            "tags": ["Science Experiments", "Video QA", "Multimodal"]
+          },
+          {
+            "name": "Chart Reasoning QA Dataset",
+            "desc": "Deep reasoning evaluation data fusing complex charts and natural language, with multi-step derivation and cross-chart-text links",
+            "scale": "2K+ samples",
+            "tags": ["Chart Understanding", "Deep Reasoning", "Multi-step"]
+          }
         ]
       },
       "agent": {
         "name": "Agent Datasets",
         "datasets": [
-          { "name": "Browser Dataset", "desc": "Browser agent trajectory dataset", "scale": "30K+ trajectories", "tags": ["Web", "Agent"] },
-          { "name": "Openclaw Dataset", "desc": "General GUI control agent dataset", "scale": "20K+ trajectories", "tags": ["GUI", "Agent"] }
+          {
+            "name": "Browser Dataset",
+            "desc": "Real user browser operation traces with task decomposition, mid-task decisions, and error recovery paths",
+            "scale": "5K+ trajectories",
+            "tags": ["Web Agent", "Task Planning", "Trajectories"]
+          },
+          {
+            "name": "Openclaw Dataset",
+            "desc": "Cross-platform GUI agent dataset covering desktop and mobile interface operation trajectories",
+            "scale": "3K+ trajectories",
+            "tags": ["GUI Agent", "Cross-platform", "Control"]
+          },
+          {
+            "name": "Search Evaluation Dataset",
+            "desc": "Multi-hop reasoning search benchmark with diverse query sources spanning multiple information types",
+            "scale": "5K+ samples",
+            "tags": ["Multi-hop Reasoning", "Search Eval", "Diverse Queries"]
+          }
         ]
       }
     },
@@ -49,12 +108,89 @@
       "cancel": "Cancel"
     }
   },
+  "expertData": {
+    "tag": "Why Expert Data",
+    "title": "Expert Knowledge Is the Foundation of Capability Breakthroughs",
+    "subtitle": "High-quality expert annotations outperform crowd-sourced data in training efficiency, reasoning depth, and domain precision",
+    "pipeline": {
+      "heading": "Human-AI Collaborative Annotation Pipeline",
+      "passLabel": "Pass",
+      "passDesc": "Enters the dataset",
+      "rejectLabel": "Reject",
+      "rejectDesc": "Discarded if difficulty threshold not met",
+      "steps": [
+        {
+          "title": "LLM Paper Decomposition",
+          "desc": "Frontier LLM parses paper structure, key concepts, and reasoning logic — outputs structured summary and concept inventory",
+          "type": "ai",
+          "badge": "AI"
+        },
+        {
+          "title": "Expert Paper Reading",
+          "desc": "Domain experts conduct deep reading to capture implicit assumptions, contextual details, and disciplinary nuances",
+          "type": "human",
+          "badge": "Human"
+        },
+        {
+          "title": "Knowledge Graph Construction",
+          "desc": "Merges LLM parsing and expert understanding into explicit knowledge graphs and implicit association graphs",
+          "type": "hybrid",
+          "badge": "AI + Human"
+        },
+        {
+          "title": "Expert Question Writing",
+          "desc": "Based on the graphs, experts craft highly discriminative questions with complete reasoning chain answers",
+          "type": "human",
+          "badge": "Human"
+        },
+        {
+          "title": "Multi-expert Cross-review",
+          "desc": "Multiple experts independently review each item, scoring quality, difficulty, and uniqueness for consistency",
+          "type": "human",
+          "badge": "Multi-expert"
+        },
+        {
+          "title": "Difficulty Judgment",
+          "desc": "Gemini 3.1 Pro · GPT-5.4",
+          "type": "gate",
+          "badge": "AI Judge"
+        }
+      ]
+    }
+  },
   "ai4ss": {
-    "title": "Understanding Intelligence through Social Science, Driving AGI with Personality Diversity",
+    "tag": "Core Vision",
+    "title": "AI4SS4AI",
+    "subtitle": "Understand human diversity through Social Science. Let AI genuinely give back to the Real World.",
+    "fromReal": "FROM REAL",
+    "toReal": "TO REAL",
+    "loopDesc": "Starting from the real world, empowered by the mutual reinforcement of Social Science and AI, and ultimately returning to improve the real world",
+    "personaCallout": {
+      "stat": "1,000,000+",
+      "label": "Persona × Skills Combinations",
+      "desc": "A million-scale multi-dimensional personality and skills taxonomy spanning value systems, cognitive styles, professional competencies, and cultural backgrounds — the foundation of unprecedented data diversity"
+    },
     "steps": [
-      { "title": "Build Personality Library", "desc": "Starting from social science theories, construct a broad personality profile library" },
-      { "title": "Generate Diverse Data", "desc": "Driven by the personality library, generate highly diverse and representative data" },
-      { "title": "Empower AGI", "desc": "Provide a richer, more human-realistic data foundation for the development of AGI" }
+      {
+        "title": "Real-World Observation",
+        "desc": "Collect first-hand data from real social behaviors, cultural differences, and human interactions — preserving the full complexity of human nature"
+      },
+      {
+        "title": "Social Science Extraction",
+        "desc": "Distill personality traits and behavioral patterns using established frameworks from psychology and sociology, giving data scientific interpretability"
+      },
+      {
+        "title": "Personality Diversity Modeling",
+        "desc": "Build a personality atlas spanning diverse value systems, cognitive styles, and cultural backgrounds — enabling unprecedented data diversity"
+      },
+      {
+        "title": "High-Quality Data Generation",
+        "desc": "Driven by the personality atlas, generate large-scale training data that is simultaneously diverse, authentic, and internally consistent"
+      },
+      {
+        "title": "AGI Empowers Reality",
+        "desc": "AI that truly understands human diversity — making wiser, more empathetic decisions in education, healthcare, and governance"
+      }
     ]
   },
   "footer": {

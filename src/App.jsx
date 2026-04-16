@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navbar } from './components/Navbar.jsx';
 import { Hero } from './components/Hero.jsx';
 import { Products } from './components/Products.jsx';
+import { ExpertDataValue } from './components/ExpertDataValue.jsx';
 import { AI4SS4AI } from './components/AI4SS4AI.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/ContactModal.jsx';
@@ -61,6 +62,8 @@ function App() {
         <Hero />
         <WaveDivider />
         <Products onContact={setSelectedDataset} />
+        <DiagonalDivider />
+        <ExpertDataValue />
         <DiagonalDivider />
         <AI4SS4AI />
       </main>
