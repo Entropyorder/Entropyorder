@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, X, Sun, Moon, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme.js';
+import logoUrl from '/logo.png';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 
 const navItems = [
@@ -92,7 +93,7 @@ export function Navbar() {
               onClick={(e) => handleNavClick(e, '#home')}
               className="flex items-center gap-2.5 group"
             >
-              <img src="/logo.png" alt="EntropyOrder" className="h-7 w-auto transition-opacity group-hover:opacity-80" />
+              <img src={logoUrl} alt="EntropyOrder" className="h-7 w-auto transition-opacity group-hover:opacity-80" />
               <span className="font-semibold text-sm text-slate-700 dark:text-slate-200 tracking-tight">
                 熵基秩序
                 <span className="hidden sm:inline text-slate-400 dark:text-slate-500 font-light"> · EntropyOrder</span>

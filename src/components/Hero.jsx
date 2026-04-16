@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
+import logoUrl from '/logo.png';
 
 // Floating geometric shape
 function FloatShape({ className, delay = 0, duration = 8 }) {
@@ -112,7 +113,7 @@ export function Hero() {
           className="mb-10"
         >
           <img
-            src="/logo.png"
+            src={logoUrl}
             alt="EntropyOrder"
             className="h-20 md:h-28 w-auto logo-glow mx-auto"
           />
