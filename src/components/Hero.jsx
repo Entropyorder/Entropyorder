@@ -18,9 +18,13 @@ function FloatShape({ className, delay = 0, duration = 8 }) {
 export function Hero() {
   const { t } = useTranslation();
 
-  const scrollToProducts = () => {
-    const el = document.getElementById('products');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  const scrollToExpert = () => {
+    const el = document.getElementById('expert-data');
+    if (el) {
+      const navbarH = 64;
+      const y = el.getBoundingClientRect().top + window.scrollY - navbarH;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -126,13 +130,13 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6"
         >
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[96px] font-bold tracking-tight leading-[1.05]">
+          <h1 className="text-7xl sm:text-8xl md:text-[110px] lg:text-[120px] font-bold tracking-tight leading-[1.05]">
             <span className="gradient-text">熵基</span>
             <span className="gradient-text">秩序</span>
           </h1>
           <div className="mt-3 flex items-center justify-center gap-3">
             <div className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-brand-400/50 to-transparent" />
-            <span className="text-xl sm:text-2xl md:text-3xl font-light tracking-[0.18em] text-slate-400 dark:text-slate-500 uppercase">
+            <span className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.18em] text-slate-400 dark:text-slate-500 uppercase">
               EntropyOrder
             </span>
             <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-brand-400/50 to-transparent" />
@@ -144,7 +148,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-lg leading-relaxed"
+          className="text-lg sm:text-xl md:text-2xl text-slate-500 dark:text-slate-400 max-w-lg leading-relaxed"
         >
           {t('hero.subtitle')}
         </motion.p>
@@ -158,7 +162,7 @@ export function Hero() {
         >
           {['Data', 'Intelligence', 'Future'].map((word, i) => (
             <span key={word} className="flex items-center gap-2">
-              <span className="text-xs uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500 font-medium">
+              <span className="text-sm uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500 font-medium">
                 {word}
               </span>
               {i < 2 && <span className="w-1 h-1 rounded-full bg-brand-400/50" />}
@@ -169,14 +173,14 @@ export function Hero() {
 
       {/* Scroll cue */}
       <motion.button
-        onClick={scrollToProducts}
+        onClick={scrollToExpert}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.3, duration: 0.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-slate-400 hover:text-brand-500 dark:text-slate-500 dark:hover:text-brand-400 transition-colors group"
         aria-label="Scroll down"
       >
-        <span className="text-[10px] uppercase tracking-widest opacity-70 group-hover:opacity-100">scroll</span>
+        <span className="text-xs sm:text-sm uppercase tracking-widest opacity-70 group-hover:opacity-100">{t('hero.scrollHint')}</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}

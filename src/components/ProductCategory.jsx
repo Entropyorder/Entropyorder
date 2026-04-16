@@ -58,12 +58,12 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
             className="lg:w-1/2"
           >
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-[11px] font-bold font-mono tracking-[0.35em] text-brand-500/70 dark:text-brand-400/60 uppercase">
+              <span className="text-sm font-bold font-mono tracking-[0.35em] text-brand-500/70 dark:text-brand-400/60 uppercase">
                 /{sectionNum}
               </span>
               <div className="h-px w-10 bg-gradient-to-r from-brand-500/50 to-transparent" />
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-50 leading-tight">
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-50 leading-tight">
               {title}
             </h3>
           </motion.div>

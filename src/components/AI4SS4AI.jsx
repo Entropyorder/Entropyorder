@@ -61,10 +61,10 @@ function PipelineNode({ step, index, color, Icon }) {
       </div>
 
       {/* Text */}
-      <h3 className="text-[15px] font-bold text-slate-800 dark:text-slate-100 mb-2 px-1 leading-snug">
+      <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-2 px-1 leading-snug">
         {step.title}
       </h3>
-      <p className="text-[12.5px] text-slate-500 dark:text-slate-400 leading-relaxed px-1 max-w-[160px] lg:max-w-none">
+      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed px-1 max-w-[160px] lg:max-w-none">
         {step.desc}
       </p>
     </motion.div>
@@ -129,7 +129,7 @@ export function AI4SS4AI() {
           transition={{ duration: 0.7 }}
           className="text-center mb-14"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-8">
+          <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400 animate-pulse inline-block" />
             {t('ai4ss.tag')}
           </span>
@@ -141,7 +141,7 @@ export function AI4SS4AI() {
             {t('ai4ss.title')}
           </h2>
 
-          <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             {t('ai4ss.subtitle')}
           </p>
         </motion.div>
@@ -179,12 +179,12 @@ export function AI4SS4AI() {
                   dark:from-blue-400 dark:to-cyan-300">
                   {callout.stat}
                 </div>
-                <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+                <div className="mt-1 text-sm font-bold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
                   {callout.label}
                 </div>
               </div>
               {/* Description */}
-              <p className="text-[14px] text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                 {callout.desc}
               </p>
             </div>
@@ -204,7 +204,7 @@ export function AI4SS4AI() {
               className="flex items-center gap-3"
             >
               <div className="text-left">
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-500/70 dark:text-brand-400/60 leading-none">
+                <div className="text-xs font-black uppercase tracking-[0.4em] text-brand-500/70 dark:text-brand-400/60 leading-none">
                   {t('ai4ss.fromReal')}
                 </div>
                 <div className="mt-1 h-px w-16 bg-gradient-to-r from-brand-400/60 to-transparent" />
@@ -219,7 +219,7 @@ export function AI4SS4AI() {
               className="flex items-center gap-3"
             >
               <div className="text-right">
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-500/70 dark:text-brand-400/60 leading-none">
+                <div className="text-xs font-black uppercase tracking-[0.4em] text-brand-500/70 dark:text-brand-400/60 leading-none">
                   {t('ai4ss.toReal')}
                 </div>
                 <div className="mt-1 h-px w-16 ml-auto bg-gradient-to-l from-brand-400/60 to-transparent" />
@@ -264,7 +264,7 @@ export function AI4SS4AI() {
               </svg>
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-brand-400/40 to-transparent" />
             </div>
-            <p className="text-center text-[13px] text-slate-400 dark:text-slate-500 leading-relaxed">
+            <p className="text-center text-sm text-slate-400 dark:text-slate-500 leading-relaxed">
               {t('ai4ss.loopDesc')}
             </p>
           </motion.div>

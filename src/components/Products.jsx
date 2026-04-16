@@ -47,7 +47,7 @@ export function Products({ onContact }) {
     <section id="products" className="relative bg-white dark:bg-slate-900 transition-colors">
       {/* Section label — small and muted, not a competing title */}
       <div className="pt-24 pb-4 text-center">
-        <span className="inline-block text-xs font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
+        <span className="inline-block text-sm font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
           {t('products.title')}
         </span>
       </div>
@@ -63,7 +63,7 @@ export function Products({ onContact }) {
                   aria-selected={activeTab === idx}
                   aria-controls={`product-panel-${idx}`}
                   onClick={() => scrollToCategory(idx)}
-                  className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-base font-medium transition-all duration-200 ${
                     activeTab === idx
                       ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white shadow-sm shadow-brand-500/20'
                       : 'text-slate-600 hover:text-slate-800 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60'
@@ -86,7 +86,7 @@ export function Products({ onContact }) {
                   aria-selected={activeTab === idx}
                   aria-controls={`product-panel-${idx}`}
                   onClick={() => scrollToCategory(idx)}
-                  className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`shrink-0 px-4 py-2 rounded-full text-base font-medium transition-all duration-200 ${
                     activeTab === idx
                       ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white'
                       : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'

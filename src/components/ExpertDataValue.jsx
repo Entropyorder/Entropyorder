@@ -54,7 +54,7 @@ export function ExpertDataValue() {
   const isGateStep = (idx) => idx === steps.length - 1;
 
   return (
-    <section className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
+    <section id="expert-data" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
       {/* Background dot grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-25 dark:opacity-10"
@@ -76,14 +76,14 @@ export function ExpertDataValue() {
           transition={{ duration: 0.65 }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-6">
+          <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400 inline-block" />
             {t('expertData.tag')}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-50 mb-5 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-50 mb-5 leading-tight">
             {t('expertData.title')}
           </h2>
-          <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
             {t('expertData.subtitle')}
           </p>
         </motion.div>
@@ -97,7 +97,7 @@ export function ExpertDataValue() {
           className="flex items-center gap-4 mb-10"
         >
           <div className="flex-1 h-px bg-gradient-to-r from-transparent to-slate-200 dark:to-slate-700" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 whitespace-nowrap">
+          <span className="text-sm font-bold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 whitespace-nowrap">
             {t('expertData.pipeline.heading')}
           </span>
           <div className="flex-1 h-px bg-gradient-to-l from-transparent to-slate-200 dark:to-slate-700" />
@@ -153,23 +153,23 @@ export function ExpertDataValue() {
                   {/* Right: content */}
                   <div className={`flex-1 ${isLast ? 'pb-0' : 'pb-6'} pt-0.5`}>
                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                      <h3 className={`font-bold text-slate-800 dark:text-slate-100 leading-snug ${isLast ? 'text-[17px]' : 'text-[15px]'}`}>
+                      <h3 className={`font-bold text-slate-800 dark:text-slate-100 leading-snug ${isLast ? 'text-lg' : 'text-base'}`}>
                         {step.title}
                       </h3>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${meta.badgeCls}`}>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${meta.badgeCls}`}>
                         {step.badge}
                       </span>
                     </div>
                     {/* Normal step description */}
                     {!isLast && (
-                      <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                         {step.desc}
                       </p>
                     )}
                     {/* Gate step: model names + decision outcomes */}
                     {isLast && (
                       <div>
-                        <p className="text-[12.5px] font-mono text-blue-500 dark:text-blue-400 mb-4">
+                        <p className="text-sm font-mono text-blue-500 dark:text-blue-400 mb-4">
                           {step.desc}
                         </p>
                         {/* Decision outcomes */}
@@ -187,11 +187,11 @@ export function ExpertDataValue() {
                               <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
                                 <Check className="w-3 h-3 text-white" strokeWidth={2.5} />
                               </div>
-                              <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                              <span className="text-base font-bold text-emerald-700 dark:text-emerald-400">
                                 {t('expertData.pipeline.passLabel')}
                               </span>
                             </div>
-                            <p className="text-[12px] text-emerald-600 dark:text-emerald-500 pl-7">
+                            <p className="text-sm text-emerald-600 dark:text-emerald-500 pl-7">
                               {t('expertData.pipeline.passDesc')}
                             </p>
                           </motion.div>
@@ -209,11 +209,11 @@ export function ExpertDataValue() {
                               <div className="w-5 h-5 rounded-full bg-slate-400 dark:bg-slate-600 flex items-center justify-center flex-shrink-0">
                                 <XCircle className="w-3 h-3 text-white" strokeWidth={2.5} />
                               </div>
-                              <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                              <span className="text-base font-bold text-slate-500 dark:text-slate-400">
                                 {t('expertData.pipeline.rejectLabel')}
                               </span>
                             </div>
-                            <p className="text-[12px] text-slate-400 dark:text-slate-500 pl-7">
+                            <p className="text-sm text-slate-400 dark:text-slate-500 pl-7">
                               {t('expertData.pipeline.rejectDesc')}
                             </p>
                           </motion.div>
