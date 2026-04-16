@@ -12,7 +12,6 @@
   "dependencies": {
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
-    "@react-three/postprocessing": "^3.0.4",
     "framer-motion": "^12.38.0",
     "i18next": "^26.0.5",
     "i18next-browser-languagedetector": "^8.2.1",
