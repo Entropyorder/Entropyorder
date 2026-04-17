@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Bot, BookOpen, Network, PenLine, Users, ShieldCheck, Check, XCircle, ExternalLink } from 'lucide-react';
@@ -47,48 +48,79 @@ const STEP_META = [
   },
 ];
 
-const PAPER_GRADIENTS = [
-  'from-blue-600 via-indigo-600 to-violet-700',
-  'from-cyan-500 via-teal-500 to-emerald-600',
-  'from-violet-500 via-purple-500 to-fuchsia-600',
-];
+function PaperCard({ paper, index, hoveredIndex, onHover }) {
+  const isHovered = hoveredIndex === index;
+  const isAnyHovered = hoveredIndex !== null;
+  const isOtherHovered = isAnyHovered && !isHovered;
 
-function PaperCard({ paper, index, total }) {
-  const rotation = (index - 1) * 4;
-  const offsetX = index * 8;
-  const offsetY = index * 6;
-  const scale = 1 - index * 0.03;
+  const offsets = [
+    { x: -6, y: -4, rotate: -3 },
+    { x: 4, y: 2, rotate: 1.5 },
+    { x: 12, y: 8, rotate: 5 },
+  ];
+  const offset = offsets[index] || offsets[0];
+
+  const baseStyle = {
+    rotate: offset.rotate,
+    y: offset.y,
+    x: offset.x,
+    zIndex: isHovered ? 20 : 3 - index,
+  };
+
+  const hoveredStyle = {
+    rotate: 0,
+    y: index === 0 ? -180 : index === 1 ? -90 : 0,
+    x: 0,
+    scale: 1.02,
+    zIndex: 20,
+  };
 
   return (
     <motion.a
       href={paper.url}
-      target={paper.url.startsWith('#') ? '_self' : '_blank'}
+      target="_blank"
       rel="noreferrer"
-      initial={{ opacity: 0, y: 20, rotate: 0 }}
-      whileInView={{ opacity: 1, y: 0, rotate: rotation }}
+      onHoverStart={() => onHover(index)}
+      onHoverEnd={() => onHover(null)}
+      animate={isHovered ? hoveredStyle : baseStyle}
+      initial={{
+        opacity: 0,
+        y: 40 + index * 20,
+        rotate: 0,
+        scale: 0.9,
+      }}
+      whileInView={{
+        opacity: isOtherHovered ? 0.5 : 1,
+        y: isHovered ? hoveredStyle.y : offset.y,
+        x: isHovered ? hoveredStyle.x : offset.x,
+        rotate: isHovered ? hoveredStyle.rotate : offset.rotate,
+        scale: isHovered ? hoveredStyle.scale : isOtherHovered ? 0.96 : 1,
+      }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: 0.3 + index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ scale: 1.04, y: -4, zIndex: 30 }}
-      className="absolute w-full aspect-[3/4] rounded-xl overflow-hidden shadow-2xl cursor-pointer group"
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 25,
+        mass: 0.8,
+      }}
+      className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-center"
       style={{
-        transform: `rotate(${rotation}deg) translateX(${offsetX}px) translateY(${offsetY}px) scale(${scale})`,
-        zIndex: total - index,
+        zIndex: isHovered ? 20 : 3 - index,
+        aspectRatio: '3/4',
       }}
     >
-      <div className={`w-full h-full bg-gradient-to-br ${PAPER_GRADIENTS[index % PAPER_GRADIENTS.length]} p-5 flex flex-col justify-between`}>
-        <div>
-          <div className="flex items-center gap-1.5 mb-4">
-            <div className="w-2 h-2 rounded-full bg-white/40" />
-            <div className="h-px flex-1 bg-white/20" />
-          </div>
-          <h4 className="text-white font-bold text-base leading-snug mb-2 line-clamp-3">
-            {paper.title}
-          </h4>
-          <p className="text-white/60 text-xs">{paper.authors}</p>
-        </div>
+      <img
+        src={paper.img}
+        alt={paper.title}
+        className="w-full h-full object-cover object-top"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <h4 className="text-white font-bold text-sm leading-snug mb-1 line-clamp-2">{paper.title}</h4>
         <div className="flex items-center justify-between">
-          <span className="text-white/50 text-xs font-mono">{paper.venue}</span>
-          <ExternalLink className="w-3.5 h-3.5 text-white/40 group-hover:text-white/80 transition-colors" />
+          <span className="text-white/70 text-xs">{paper.authors} · {paper.venue}</span>
+          <ExternalLink className="w-3.5 h-3.5 text-white/60 flex-shrink-0 ml-2" />
         </div>
       </div>
     </motion.a>
@@ -97,6 +129,7 @@ function PaperCard({ paper, index, total }) {
 
 export function ExpertDataValue() {
   const { t } = useTranslation();
+  const [hoveredPaper, setHoveredPaper] = useState(null);
   const rawSteps = t('expertData.pipeline.steps', { returnObjects: true });
   const steps = Array.isArray(rawSteps) ? rawSteps : [];
   const rawPapers = t('expertData.pipeline.papers', { returnObjects: true });
@@ -268,7 +301,7 @@ export function ExpertDataValue() {
           </div>
 
           {papers.length > 0 && (
-            <div className="w-full lg:w-[320px] xl:w-[360px] flex-shrink-0">
+            <div className="w-full lg:w-[280px] xl:w-[310px] flex-shrink-0">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -280,9 +313,15 @@ export function ExpertDataValue() {
                   {t('expertData.pipeline.papersLabel', 'Related Publications')}
                 </span>
               </motion.div>
-              <div className="relative" style={{ height: 360 }}>
+              <div className="relative" style={{ height: 380 }}>
                 {papers.map((paper, i) => (
-                  <PaperCard key={i} paper={paper} index={i} total={papers.length} />
+                  <PaperCard
+                    key={i}
+                    paper={paper}
+                    index={i}
+                    hoveredIndex={hoveredPaper}
+                    onHover={setHoveredPaper}
+                  />
                 ))}
               </div>
             </div>

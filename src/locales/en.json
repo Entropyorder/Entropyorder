@@ -123,22 +123,25 @@
       "papersLabel": "Related Publications",
       "papers": [
         {
-          "title": "Humanity's Last Exam",
-          "authors": "Phan et al.",
-          "venue": "arXiv 2025",
-          "url": "https://arxiv.org/abs/2501.14231"
+          "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
+          "authors": "Rein et al.",
+          "venue": "arXiv 2023",
+          "url": "https://arxiv.org/abs/2311.12022",
+          "img": "papers/gpqa.png"
         },
         {
-          "title": "SCBench: A KV Cache-Centric Benchmark",
+          "title": "SCBench: A KV Cache-Centric Benchmark for Long Context",
           "authors": "Li et al.",
           "venue": "arXiv 2025",
-          "url": "https://arxiv.org/abs/2412.12119"
+          "url": "https://arxiv.org/abs/2412.12119",
+          "img": "papers/scbench.png"
         },
         {
-          "title": "From Real to Real: AI4SS4AI",
-          "authors": "EntropyOrder",
-          "venue": "2026",
-          "url": "#"
+          "title": "MMLU-Pro: A More Robust and Challenging MultiTask Language Understanding Benchmark",
+          "authors": "Wang et al.",
+          "venue": "arXiv 2024",
+          "url": "https://arxiv.org/abs/2406.08064",
+          "img": "papers/mmlu_pro.png"
         }
       ],
       "steps": [
