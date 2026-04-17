@@ -78,9 +78,7 @@ function App() {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    if (tab === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const direction = TAB_ORDER.indexOf(activeTab);

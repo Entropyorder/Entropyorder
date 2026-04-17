@@ -103,39 +103,57 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
     }
   };
 
+  const isLightNotScrolled = !isScrolled && theme !== 'dark';
+
   const navBg = isScrolled
     ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm border-b border-brand-600/10 dark:border-slate-700/60'
-    : 'bg-transparent border-b border-transparent';
+    : theme === 'dark'
+    ? 'bg-transparent border-b border-transparent'
+    : 'bg-white/70 backdrop-blur-xl border-b border-slate-200/40';
 
   const textColor = isScrolled
     ? ''
-    : 'text-white dark:text-white';
+    : theme === 'dark'
+    ? 'text-white dark:text-white'
+    : '';
 
   const logoTextColor = isScrolled
     ? 'text-slate-700 dark:text-slate-200'
-    : 'text-white';
+    : theme === 'dark'
+    ? 'text-white'
+    : 'text-slate-800';
 
   const navTextBase = isScrolled
     ? 'text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
-    : 'text-white/80 hover:text-white dark:text-white/80 dark:hover:text-white';
+    : theme === 'dark'
+    ? 'text-white/80 hover:text-white dark:text-white/80 dark:hover:text-white'
+    : 'text-slate-600 hover:text-slate-800';
 
   const activeTextCls = isScrolled
     ? 'text-brand-600 dark:text-brand-400'
-    : 'text-white dark:text-white';
+    : theme === 'dark'
+    ? 'text-white dark:text-white'
+    : 'text-brand-600';
 
   const activeBgCls = isScrolled
     ? 'bg-brand-50 dark:bg-brand-900/30'
-    : 'bg-white/15 dark:bg-white/15';
+    : theme === 'dark'
+    ? 'bg-white/15 dark:bg-white/15'
+    : 'bg-brand-50';
 
-  const iconColor = isScrolled ? undefined : 'text-white';
+  const iconColor = isScrolled ? undefined : isLightNotScrolled ? 'text-slate-600' : 'text-white';
 
   const langBtnCls = isScrolled
     ? 'text-xs font-semibold text-slate-600 dark:text-slate-400 min-w-[36px]'
-    : 'text-xs font-semibold text-white/90 dark:text-white/90 min-w-[36px]';
+    : theme === 'dark'
+    ? 'text-xs font-semibold text-white/90 dark:text-white/90 min-w-[36px]'
+    : 'text-xs font-semibold text-slate-600 min-w-[36px]';
 
   const themeBtnHover = isScrolled
     ? 'hover:bg-slate-100 dark:hover:bg-slate-800'
-    : 'hover:bg-white/15 dark:hover:bg-white/15';
+    : theme === 'dark'
+    ? 'hover:bg-white/15 dark:hover:bg-white/15'
+    : 'hover:bg-slate-100';
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${navBg}`}>
@@ -148,7 +166,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
           <img src={logoUrl} alt="EntropyOrder" className="h-7 w-auto transition-opacity group-hover:opacity-80" />
           <span className={`font-semibold text-sm ${logoTextColor} tracking-tight`}>
             熵基秩序
-            <span className={`hidden sm:inline ${isScrolled ? 'text-slate-400 dark:text-slate-500' : 'text-white/60 dark:text-white/60'} font-light`}> · EntropyOrder</span>
+            <span className={`hidden sm:inline ${isScrolled ? 'text-slate-400 dark:text-slate-500' : theme === 'dark' ? 'text-white/60 dark:text-white/60' : 'text-slate-400'} font-light`}> · EntropyOrder</span>
           </span>
         </a>
 
@@ -195,7 +213,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
           >
             {theme === 'dark'
               ? <Sun className={`w-4 h-4 ${isScrolled ? 'text-slate-400' : 'text-white/80'}`} />
-              : <Moon className={`w-4 h-4 ${isScrolled ? 'text-slate-600' : 'text-white/80'}`} />}
+              : <Moon className={`w-4 h-4 ${isScrolled ? 'text-slate-600' : isLightNotScrolled ? 'text-slate-600' : 'text-white/80'}`} />}
           </button>
           <button
             onClick={toggleLang}
@@ -214,8 +232,8 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
               className={`p-2 rounded-lg ${themeBtnHover} transition-colors`}
             >
               {mobileOpen
-                ? <X className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : 'text-white'}`} />
-                : <Menu className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : 'text-white'}`} />}
+                ? <X className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : theme === 'dark' ? 'text-white' : 'text-slate-700'}`} />
+                : <Menu className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : theme === 'dark' ? 'text-white' : 'text-slate-700'}`} />}
             </button>
           )}
         </div>
@@ -227,7 +245,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          className="border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-4 py-4"
+          className={`border-t ${isLightNotScrolled ? 'border-slate-200 bg-white/95' : 'border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95'} backdrop-blur-xl px-4 py-4`}
         >
           <div className="flex flex-col gap-1">
             {navItems.map((item) => (

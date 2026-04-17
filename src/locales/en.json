@@ -120,6 +120,27 @@
       "passDesc": "Enters the dataset",
       "rejectLabel": "Reject",
       "rejectDesc": "Discarded if difficulty threshold not met",
+      "papersLabel": "Related Publications",
+      "papers": [
+        {
+          "title": "Humanity's Last Exam",
+          "authors": "Phan et al.",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2501.14231"
+        },
+        {
+          "title": "SCBench: A KV Cache-Centric Benchmark",
+          "authors": "Li et al.",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2412.12119"
+        },
+        {
+          "title": "From Real to Real: AI4SS4AI",
+          "authors": "EntropyOrder",
+          "venue": "2026",
+          "url": "#"
+        }
+      ],
       "steps": [
         {
           "title": "LLM Paper Decomposition",
