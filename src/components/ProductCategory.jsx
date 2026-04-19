@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { DatasetCard } from './DatasetCard.jsx';
 import { offset, duration } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
-import { ArtifactLazy } from '../animations/ArtifactLazy.jsx';
 
 // clip-path parallelogram that tiles all cards flat, each with a staggered float
 function ParallelogramCards({ datasets, onContact }) {
@@ -79,9 +78,7 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
             transition={{ duration: duration.normal, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="w-full lg:w-5/12"
           >
-            <ArtifactLazy height={320}>
-              <Artifact />
-            </ArtifactLazy>
+            <Artifact />
           </motion.div>
         </div>
 
