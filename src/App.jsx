@@ -24,9 +24,30 @@ function WaveDivider() {
         xmlns="http://www.w3.org/2000/svg"
         className="absolute inset-0 w-full h-full"
       >
+        <defs>
+          <linearGradient id="wave-light" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#d8eeff" />
+            <stop offset="100%" stopColor="#ffffff" />
+          </linearGradient>
+          <linearGradient id="wave-dark" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#071424" />
+            <stop offset="100%" stopColor="#0f172a" />
+          </linearGradient>
+        </defs>
         <path
           d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
           className="fill-white dark:fill-slate-900"
+        />
+        {/* Gradient overlay for smooth Hero→section transition */}
+        <path
+          d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
+          fill="url(#wave-light)"
+          className="dark:hidden"
+        />
+        <path
+          d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
+          fill="url(#wave-dark)"
+          className="hidden dark:block"
         />
       </svg>
     </div>

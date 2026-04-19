@@ -141,19 +141,6 @@ export function ExpertDataValue() {
 
   return (
     <section id="expert-data" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
-      {/* Bridge gradient — echoes Hero's blue tint at top, fades to section bg */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-64"
-        style={{
-          background: 'linear-gradient(180deg, #eef4ff 0%, transparent 100%)',
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-64 hidden dark:block"
-        style={{
-          background: 'linear-gradient(180deg, #0b1628 0%, transparent 100%)',
-        }}
-      />
       <div
         className="pointer-events-none absolute inset-0 opacity-25 dark:opacity-10"
         style={{
