@@ -6,16 +6,13 @@ import logoUrl from '/logo.png';
 import { duration, offset } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
 
-// Subtle breathing shape — slow, minimal motion for "沉稳厚重" feel
-function FloatShape({ className, delay = 0, breathDuration = 12 }) {
+// Floating geometric shape
+function FloatShape({ className, delay = 0, duration = 8 }) {
   return (
     <motion.div
       className={className}
-      animate={{
-        opacity: [0.6, 1, 0.6],
-        scale: [1, 1.03, 1],
-      }}
-      transition={{ duration: breathDuration, delay, repeat: Infinity, ease: 'easeInOut' }}
+      animate={{ y: [0, -18, 0], rotate: [0, 5, 0] }}
+      transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
     />
   );
 }
@@ -74,29 +71,42 @@ export function Hero() {
         }}
       />
 
-      {/* ── Layer 3: Subtle geometric accents ────────── */}
-      {/* Large ring top-right — breathes slowly */}
+      {/* ── Layer 3: Floating geometric shapes ────────── */}
+      {/* Large ring top-right */}
       <FloatShape
-        breathDuration={14}
-        className="pointer-events-none absolute top-16 right-[8%] w-64 h-64 rounded-full border border-brand-400/12 dark:border-brand-400/18"
+        duration={10}
+        delay={0}
+        className="pointer-events-none absolute top-16 right-[8%] w-64 h-64 rounded-full border border-brand-400/15 dark:border-brand-400/20"
       />
-      {/* Medium ring top-right — offset rhythm */}
+      {/* Medium ring */}
       <FloatShape
-        breathDuration={18}
-        delay={4}
-        className="pointer-events-none absolute top-24 right-[10%] w-44 h-44 rounded-full border border-accent-400/10 dark:border-accent-400/15"
+        duration={13}
+        delay={2}
+        className="pointer-events-none absolute top-24 right-[10%] w-44 h-44 rounded-full border border-accent-400/15 dark:border-accent-400/20"
+      />
+      {/* Small filled circle top-right */}
+      <FloatShape
+        duration={9}
+        delay={1}
+        className="pointer-events-none absolute top-28 right-[12%] w-3 h-3 rounded-full bg-brand-400/30 dark:bg-brand-400/50"
       />
       {/* Large ring bottom-left */}
       <FloatShape
-        breathDuration={16}
-        delay={2}
-        className="pointer-events-none absolute bottom-24 left-[6%] w-56 h-56 rounded-full border border-brand-500/8 dark:border-brand-500/12"
+        duration={11}
+        delay={3}
+        className="pointer-events-none absolute bottom-24 left-[6%] w-56 h-56 rounded-full border border-brand-500/10 dark:border-brand-500/15"
       />
-      {/* Tilted square bottom-right */}
+      {/* Small accent dot */}
       <FloatShape
-        breathDuration={20}
-        delay={6}
-        className="pointer-events-none absolute bottom-40 right-[5%] w-20 h-20 border border-brand-400/8 dark:border-brand-400/12 rotate-45"
+        duration={7}
+        delay={1.5}
+        className="pointer-events-none absolute bottom-32 left-[10%] w-2 h-2 rounded-full bg-accent-400/50 dark:bg-accent-400/70"
+      />
+      {/* Medium tilted square bottom-right */}
+      <FloatShape
+        duration={12}
+        delay={0.5}
+        className="pointer-events-none absolute bottom-40 right-[5%] w-20 h-20 border border-brand-400/10 dark:border-brand-400/15 rotate-45"
       />
 
       {/* ── Layer 4: Main content ──────────────────────── */}
