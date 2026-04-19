@@ -95,8 +95,9 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
               x: target.x,
               y: target.y,
               rotate: target.rotate,
-              opacity: isOtherHovered ? 0.7 : 1,
-              scale: isHovered ? 1.03 : isOtherHovered ? 0.97 : 1,
+              opacity: 1,
+              scale: isHovered ? 1.04 : isOtherHovered ? 0.95 : 1,
+              filter: isOtherHovered ? 'brightness(0.88)' : 'brightness(1)',
             }
           : { opacity: 0, y: 30 + index * 15, scale: 0.9 }
       }
