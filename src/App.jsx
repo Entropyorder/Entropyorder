@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar.jsx';
 import { Hero } from './components/Hero.jsx';
 import { Products } from './components/Products.jsx';
@@ -8,6 +8,7 @@ import { AI4SS4AI } from './components/AI4SS4AI.jsx';
 import { Blog } from './components/Blog.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/ContactModal.jsx';
+import { duration, ease } from './animations/tokens.js';
 import './App.css';
 
 function WaveDivider() {
@@ -72,6 +73,7 @@ const slideVariants = {
 };
 
 function App() {
+  const prefersReducedMotion = useReducedMotion();
   const [selectedDataset, setSelectedDataset] = useState(null);
   const [activeTab, setActiveTab] = useState('home');
   const mainRef = useRef(null);
@@ -84,6 +86,7 @@ function App() {
   const direction = TAB_ORDER.indexOf(activeTab);
 
   return (
+    <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-50 transition-colors">
       <Navbar
         activeTab={activeTab}
@@ -113,8 +116,8 @@ function App() {
               animate="center"
               exit="exit"
               transition={{
-                x: { type: 'tween', ease: [0.25, 0.1, 0.25, 1], duration: 0.45 },
-                opacity: { duration: 0.3 },
+                x: { type: 'tween', ease: ease.default, duration: duration.page },
+                opacity: { duration: duration.page * 0.6 },
               }}
               className="min-h-screen"
             >
@@ -130,6 +133,7 @@ function App() {
         <ContactModal dataset={selectedDataset} onClose={() => setSelectedDataset(null)} />
       )}
     </div>
+    </MotionConfig>
   );
 }
 export default App;
