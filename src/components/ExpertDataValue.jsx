@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Fragment } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Bot, BookOpen, Network, PenLine, Users, ShieldCheck, Check, XCircle, ExternalLink } from 'lucide-react';
@@ -117,6 +117,11 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
         className="w-full h-full object-cover object-top"
         loading="lazy"
       />
+      {/* Persistent info bar — always visible */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+        <h4 className="text-white font-semibold text-xs leading-snug line-clamp-1 mb-0.5">{paper.title}</h4>
+        <span className="text-white/60 text-[10px]">{paper.authors} · {paper.venue}</span>
+      </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
         <h4 className="text-white font-bold text-sm leading-snug mb-1 line-clamp-2">{paper.title}</h4>
@@ -169,6 +174,30 @@ export function ExpertDataValue() {
           </p>
         </motion.div>
 
+        {/* ── Stats Banner ──────────────────────── */}
+        {(() => {
+          const rawStats = t('expertData.stats', { returnObjects: true });
+          const stats = Array.isArray(rawStats) ? rawStats : [];
+          return stats.length > 0 ? (
+            <motion.div
+              {...presets.fadeUp(offset.medium, duration.normal, 0.15)}
+              className="flex items-center justify-center gap-6 sm:gap-10 md:gap-16 mb-16"
+            >
+              {stats.map((stat, i) => (
+                <Fragment key={i}>
+                  {i > 0 && <div className="w-px h-10 bg-slate-200 dark:bg-slate-700/60" />}
+                  <div className="text-center">
+                    <div className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-cyan-500 dark:from-brand-400 dark:to-cyan-300">
+                      {stat.value}
+                    </div>
+                    <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">{stat.label}</div>
+                  </div>
+                </Fragment>
+              ))}
+            </motion.div>
+          ) : null;
+        })()}
+
         <motion.div
           {...presets.fadeIn(duration.normal, 0.1)}
           className="flex items-center gap-4 mb-10"
@@ -214,7 +243,13 @@ export function ExpertDataValue() {
                           <Icon className="w-5 h-5 text-white" strokeWidth={1.8} />
                         </div>
                         {!isLast && (
-                          <div className={`w-0.5 flex-1 min-h-[1.75rem] mt-1 ${meta.lineCls}`} />
+                          <div className={`relative w-0.5 flex-1 min-h-[1.75rem] mt-1 ${meta.lineCls}`}>
+                            <motion.div
+                              className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-brand-400 dark:bg-brand-300"
+                              animate={{ top: ['0%', '100%'], opacity: [0, 1, 1, 0] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: i * 0.3 }}
+                            />
+                          </div>
                         )}
                         {!isLast && i === steps.length - 2 && (
                           <svg viewBox="0 0 8 6" className="w-2 text-blue-300 dark:text-blue-800 fill-current flex-shrink-0 mb-0.5">
@@ -298,7 +333,7 @@ export function ExpertDataValue() {
           </div>
 
           {papers.length > 0 && (
-            <div className="w-full lg:w-[280px] xl:w-[310px] flex-shrink-0">
+            <div className="w-full lg:w-[320px] xl:w-[350px] flex-shrink-0">
               <motion.div
                 {...presets.fadeIn(duration.normal, 0.2)}
                 className="mb-5"
@@ -307,7 +342,7 @@ export function ExpertDataValue() {
                   {t('expertData.pipeline.papersLabel', 'Related Publications')}
                 </span>
               </motion.div>
-              <div className="relative" style={{ height: 380 }}>
+              <div className="relative" style={{ height: 440 }}>
                 {papers.map((paper, i) => (
                   <PaperCard
                     key={i}
@@ -322,6 +357,51 @@ export function ExpertDataValue() {
             </div>
           )}
         </div>
+
+        {/* ── Expert vs Crowd Comparison ────────── */}
+        {(() => {
+          const comp = t('expertData.comparison', { returnObjects: true });
+          if (!comp || !comp.expertPoints) return null;
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+              <motion.div
+                {...presets.fadeLeft(offset.medium, duration.normal, 0.1)}
+                className="relative rounded-2xl p-6 border-2 border-emerald-300/60 dark:border-emerald-600/40 bg-emerald-50/50 dark:bg-emerald-900/10"
+              >
+                <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5">
+                  <Check className="w-3 h-3" strokeWidth={3} />
+                  {comp.expertTitle}
+                </div>
+                <ul className="mt-3 space-y-3">
+                  {comp.expertPoints.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-emerald-700 dark:text-emerald-300">
+                      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              <motion.div
+                {...presets.fadeRight(offset.medium, duration.normal, 0.2)}
+                className="relative rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/20"
+              >
+                <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-slate-400 dark:bg-slate-600 text-white text-xs font-bold flex items-center gap-1.5">
+                  <XCircle className="w-3 h-3" strokeWidth={3} />
+                  {comp.crowdTitle}
+                </div>
+                <ul className="mt-3 space-y-3">
+                  {comp.crowdPoints.map((point, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400 dark:text-slate-500 line-through decoration-slate-300 dark:decoration-slate-600">
+                      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 flex-shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </div>
+          );
+        })()}
       </div>
     </section>
   );
