@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Layers, Rocket } from 'lucide-react';
+import { stagger, offset } from '../animations/tokens.js';
+import { useScrollReveal } from '../animations/useScrollReveal.js';
 
 const STEP_ICONS = [Brain, Layers, Rocket];
 
@@ -11,6 +13,7 @@ export function Timeline({ steps }) {
     offset: ['start 0.85', 'end 0.25'],
   });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const { getChildProps } = useScrollReveal(stagger.normal);
 
   return (
     <div ref={containerRef} className="relative mx-auto max-w-3xl px-4">
@@ -32,10 +35,10 @@ export function Timeline({ steps }) {
           return (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: offset.medium }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.65, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.65, delay: getChildProps(idx).delay, ease: [0.16, 1, 0.3, 1] }}
               className={`relative flex items-center ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} flex-row gap-6 md:gap-12`}
             >
               {/* Desktop: left-side text */}

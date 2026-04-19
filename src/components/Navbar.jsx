@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme.js';
+import { spring } from '../animations/tokens.js';
 import logoUrl from '/logo.png';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 
@@ -188,7 +189,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
                   <motion.span
                     layoutId="nav-indicator"
                     className={`absolute inset-0 rounded-lg ${activeBgCls}`}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    transition={{ type: 'spring', ...spring.heavy }}
                   />
                 )}
                 <span className="relative">{item.label}</span>
