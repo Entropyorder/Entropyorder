@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, ArrowRight } from 'lucide-react';
+import { stagger, offset, duration, spring } from '../animations/tokens.js';
+import * as presets from '../animations/presets.js';
+import { useScrollReveal } from '../animations/useScrollReveal.js';
 
 function BlogCard({ post, onOpen }) {
   const aspectRatio = 'aspect-[8.5/11]';
   return (
     <motion.div
       whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      transition={{ type: 'spring', ...spring.snappy }}
       onClick={() => onOpen(post)}
       className="group cursor-pointer rounded-2xl overflow-hidden
         bg-white dark:bg-[#0d1a2d]
@@ -64,9 +67,10 @@ function ArticleModal({ post, onClose }) {
         className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 py-8"
       >
         <motion.div
-          initial={{ scale: 0.92, opacity: 0, y: 20 }}
+          initial={{ scale: 0.92, opacity: 0, y: offset.small }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.92, opacity: 0, y: 20 }}
+          exit={{ scale: 0.92, opacity: 0, y: offset.small }}
+          transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
           onClick={(e) => e.stopPropagation()}
           className="w-full max-w-2xl max-h-[85vh] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden flex flex-col"
         >
@@ -99,6 +103,7 @@ export function Blog() {
   const rawPosts = t('blog.posts', { returnObjects: true });
   const posts = Array.isArray(rawPosts) ? rawPosts : [];
   const [selectedPost, setSelectedPost] = useState(null);
+  const { getChildProps } = useScrollReveal(stagger.fast);
 
   return (
     <section id="blog" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
@@ -111,10 +116,7 @@ export function Blog() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65 }}
+          {...presets.fadeUp(offset.medium)}
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-6">
@@ -133,10 +135,10 @@ export function Blog() {
           {posts.map((post, i) => (
             <motion.div
               key={post.title}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: offset.medium }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              transition={{ duration: duration.normal, delay: getChildProps(i).delay, ease: [0.16, 1, 0.3, 1] }}
             >
               <BlogCard post={post} onOpen={setSelectedPost} />
             </motion.div>
