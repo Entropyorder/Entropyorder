@@ -98,7 +98,8 @@
     },
     "card": {
       "scale": "数据规模",
-      "contact": "联系获取样例"
+      "contact": "联系获取样例",
+      "viewDetail": "查看详情"
     },
     "modal": {
       "title": "申请数据集样例",
@@ -108,12 +109,31 @@
       "purpose": "用途说明",
       "submit": "提交申请",
       "cancel": "取消"
+    },
+    "detail": {
+      "overview": "概述",
+      "dataStructure": "数据结构",
+      "relatedPaper": "相关论文",
+      "close": "关闭",
+      "contactSample": "联系获取样例"
     }
   },
   "expertData": {
     "tag": "为什么选择专家数据",
     "title": "专家知识，是能力跃迁的基础",
     "subtitle": "高质量专家标注数据在训练效率、推理深度和领域精准度上，远超群体众包数据",
+    "stats": [
+      { "value": "50+", "label": "领域专家" },
+      { "value": "4", "label": "数据集" },
+      { "value": "95%", "label": "通过率" },
+      { "value": "3×", "label": "效率提升" }
+    ],
+    "comparison": {
+      "expertTitle": "专家标注",
+      "expertPoints": ["完整推理链路", "多专家交叉验证", "领域知识深度理解", "高难度鉴别性题目"],
+      "crowdTitle": "众包标注",
+      "crowdPoints": ["推理链路断裂", "单一标注无校验", "表面理解无深度", "难度不足易被破解"]
+    },
     "pipeline": {
       "heading": "人机协作标注流程",
       "passLabel": "通过",
@@ -277,5 +297,101 @@
     },
     "copyright": "© 2026 熵基秩序 EntropyOrder. All rights reserved.",
     "backToTop": "返回顶部"
+  },
+  "datasets": {
+    "hle": {
+      "name": "HLE 数据集",
+      "desc": "高难度科学推理评估数据集，涵盖数学、物理、化学、生物、医学、计算机、工程、金融、艺术、语言学、天文、地理等综合领域",
+      "scale": "3K+ 样本",
+      "tags": ["科学推理", "多领域", "评估基准"],
+      "brief": "HLE（Hard-Level Evaluation）数据集是面向前沿大模型的高难度科学推理评估基准。题目由领域专家精心设计与审核，覆盖 12+ 学科，要求模型具备深层推理能力而非表面匹配。每道题配有完整推理链标注与难度评级。",
+      "structure": "JSONL 格式，每条包含：query（问题）、rubric（评分标准）、answer（参考答案与推理链）、domain（学科领域）、difficulty（难度等级 1-5）",
+      "paper": {
+        "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
+        "authors": "Rein et al.",
+        "venue": "arXiv 2023",
+        "url": "https://arxiv.org/abs/2311.12022"
+      }
+    },
+    "sfe": {
+      "name": "SFE 数据集",
+      "desc": "科研场景下真实问题数据集，由领域科学家从实际研究工作中采集与标注，具有强现实约束",
+      "scale": "5K+ 样本",
+      "tags": ["科研场景", "真实问题", "专家标注"],
+      "brief": "SFE（Scientific Frontiers Evaluation）数据集从真实科研场景中提取问题，由一线研究人员标注。与合成数据不同，这些问题具有真实的约束条件、不确定性和前沿性，是对模型科研辅助能力的直接考验。",
+      "structure": "JSONL 格式，每条包含：query（科研问题）、context（研究背景）、rubric（评分标准）、answer（专家推理过程与结论）、field（研究领域）"
+    },
+    "microvqa": {
+      "name": "MicroVQA 数据集",
+      "desc": "生物学显微镜多模态专有领域数据，含细胞、组织切片等微观图像的视觉问答",
+      "scale": "2K+ 样本",
+      "tags": ["生物学", "显微镜", "多模态"],
+      "brief": "MicroVQA 是专属于生物学显微成像的视觉问答数据集，涵盖细胞学、组织学、病理学等子领域。每条样本包含高分辨率显微镜图像及由生物学家标注的多轮问答对，要求模型具备微观图像理解与专业术语推理能力。",
+      "structure": "JSONL 格式，每条包含：image_path（显微镜图像路径）、qa_pairs（多轮问答数组）、magnification（放大倍数）、tissue_type（组织类型）、staining（染色方法）"
+    },
+    "crosslingual-k12qa": {
+      "name": "跨语言 K12QA 数据集",
+      "desc": "覆盖 20+ 语种的 K12 习题数据集，专家从对应国家习题册采集并校对，保留原版题目逻辑",
+      "scale": "10K+ 样本",
+      "tags": ["多语言", "K12", "习题校对"],
+      "brief": "覆盖全球 20+ 种语言的 K12 教育习题数据集。题目由母语为对应语言的教育专家从各国正版教材与习题册中采集，经多轮校对后保留原始题目逻辑与文化语境，是评估模型跨语言教育能力的理想基准。",
+      "structure": "JSONL 格式，每条包含：question（题目）、options（选项数组）、answer（正确答案）、explanation（解析）、language（ISO 639 语言代码）、grade（年级）、subject（学科）"
+    },
+    "tri-modal": {
+      "name": "三模态对齐数据集",
+      "desc": "视频-音频-文本三模态精准对齐数据集，含帧级分片标注与跨模态语义映射",
+      "scale": "2K+ 样本",
+      "tags": ["视频", "音频", "文本对齐"],
+      "brief": "面向多模态模型的三模态对齐数据集，提供视频、音频、文本三路信号的帧级对齐标注。适用于训练跨模态检索、多模态理解与生成任务，覆盖教育、新闻、科普等多样化场景。",
+      "structure": "JSONL 格式，每条包含：video_segments（视频片段时间戳）、audio_segments（音频片段时间戳）、text_transcript（文本转录）、alignment_map（跨模态对齐映射）、category（场景类别）"
+    },
+    "proactive-video": {
+      "name": "Proactive Streaming Video",
+      "desc": "流式视频主动理解数据集，模型需在视频播放过程中进行实时推断与预测",
+      "scale": "1K+ 样本",
+      "tags": ["流式视频", "主动推断", "实时理解"],
+      "brief": "挑战模型在流式视频播放中进行主动理解与预测的能力。模型需在视频未完整播放时做出预判，并在后续帧中验证或修正。模拟人类在观看视频时主动推理的认知过程。",
+      "structure": "JSONL 格式，每条包含：video_url（视频源）、timestamps（关键时间戳）、predictions（预测问题数组）、ground_truth（真实结果）、reasoning_trace（推理过程）"
+    },
+    "science-video-qa": {
+      "name": "科学视频问答数据集",
+      "desc": "覆盖化学、生物实验等科学视频的多模态 QA 数据，含操作步骤与现象解释",
+      "scale": "1K+ 样本",
+      "tags": ["科学实验", "视频QA", "多模态"],
+      "brief": "专门针对科学实验视频的问答数据集，涵盖化学实验、生物操作、物理演示等。每个视频配有步骤分解、现象解释和安全提示标注，适合评估模型对科学过程的深层理解能力。",
+      "structure": "JSONL 格式，每条包含：video_url（实验视频）、questions（问题数组，含时间戳定位）、steps（实验步骤分解）、phenomena（关键现象描述）、safety_notes（安全提示）"
+    },
+    "chart-reasoning": {
+      "name": "图文推理 QA 数据集",
+      "desc": "复杂图表与自然语言深度融合的推理评测数据，含多步推导与跨图文关联",
+      "scale": "2K+ 样本",
+      "tags": ["图表理解", "深度推理", "多步推导"],
+      "brief": "针对复杂图表理解的深度推理数据集。每条样本包含一个或多个相关图表，以及需要多步推导才能回答的问题。覆盖柱状图、折线图、饼图、散点图、热力图等多种图表类型。",
+      "structure": "JSONL 格式，每条包含：chart_image（图表图像路径）、chart_type（图表类型）、question（推理问题）、reasoning_steps（推理步骤数组）、answer（最终答案）、source_data（原始数据）"
+    },
+    "browser": {
+      "name": "Browser 数据集",
+      "desc": "真实用户浏览器操作轨迹，含任务分解、中途决策与错误恢复路径",
+      "scale": "5K+ 轨迹",
+      "tags": ["Web Agent", "任务规划", "操作轨迹"],
+      "brief": "从真实用户浏览器操作中采集的轨迹数据集，覆盖电商购物、信息检索、表单填写、内容创作等多种 Web 任务。每条轨迹包含完整的操作序列、DOM 快照和用户意图标注。",
+      "structure": "JSONL 格式，每条包含：task_description（任务描述）、actions（操作序列数组，含 action_type/element/value/screenshot）、dom_snapshots（DOM 快照）、outcome（任务结果）"
+    },
+    "openclaw": {
+      "name": "Openclaw 数据集",
+      "desc": "跨平台 GUI 控制智能体数据集，覆盖桌面与移动端的界面操作轨迹",
+      "scale": "3K+ 轨迹",
+      "tags": ["GUI Agent", "跨平台", "操作控制"],
+      "brief": "跨平台 GUI 控制智能体训练数据集，覆盖 Windows、macOS、Android、iOS 四大平台。每条轨迹包含屏幕截图序列、操作动作、UI 元素定位和任务目标描述。",
+      "structure": "JSONL 格式，每条包含：platform（目标平台）、task（任务描述）、steps（步骤数组：screenshot/action/bbox/reasoning）、platform_version（系统版本）、app_name（应用名称）"
+    },
+    "search-eval": {
+      "name": "搜索评测数据集",
+      "desc": "多跳推理搜索评测数据，Query 来源多样、涵盖多类信息源，考察深层检索与推理能力",
+      "scale": "5K+ 样本",
+      "tags": ["多跳推理", "搜索评测", "多源Query"],
+      "brief": "面向搜索增强生成（RAG）系统的多跳推理评测数据集。每个问题需要检索并整合多个信息源才能回答，覆盖事实核查、比较分析、因果推理等任务类型。",
+      "structure": "JSONL 格式，每条包含：query（查询问题）、reasoning_type（推理类型）、required_sources（所需信息源数量）、evidence_urls（证据 URL 数组）、answer（参考答案）、evaluation_rubric（评分标准）"
+    }
   }
 }

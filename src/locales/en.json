@@ -98,7 +98,8 @@
     },
     "card": {
       "scale": "Scale",
-      "contact": "Contact for Sample"
+      "contact": "Contact for Sample",
+      "viewDetail": "View Details"
     },
     "modal": {
       "title": "Request Dataset Sample",
@@ -108,12 +109,31 @@
       "purpose": "Purpose",
       "submit": "Submit",
       "cancel": "Cancel"
+    },
+    "detail": {
+      "overview": "Overview",
+      "dataStructure": "Data Structure",
+      "relatedPaper": "Related Paper",
+      "close": "Close",
+      "contactSample": "Request Sample"
     }
   },
   "expertData": {
     "tag": "Why Expert Data",
     "title": "Expert Knowledge Is the Foundation of Capability Breakthroughs",
     "subtitle": "High-quality expert annotations outperform crowd-sourced data in training efficiency, reasoning depth, and domain precision",
+    "stats": [
+      { "value": "50+", "label": "Domain Experts" },
+      { "value": "4", "label": "Datasets" },
+      { "value": "95%", "label": "Pass Rate" },
+      { "value": "3×", "label": "Efficiency Gain" }
+    ],
+    "comparison": {
+      "expertTitle": "Expert Annotation",
+      "expertPoints": ["Complete reasoning chains", "Multi-expert cross-validation", "Deep domain understanding", "High-difficulty discriminative questions"],
+      "crowdTitle": "Crowd Annotation",
+      "crowdPoints": ["Broken reasoning chains", "Single annotation, no validation", "Surface-level understanding", "Low difficulty, easily cracked"]
+    },
     "pipeline": {
       "heading": "Human-AI Collaborative Annotation Pipeline",
       "passLabel": "Pass",
@@ -277,5 +297,101 @@
     },
     "copyright": "© 2026 熵基秩序 EntropyOrder. All rights reserved.",
     "backToTop": "Back to Top"
+  },
+  "datasets": {
+    "hle": {
+      "name": "HLE Dataset",
+      "desc": "High-difficulty scientific reasoning evaluation dataset spanning math, physics, chemistry, biology, medicine, CS, engineering, finance, arts, linguistics, astronomy, geography, and more",
+      "scale": "3K+ samples",
+      "tags": ["Science Reasoning", "Multi-domain", "Benchmark"],
+      "brief": "HLE (Hard-Level Evaluation) is a high-difficulty scientific reasoning benchmark for frontier LLMs. Questions are designed and reviewed by domain experts across 12+ disciplines, requiring deep reasoning rather than surface matching. Each question includes complete reasoning chain annotations and difficulty ratings.",
+      "structure": "JSONL format. Fields: query, rubric (scoring criteria), answer (reference with reasoning chain), domain, difficulty (1-5)",
+      "paper": {
+        "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
+        "authors": "Rein et al.",
+        "venue": "arXiv 2023",
+        "url": "https://arxiv.org/abs/2311.12022"
+      }
+    },
+    "sfe": {
+      "name": "SFE Dataset",
+      "desc": "Real-world research questions collected and annotated by domain scientists from active research work, with strong real-world constraints",
+      "scale": "5K+ samples",
+      "tags": ["Research Scenarios", "Real Problems", "Expert Annotations"],
+      "brief": "SFE (Scientific Frontiers Evaluation) extracts questions from real research scenarios, annotated by active researchers. Unlike synthetic data, these questions feature genuine constraints, uncertainties, and cutting-edge challenges that directly test a model's research assistance capabilities.",
+      "structure": "JSONL format. Fields: query, context (research background), rubric, answer (expert reasoning and conclusion), field"
+    },
+    "microvqa": {
+      "name": "MicroVQA Dataset",
+      "desc": "Biology microscopy multimodal domain-specific data with visual Q&A on cellular and tissue section images",
+      "scale": "2K+ samples",
+      "tags": ["Biology", "Microscopy", "Multimodal"],
+      "brief": "MicroVQA is a visual Q&A dataset specialized for biological microscopy imaging, covering cytology, histology, and pathology. Each sample includes high-resolution microscopy images with multi-turn Q&A pairs annotated by biologists, requiring micrograph understanding and professional terminology reasoning.",
+      "structure": "JSONL format. Fields: image_path, qa_pairs (multi-turn array), magnification, tissue_type, staining"
+    },
+    "crosslingual-k12qa": {
+      "name": "Cross-lingual K12QA Dataset",
+      "desc": "K12 exercise dataset covering 20+ languages, collected and verified by native education experts from country-specific textbooks",
+      "scale": "10K+ samples",
+      "tags": ["Multilingual", "K12", "Verified"],
+      "brief": "A K12 education exercise dataset spanning 20+ languages worldwide. Questions are collected by native-speaking education experts from official textbooks and exercise books in each country, multi-round verified to preserve original logic and cultural context. An ideal benchmark for evaluating cross-lingual education capabilities.",
+      "structure": "JSONL format. Fields: question, options (array), answer, explanation, language (ISO 639 code), grade, subject"
+    },
+    "tri-modal": {
+      "name": "Tri-modal Alignment Dataset",
+      "desc": "Video-audio-text tri-modal precise alignment dataset with frame-level segmentation and cross-modal semantic mapping",
+      "scale": "2K+ samples",
+      "tags": ["Video", "Audio", "Text Alignment"],
+      "brief": "A tri-modal alignment dataset for multimodal models, providing frame-level alignment annotations across video, audio, and text signals. Suitable for training cross-modal retrieval, multimodal understanding, and generation tasks across diverse scenarios including education, news, and science popularization.",
+      "structure": "JSONL format. Fields: video_segments (timestamps), audio_segments (timestamps), text_transcript, alignment_map (cross-modal mapping), category"
+    },
+    "proactive-video": {
+      "name": "Proactive Streaming Video",
+      "desc": "Streaming video proactive understanding dataset where models must infer and predict in real-time during playback",
+      "scale": "1K+ samples",
+      "tags": ["Streaming Video", "Active Inference", "Real-time"],
+      "brief": "Challenges models to proactively understand and predict during streaming video playback. Models must make predictions before the video completes, then verify or revise as subsequent frames arrive. Simulates the cognitive process of active reasoning during video viewing.",
+      "structure": "JSONL format. Fields: video_url, timestamps (key moments), predictions (array of prediction questions), ground_truth, reasoning_trace"
+    },
+    "science-video-qa": {
+      "name": "Science Video QA Dataset",
+      "desc": "Multimodal QA for science experiment videos covering chemistry, biology, with procedure steps and phenomenon explanations",
+      "scale": "1K+ samples",
+      "tags": ["Science Experiments", "Video QA", "Multimodal"],
+      "brief": "A Q&A dataset specialized for science experiment videos, covering chemistry experiments, biological procedures, and physics demonstrations. Each video includes step decomposition, phenomenon explanations, and safety annotations for evaluating deep understanding of scientific processes.",
+      "structure": "JSONL format. Fields: video_url, questions (with timestamp anchoring), steps (procedure decomposition), phenomena (key observations), safety_notes"
+    },
+    "chart-reasoning": {
+      "name": "Chart Reasoning QA Dataset",
+      "desc": "Deep reasoning evaluation data fusing complex charts with natural language, requiring multi-step inference and cross-chart correlation",
+      "scale": "2K+ samples",
+      "tags": ["Chart Understanding", "Deep Reasoning", "Multi-step"],
+      "brief": "A deep reasoning dataset for complex chart understanding. Each sample contains one or more related charts with questions requiring multi-step inference. Covers bar charts, line graphs, pie charts, scatter plots, heatmaps, and more.",
+      "structure": "JSONL format. Fields: chart_image (path), chart_type, question, reasoning_steps (array), answer, source_data"
+    },
+    "browser": {
+      "name": "Browser Dataset",
+      "desc": "Real user browser operation trajectories with task decomposition, mid-task decisions, and error recovery paths",
+      "scale": "5K+ trajectories",
+      "tags": ["Web Agent", "Task Planning", "Trajectories"],
+      "brief": "Trajectory dataset collected from real user browser operations, covering e-commerce shopping, information retrieval, form filling, content creation, and more. Each trajectory includes complete action sequences, DOM snapshots, and user intent annotations.",
+      "structure": "JSONL format. Fields: task_description, actions (array with action_type/element/value/screenshot), dom_snapshots, outcome"
+    },
+    "openclaw": {
+      "name": "Openclaw Dataset",
+      "desc": "Cross-platform GUI control agent dataset covering desktop and mobile interface operation trajectories",
+      "scale": "3K+ trajectories",
+      "tags": ["GUI Agent", "Cross-platform", "Control"],
+      "brief": "A cross-platform GUI control agent training dataset covering Windows, macOS, Android, and iOS. Each trajectory includes screenshot sequences, action events, UI element localization, and task goal descriptions.",
+      "structure": "JSONL format. Fields: platform, task, steps (array: screenshot/action/bbox/reasoning), platform_version, app_name"
+    },
+    "search-eval": {
+      "name": "Search Evaluation Dataset",
+      "desc": "Multi-hop reasoning search evaluation data with diverse query sources and multiple information sources for deep retrieval and reasoning",
+      "scale": "5K+ samples",
+      "tags": ["Multi-hop Reasoning", "Search Eval", "Diverse Queries"],
+      "brief": "A multi-hop reasoning evaluation dataset for search-augmented generation (RAG) systems. Each question requires retrieving and synthesizing multiple information sources, covering fact-checking, comparative analysis, causal reasoning, and more.",
+      "structure": "JSONL format. Fields: query, reasoning_type, required_sources (count), evidence_urls (array), answer, evaluation_rubric"
+    }
   }
 }

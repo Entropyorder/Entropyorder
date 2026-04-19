@@ -5,10 +5,9 @@ import { ProductCategory } from './ProductCategory.jsx';
 import { ExpertArtifact } from './Artifacts/ExpertArtifact.jsx';
 import { MultimodalArtifact } from './Artifacts/MultimodalArtifact.jsx';
 import { AgentArtifact } from './Artifacts/AgentArtifact.jsx';
+import { DATASET_CATEGORIES } from '../data/datasets.js';
 
-function ensureArray(val) {
-  return Array.isArray(val) ? val : [];
-}
+const ARTIFACTS = { ExpertArtifact, MultimodalArtifact, AgentArtifact };
 
 export function Products({ onViewDetail }) {
   const { t } = useTranslation();
@@ -16,11 +15,15 @@ export function Products({ onViewDetail }) {
   const [activeTab, setActiveTab] = useState(0);
   const sectionRefs = useRef([]);
 
-  const categories = [
-    { key: 'expert', title: t('products.categories.expert.name'), artifact: ExpertArtifact, datasets: ensureArray(t('products.categories.expert.datasets', { returnObjects: true })) },
-    { key: 'multimodal', title: t('products.categories.multimodal.name'), artifact: MultimodalArtifact, datasets: ensureArray(t('products.categories.multimodal.datasets', { returnObjects: true })) },
-    { key: 'agent', title: t('products.categories.agent.name'), artifact: AgentArtifact, datasets: ensureArray(t('products.categories.agent.datasets', { returnObjects: true })) },
-  ];
+  const categories = DATASET_CATEGORIES.map((cat) => ({
+    key: cat.key,
+    title: t(`${cat.i18nKey}.name`),
+    artifact: ARTIFACTS[cat.artifact] || ExpertArtifact,
+    datasets: cat.datasets.map((id) => ({
+      id,
+      ...t(`datasets.${id}`, { returnObjects: true }),
+    })),
+  }));
 
   const scrollToCategory = (idx) => {
     sectionRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
