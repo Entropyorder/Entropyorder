@@ -44,7 +44,7 @@ export function Products({ onContact }) {
   }, []);
 
   return (
-    <section id="products" className="relative bg-white dark:bg-slate-900 transition-colors">
+    <section id="products" className="relative bg-page-bg dark:bg-page-bg-dark transition-colors">
       {/* Section label — small and muted, not a competing title */}
       <div className="pt-24 pb-4 text-center">
         <span className="inline-block text-sm font-medium uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">

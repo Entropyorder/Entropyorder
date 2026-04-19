@@ -38,7 +38,7 @@ function BlogCard({ post, onOpen }) {
           </div>
         </div>
         <div className="card-shimmer" />
-        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-white dark:from-[#0d1a2d] to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-page-bg dark:from-[#0d1a2d] to-transparent" />
       </div>
       <div className="relative p-4 sm:p-5 z-[2]">
         <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-50 leading-snug mb-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
@@ -106,7 +106,7 @@ export function Blog() {
   const { getChildProps } = useScrollReveal(stagger.fast);
 
   return (
-    <section id="blog" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
+    <section id="blog" className="relative py-28 overflow-hidden bg-page-bg dark:bg-page-bg-dark">
       <div className="pointer-events-none absolute inset-0 opacity-25 dark:opacity-10" style={{
         backgroundImage: 'radial-gradient(circle at 1.5px 1.5px, rgba(37,99,235,0.18) 1.5px, transparent 0)',
         backgroundSize: '32px 32px',

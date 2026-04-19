@@ -82,7 +82,7 @@ export function AI4SS4AI() {
   const { getChildProps } = useScrollReveal(stagger.slow);
 
   return (
-    <section id="ai4ss" className="relative py-32 overflow-hidden bg-slate-50 dark:bg-[#060c17]">
+    <section id="ai4ss" className="relative py-32 overflow-hidden bg-page-bg dark:bg-page-bg-dark">
 
       {/* ── Background layers ─────────────────────────────────── */}
 
@@ -106,7 +106,7 @@ export function AI4SS4AI() {
       />
 
       {/* Bottom fade */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-page-bg dark:from-page-bg-dark to-transparent" />
 
       {/* ── Large "AI4SS4AI" watermark ──────────────────────────── */}
       <div

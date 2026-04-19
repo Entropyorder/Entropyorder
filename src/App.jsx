@@ -24,30 +24,9 @@ function WaveDivider() {
         xmlns="http://www.w3.org/2000/svg"
         className="absolute inset-0 w-full h-full"
       >
-        <defs>
-          <linearGradient id="wave-light" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d8eeff" />
-            <stop offset="100%" stopColor="#ffffff" />
-          </linearGradient>
-          <linearGradient id="wave-dark" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#071424" />
-            <stop offset="100%" stopColor="#0f172a" />
-          </linearGradient>
-        </defs>
         <path
           d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
-          className="fill-white dark:fill-slate-900"
-        />
-        {/* Gradient overlay for smooth Hero→section transition */}
-        <path
-          d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
-          fill="url(#wave-light)"
-          className="dark:hidden"
-        />
-        <path
-          d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1380,18 1440,36 L1440,72 L0,72 Z"
-          fill="url(#wave-dark)"
-          className="hidden dark:block"
+          className="fill-page-bg dark:fill-page-bg-dark"
         />
       </svg>
     </div>
@@ -69,7 +48,7 @@ function DiagonalDivider() {
       >
         <polygon
           points="0,56 1440,0 1440,56"
-          className="fill-slate-50 dark:fill-slate-800/40"
+          className="fill-page-bg dark:fill-page-bg-dark"
         />
       </svg>
     </div>
@@ -108,7 +87,7 @@ function App() {
 
   return (
     <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
-    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-50 transition-colors">
+    <div className="min-h-screen bg-page-bg dark:bg-page-bg-dark text-slate-800 dark:text-slate-50 transition-colors">
       <Navbar
         activeTab={activeTab}
         onTabChange={handleTabChange}

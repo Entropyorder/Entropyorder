@@ -12,14 +12,14 @@ function ParallelogramCards({ datasets, onContact }) {
     >
       {/* Band background */}
       <div className="absolute inset-0
-        bg-gradient-to-br from-brand-50 via-white to-cyan-50/50
-        dark:from-[#0d1827] dark:via-[#0a1425] dark:to-slate-900/90" />
+        bg-gradient-to-br from-brand-50 via-page-bg to-cyan-50/50
+        dark:from-[#0d1827] dark:via-page-bg-dark dark:to-page-bg-dark/90" />
 
       {/* Diagonal edge fades */}
       <div className="absolute inset-y-0 left-0 w-20 z-10
-        bg-gradient-to-r from-white dark:from-slate-900 to-transparent pointer-events-none" />
+        bg-gradient-to-r from-page-bg dark:from-page-bg-dark to-transparent pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-20 z-10
-        bg-gradient-to-l from-white dark:from-slate-900 to-transparent pointer-events-none" />
+        bg-gradient-to-l from-page-bg dark:from-page-bg-dark to-transparent pointer-events-none" />
 
       {/* Tiled cards — px-12 keeps cards clear of the clipped diagonal edges */}
       <div className="relative z-[1] grid grid-cols-2 gap-4 px-12 py-8">

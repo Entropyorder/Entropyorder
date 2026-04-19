@@ -140,7 +140,7 @@ export function ExpertDataValue() {
   const { getChildProps: getStepProps } = useScrollReveal(stagger.normal * 0.9);
 
   return (
-    <section id="expert-data" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
+    <section id="expert-data" className="relative py-28 overflow-hidden bg-page-bg dark:bg-page-bg-dark">
       <div
         className="pointer-events-none absolute inset-0 opacity-25 dark:opacity-10"
         style={{

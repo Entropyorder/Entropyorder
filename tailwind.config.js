@@ -8,6 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        page: {
+          bg: '#f0f5ff',
+          'bg-dark': '#060d1a',
+        },
         brand: {
           50: '#eff6ff',
           100: '#dbeafe',
