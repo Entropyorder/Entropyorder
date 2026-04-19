@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
 import { DatasetCard } from './DatasetCard.jsx';
+import { offset, duration } from '../animations/tokens.js';
+import * as presets from '../animations/presets.js';
+import { ArtifactLazy } from '../animations/ArtifactLazy.jsx';
 
 // clip-path parallelogram that tiles all cards flat, each with a staggered float
 function ParallelogramCards({ datasets, onContact }) {
@@ -51,10 +54,10 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
         {/* Header row: section marker + title  |  3D artifact (no container) */}
         <div className={`flex flex-col ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 mb-10`}>
           <motion.div
-            initial={{ opacity: 0, x: isLeft ? -36 : 36 }}
+            initial={{ opacity: 0, x: isLeft ? -offset.medium : offset.medium }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
             className="lg:w-1/2"
           >
             <div className="flex items-center gap-3 mb-3">
@@ -70,22 +73,24 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
 
           {/* 3D artifact — no wrapper, transparent canvas */}
           <motion.div
-            initial={{ opacity: 0, x: isLeft ? 36 : -36 }}
+            initial={{ opacity: 0, x: isLeft ? offset.medium : -offset.medium }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: duration.normal, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="w-full lg:w-5/12"
           >
-            <Artifact />
+            <ArtifactLazy height={320}>
+              <Artifact />
+            </ArtifactLazy>
           </motion.div>
         </div>
 
         {/* Parallelogram card band */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: offset.medium }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.65, delay: 0.15 }}
+          transition={{ duration: duration.normal, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
           <ParallelogramCards datasets={datasets} onContact={onContact} />
         </motion.div>

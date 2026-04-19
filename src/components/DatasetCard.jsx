@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { spring } from '../animations/tokens.js';
 
 export function DatasetCard({ dataset, onContact }) {
   const { t } = useTranslation();
@@ -7,7 +8,7 @@ export function DatasetCard({ dataset, onContact }) {
   return (
     <motion.div
       whileHover={{ y: -5, scale: 1.012 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      transition={{ type: 'spring', ...spring.snappy }}
       className="group relative rounded-2xl overflow-hidden
         bg-white dark:bg-[#0d1a2d]
         border border-slate-200/80 dark:border-white/[0.07]
