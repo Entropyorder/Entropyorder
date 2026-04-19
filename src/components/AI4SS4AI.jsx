@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Eye, FlaskConical, Users, Database, Sparkles } from 'lucide-react';
+import { stagger, offset, duration } from '../animations/tokens.js';
+import * as presets from '../animations/presets.js';
+import { useScrollReveal } from '../animations/useScrollReveal.js';
 
 const STEP_ICONS = [Eye, FlaskConical, Users, Database, Sparkles];
 
@@ -18,7 +21,7 @@ function PipelineConnector({ index }) {
       initial={{ scaleX: 0, opacity: 0 }}
       whileInView={{ scaleX: 1, opacity: 1 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: 0.25 + index * 0.12 }}
+      transition={{ duration: duration.normal, delay: 0.25 + index * stagger.normal, ease: [0.16, 1, 0.3, 1] }}
       className="hidden lg:flex flex-shrink-0 items-center w-8 xl:w-12 mt-6"
       style={{ transformOrigin: 'left' }}
     >
@@ -33,13 +36,13 @@ function PipelineConnector({ index }) {
   );
 }
 
-function PipelineNode({ step, index, color, Icon }) {
+function PipelineNode({ step, index, color, Icon, delay }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: offset.medium }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: 0.1 + index * 0.13, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: duration.normal, delay, ease: [0.16, 1, 0.3, 1] }}
       className="flex-1 flex flex-col items-center text-center min-w-0 relative"
     >
       {/* Node circle */}
@@ -76,6 +79,7 @@ export function AI4SS4AI() {
   const rawSteps = t('ai4ss.steps', { returnObjects: true });
   const steps = Array.isArray(rawSteps) ? rawSteps : [];
   const callout = t('ai4ss.personaCallout', { returnObjects: true });
+  const { getChildProps } = useScrollReveal(stagger.slow);
 
   return (
     <section id="ai4ss" className="relative py-32 overflow-hidden bg-slate-50 dark:bg-[#060c17]">
@@ -123,10 +127,7 @@ export function AI4SS4AI() {
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          {...presets.fadeUp(offset.medium, duration.slow)}
           className="text-center mb-14"
         >
           <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-8">
@@ -148,10 +149,10 @@ export function AI4SS4AI() {
 
         {/* ── Persona × Skills Callout ───────────────────────── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: offset.medium }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.65, delay: 0.1 }}
+          transition={{ duration: duration.normal, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 mx-auto max-w-3xl"
         >
           <div className="relative rounded-2xl overflow-hidden
@@ -197,10 +198,10 @@ export function AI4SS4AI() {
           {/* "FROM REAL" / "TO REAL" bookends row */}
           <div className="flex items-center justify-between mb-6 px-0 lg:px-2">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -offset.small }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-3"
             >
               <div className="text-left">
@@ -212,10 +213,10 @@ export function AI4SS4AI() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: offset.small }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-3"
             >
               <div className="text-right">
@@ -238,7 +239,7 @@ export function AI4SS4AI() {
                   {i > 0 && (
                     <div className="lg:hidden w-px h-8 bg-gradient-to-b from-brand-400/40 to-brand-300/20 mx-auto -mb-2" />
                   )}
-                  <PipelineNode step={step} index={i} color={color} Icon={Icon} />
+                  <PipelineNode step={step} index={i} color={color} Icon={Icon} delay={getChildProps(i).delay} />
                   {/* Desktop: horizontal connector (except after last) */}
                   {i < steps.length - 1 && (
                     <PipelineConnector index={i} />
@@ -250,10 +251,10 @@ export function AI4SS4AI() {
 
           {/* Loop description */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: offset.small }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: duration.normal, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="mt-16 mx-auto max-w-2xl"
           >
             {/* Loop visual line */}
