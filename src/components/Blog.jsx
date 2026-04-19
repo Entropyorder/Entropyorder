@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, ArrowRight } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { stagger, offset, duration, spring } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
@@ -84,12 +85,8 @@ function ArticleModal({ post, onClose }) {
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-6">
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              {post.content.split('\n\n').map((paragraph, i) => (
-                <p key={i} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                  {paragraph}
-                </p>
-              ))}
+            <div className="article-prose max-w-none">
+              <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
           </div>
         </motion.div>

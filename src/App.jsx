@@ -58,18 +58,21 @@ function DiagonalDivider() {
 
 const TAB_ORDER = ['home', 'blog', 'ai4ss'];
 
-const slideVariants = {
+const pageVariants = {
   enter: (direction) => ({
-    x: direction > 0 ? '100%' : '-100%',
     opacity: 0,
+    y: 12,
+    filter: 'blur(4px)',
   }),
   center: {
-    x: 0,
     opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
   },
   exit: (direction) => ({
-    x: direction > 0 ? '-100%' : '100%',
     opacity: 0,
+    y: -8,
+    filter: 'blur(4px)',
   }),
 };
 
@@ -113,13 +116,14 @@ function App() {
             <motion.div
               key={activeTab}
               custom={direction}
-              variants={slideVariants}
+              variants={pageVariants}
               initial="enter"
               animate="center"
               exit="exit"
               transition={{
-                x: { type: 'tween', ease: ease.default, duration: duration.page },
-                opacity: { duration: duration.page * 0.6 },
+                y: { type: 'tween', ease: ease.default, duration: duration.page * 0.7 },
+                opacity: { duration: duration.page * 0.5 },
+                filter: { duration: duration.page * 0.5 },
               }}
               className="min-h-screen"
             >
