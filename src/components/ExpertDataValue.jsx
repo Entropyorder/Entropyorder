@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Bot, BookOpen, Network, PenLine, Users, ShieldCheck, Check, XCircle, ExternalLink } from 'lucide-react';
+import { stagger, offset, duration, spring } from '../animations/tokens.js';
+import * as presets from '../animations/presets.js';
+import { useScrollReveal } from '../animations/useScrollReveal.js';
 
 const STEP_META = [
   {
@@ -53,17 +56,17 @@ function PaperCard({ paper, index, hoveredIndex, onHover }) {
   const isAnyHovered = hoveredIndex !== null;
   const isOtherHovered = isAnyHovered && !isHovered;
 
-  const offsets = [
+  const paperOffsets = [
     { x: -6, y: -4, rotate: -3 },
     { x: 4, y: 2, rotate: 1.5 },
     { x: 12, y: 8, rotate: 5 },
   ];
-  const offset = offsets[index] || offsets[0];
+  const cardOffset = paperOffsets[index] || paperOffsets[0];
 
   const baseStyle = {
-    rotate: offset.rotate,
-    y: offset.y,
-    x: offset.x,
+    rotate: cardOffset.rotate,
+    y: cardOffset.y,
+    x: cardOffset.x,
     zIndex: isHovered ? 20 : 3 - index,
   };
 
@@ -91,17 +94,15 @@ function PaperCard({ paper, index, hoveredIndex, onHover }) {
       }}
       whileInView={{
         opacity: isOtherHovered ? 0.5 : 1,
-        y: isHovered ? hoveredStyle.y : offset.y,
-        x: isHovered ? hoveredStyle.x : offset.x,
-        rotate: isHovered ? hoveredStyle.rotate : offset.rotate,
+        y: isHovered ? hoveredStyle.y : cardOffset.y,
+        x: isHovered ? hoveredStyle.x : cardOffset.x,
+        rotate: isHovered ? hoveredStyle.rotate : cardOffset.rotate,
         scale: isHovered ? hoveredStyle.scale : isOtherHovered ? 0.96 : 1,
       }}
       viewport={{ once: true }}
       transition={{
         type: 'spring',
-        stiffness: 260,
-        damping: 25,
-        mass: 0.8,
+        ...spring.snappy,
       }}
       className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-center"
       style={{
@@ -135,6 +136,7 @@ export function ExpertDataValue() {
   const rawPapers = t('expertData.pipeline.papers', { returnObjects: true });
   const papers = Array.isArray(rawPapers) ? rawPapers : [];
   const isGateStep = (idx) => idx === steps.length - 1;
+  const { getChildProps: getStepProps } = useScrollReveal(stagger.normal * 0.9);
 
   return (
     <section id="expert-data" className="relative py-28 overflow-hidden bg-white dark:bg-slate-900">
@@ -151,10 +153,7 @@ export function ExpertDataValue() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.65 }}
+          {...presets.fadeUp(offset.medium)}
           className="text-center mb-16"
         >
           <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-brand-500 dark:text-brand-400 border border-brand-200 dark:border-brand-800/60 rounded-full px-4 py-1.5 mb-6">
@@ -170,10 +169,7 @@ export function ExpertDataValue() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          {...presets.fadeIn(duration.normal, 0.1)}
           className="flex items-center gap-4 mb-10"
         >
           <div className="flex-1 h-px bg-gradient-to-r from-transparent to-slate-200 dark:to-slate-700" />
@@ -201,10 +197,10 @@ export function ExpertDataValue() {
                   return (
                     <motion.div
                       key={i}
-                      initial={{ opacity: 0, x: -16 }}
+                      initial={{ opacity: 0, x: -offset.small }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: '-30px' }}
-                      transition={{ duration: 0.5, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: duration.normal, delay: getStepProps(i).delay, ease: [0.16, 1, 0.3, 1] }}
                       className="flex items-stretch gap-5"
                     >
                       <div className="flex flex-col items-center flex-shrink-0 w-12">
@@ -247,10 +243,10 @@ export function ExpertDataValue() {
                             </p>
                             <div className="flex gap-3 flex-col sm:flex-row">
                               <motion.div
-                                initial={{ opacity: 0, y: 8 }}
+                                initial={{ opacity: 0, y: offset.small }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: steps.length * 0.09 + 0.1 }}
+                                transition={{ duration: duration.fast, delay: steps.length * stagger.normal + 0.1, ease: [0.16, 1, 0.3, 1] }}
                                 className="flex-1 rounded-xl p-4
                                   bg-emerald-50 dark:bg-emerald-900/15
                                   border border-emerald-200/70 dark:border-emerald-700/30"
@@ -269,10 +265,10 @@ export function ExpertDataValue() {
                               </motion.div>
 
                               <motion.div
-                                initial={{ opacity: 0, y: 8 }}
+                                initial={{ opacity: 0, y: offset.small }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: steps.length * 0.09 + 0.18 }}
+                                transition={{ duration: duration.fast, delay: steps.length * stagger.normal + 0.18, ease: [0.16, 1, 0.3, 1] }}
                                 className="flex-1 rounded-xl p-4
                                   bg-slate-100/80 dark:bg-slate-800/40
                                   border border-slate-200 dark:border-slate-700/50"
@@ -303,10 +299,7 @@ export function ExpertDataValue() {
           {papers.length > 0 && (
             <div className="w-full lg:w-[280px] xl:w-[310px] flex-shrink-0">
               <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                {...presets.fadeIn(duration.normal, 0.2)}
                 className="mb-5"
               >
                 <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
