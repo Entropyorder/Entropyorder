@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Bot, BookOpen, Network, PenLine, Users, ShieldCheck, Check, XCircle, ExternalLink } from 'lucide-react';
 import { stagger, offset, duration, spring } from '../animations/tokens.js';
@@ -51,60 +51,60 @@ const STEP_META = [
   },
 ];
 
-function PaperCard({ paper, index, hoveredIndex, onHover }) {
+function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const isHovered = hoveredIndex === index;
   const isAnyHovered = hoveredIndex !== null;
   const isOtherHovered = isAnyHovered && !isHovered;
 
-  const paperOffsets = [
+  // Stacked (idle) offsets — slight random-looking pile
+  const stackOffsets = [
     { x: -6, y: -4, rotate: -3 },
     { x: 4, y: 2, rotate: 1.5 },
     { x: 12, y: 8, rotate: 5 },
   ];
-  const cardOffset = paperOffsets[index] || paperOffsets[0];
+  const stack = stackOffsets[index] || stackOffsets[0];
 
-  const baseStyle = {
-    rotate: cardOffset.rotate,
-    y: cardOffset.y,
-    x: cardOffset.x,
-    zIndex: isHovered ? 20 : 3 - index,
-  };
+  // Fanned (hover) offsets — horizontal fan from bottom center
+  const centerIndex = Math.floor(totalCards / 2);
+  const fanOffsets = Array.from({ length: totalCards }, (_, i) => {
+    const delta = i - centerIndex;
+    return {
+      x: delta * 28,
+      y: Math.abs(delta) * 5,
+      rotate: delta * 5,
+    };
+  });
+  const fan = fanOffsets[index] || fanOffsets[0];
 
-  const hoveredStyle = {
-    rotate: 0,
-    y: index === 0 ? -180 : index === 1 ? -90 : 0,
-    x: 0,
-    scale: 1.02,
-    zIndex: 20,
-  };
+  const target = isAnyHovered ? fan : stack;
 
   return (
     <motion.a
+      ref={ref}
       href={paper.url}
       target="_blank"
       rel="noreferrer"
       onHoverStart={() => onHover(index)}
       onHoverEnd={() => onHover(null)}
-      animate={isHovered ? hoveredStyle : baseStyle}
-      initial={{
-        opacity: 0,
-        y: 40 + index * 20,
-        rotate: 0,
-        scale: 0.9,
-      }}
-      whileInView={{
-        opacity: isOtherHovered ? 0.5 : 1,
-        y: isHovered ? hoveredStyle.y : cardOffset.y,
-        x: isHovered ? hoveredStyle.x : cardOffset.x,
-        rotate: isHovered ? hoveredStyle.rotate : cardOffset.rotate,
-        scale: isHovered ? hoveredStyle.scale : isOtherHovered ? 0.96 : 1,
-      }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0, y: 30 + index * 15, scale: 0.9 }}
+      animate={
+        isInView
+          ? {
+              x: target.x,
+              y: target.y,
+              rotate: target.rotate,
+              opacity: isOtherHovered ? 0.7 : 1,
+              scale: isHovered ? 1.03 : isOtherHovered ? 0.97 : 1,
+            }
+          : { opacity: 0, y: 30 + index * 15, scale: 0.9 }
+      }
       transition={{
         type: 'spring',
         ...spring.snappy,
       }}
-      className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-center"
+      className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-bottom"
       style={{
         zIndex: isHovered ? 20 : 3 - index,
         aspectRatio: '3/4',
@@ -314,6 +314,7 @@ export function ExpertDataValue() {
                     index={i}
                     hoveredIndex={hoveredPaper}
                     onHover={setHoveredPaper}
+                    totalCards={papers.length}
                   />
                 ))}
               </div>
