@@ -305,12 +305,13 @@
       "scale": "3K+ samples",
       "tags": ["Science Reasoning", "Multi-domain", "Benchmark"],
       "brief": "HLE (Hard-Level Evaluation) is a high-difficulty scientific reasoning benchmark for frontier LLMs. Questions are designed and reviewed by domain experts across 12+ disciplines, requiring deep reasoning rather than surface matching. Each question includes complete reasoning chain annotations and difficulty ratings.",
-      "structure": "JSONL format. Fields: query, rubric (scoring criteria), answer (reference with reasoning chain), domain, difficulty (1-5)",
+      "structure": "{\n  \"query\": \"Under standard conditions, which reaction has the most negative ΔG°?\",\n  \"rubric\": \"Must provide correct answer with thermodynamic derivation\",\n  \"answer\": \"Option C, reasoning: ...\",\n  \"domain\": \"chemistry\",\n  \"difficulty\": 4\n}",
       "paper": {
         "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
         "authors": "Rein et al.",
         "venue": "arXiv 2023",
-        "url": "https://arxiv.org/abs/2311.12022"
+        "url": "https://arxiv.org/abs/2311.12022",
+        "img": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80"
       }
     },
     "sfe": {
@@ -319,7 +320,7 @@
       "scale": "5K+ samples",
       "tags": ["Research Scenarios", "Real Problems", "Expert Annotations"],
       "brief": "SFE (Scientific Frontiers Evaluation) extracts questions from real research scenarios, annotated by active researchers. Unlike synthetic data, these questions feature genuine constraints, uncertainties, and cutting-edge challenges that directly test a model's research assistance capabilities.",
-      "structure": "JSONL format. Fields: query, context (research background), rubric, answer (expert reasoning and conclusion), field"
+      "structure": "{\n  \"query\": \"How to quantify off-target rate after in vivo CRISPR-Cas9 editing?\",\n  \"context\": \"Based on mouse liver AAV delivery experiment\",\n  \"rubric\": \"Must cite at least two detection methods and compare sensitivity\",\n  \"answer\": \"Expert reasoning and conclusion...\",\n  \"field\": \"molecular_biology\"\n}"
     },
     "microvqa": {
       "name": "MicroVQA Dataset",
@@ -327,7 +328,7 @@
       "scale": "2K+ samples",
       "tags": ["Biology", "Microscopy", "Multimodal"],
       "brief": "MicroVQA is a visual Q&A dataset specialized for biological microscopy imaging, covering cytology, histology, and pathology. Each sample includes high-resolution microscopy images with multi-turn Q&A pairs annotated by biologists, requiring micrograph understanding and professional terminology reasoning.",
-      "structure": "JSONL format. Fields: image_path, qa_pairs (multi-turn array), magnification, tissue_type, staining"
+      "structure": "{\n  \"image_path\": \"microscopy/cell_042.tiff\",\n  \"qa_pairs\": [\n    {\"q\": \"What is the structure indicated by the arrow?\", \"a\": \"Mitochondria\"}\n  ],\n  \"magnification\": \"400x\",\n  \"tissue_type\": \"liver\",\n  \"staining\": \"H&E\"\n}"
     },
     "crosslingual-k12qa": {
       "name": "Cross-lingual K12QA Dataset",
@@ -335,7 +336,7 @@
       "scale": "10K+ samples",
       "tags": ["Multilingual", "K12", "Verified"],
       "brief": "A K12 education exercise dataset spanning 20+ languages worldwide. Questions are collected by native-speaking education experts from official textbooks and exercise books in each country, multi-round verified to preserve original logic and cultural context. An ideal benchmark for evaluating cross-lingual education capabilities.",
-      "structure": "JSONL format. Fields: question, options (array), answer, explanation, language (ISO 639 code), grade, subject"
+      "structure": "{\n  \"question\": \"If f(x)=x³-3x+1, find the maximum on [-2,2]\",\n  \"options\": [\"A. -1\", \"B. 1\", \"C. 3\", \"D. 5\"],\n  \"answer\": \"C\",\n  \"explanation\": \"f'(x)=3x²-3, set f'(x)=0...\",\n  \"language\": \"en\",\n  \"grade\": 11,\n  \"subject\": \"math\"\n}"
     },
     "tri-modal": {
       "name": "Tri-modal Alignment Dataset",
@@ -343,7 +344,7 @@
       "scale": "2K+ samples",
       "tags": ["Video", "Audio", "Text Alignment"],
       "brief": "A tri-modal alignment dataset for multimodal models, providing frame-level alignment annotations across video, audio, and text signals. Suitable for training cross-modal retrieval, multimodal understanding, and generation tasks across diverse scenarios including education, news, and science popularization.",
-      "structure": "JSONL format. Fields: video_segments (timestamps), audio_segments (timestamps), text_transcript, alignment_map (cross-modal mapping), category"
+      "structure": "{\n  \"video_segments\": [{\"start\": 0.0, \"end\": 3.2}],\n  \"audio_segments\": [{\"start\": 0.1, \"end\": 3.1}],\n  \"text_transcript\": \"Today we discuss...\",\n  \"alignment_map\": {\"v0\": \"a0\", \"v0\": \"t0\"},\n  \"category\": \"education\"\n}"
     },
     "proactive-video": {
       "name": "Proactive Streaming Video",
@@ -351,7 +352,7 @@
       "scale": "1K+ samples",
       "tags": ["Streaming Video", "Active Inference", "Real-time"],
       "brief": "Challenges models to proactively understand and predict during streaming video playback. Models must make predictions before the video completes, then verify or revise as subsequent frames arrive. Simulates the cognitive process of active reasoning during video viewing.",
-      "structure": "JSONL format. Fields: video_url, timestamps (key moments), predictions (array of prediction questions), ground_truth, reasoning_trace"
+      "structure": "{\n  \"video_url\": \"https://example.com/stream_001.mp4\",\n  \"timestamps\": [1.2, 5.8, 12.3],\n  \"predictions\": [\n    {\"at\": 5.8, \"question\": \"What happens next?\"}\n  ],\n  \"ground_truth\": \"Character opens door and enters room\",\n  \"reasoning_trace\": \"Based on motion direction in prior frames...\"\n}"
     },
     "science-video-qa": {
       "name": "Science Video QA Dataset",
@@ -359,7 +360,7 @@
       "scale": "1K+ samples",
       "tags": ["Science Experiments", "Video QA", "Multimodal"],
       "brief": "A Q&A dataset specialized for science experiment videos, covering chemistry experiments, biological procedures, and physics demonstrations. Each video includes step decomposition, phenomenon explanations, and safety annotations for evaluating deep understanding of scientific processes.",
-      "structure": "JSONL format. Fields: video_url, questions (with timestamp anchoring), steps (procedure decomposition), phenomena (key observations), safety_notes"
+      "structure": "{\n  \"video_url\": \"https://example.com/exp_chem_03.mp4\",\n  \"questions\": [\n    {\"t\": 12.5, \"q\": \"Why does the solution change color?\"}\n  ],\n  \"steps\": [\"Add 5mL HCl\", \"Stir 30s\", \"Observe precipitate\"],\n  \"phenomena\": [\"Solution turns from colorless to pale yellow\"],\n  \"safety_notes\": [\"Wear safety goggles\"]\n}"
     },
     "chart-reasoning": {
       "name": "Chart Reasoning QA Dataset",
@@ -367,7 +368,7 @@
       "scale": "2K+ samples",
       "tags": ["Chart Understanding", "Deep Reasoning", "Multi-step"],
       "brief": "A deep reasoning dataset for complex chart understanding. Each sample contains one or more related charts with questions requiring multi-step inference. Covers bar charts, line graphs, pie charts, scatter plots, heatmaps, and more.",
-      "structure": "JSONL format. Fields: chart_image (path), chart_type, question, reasoning_steps (array), answer, source_data"
+      "structure": "{\n  \"chart_image\": \"charts/bar_gdp_2024.png\",\n  \"chart_type\": \"bar\",\n  \"question\": \"Which country has growth > 5% and GDP < 3T?\",\n  \"reasoning_steps\": [\n    \"Filter countries with GDP < 3T\",\n    \"Compare growth rate against 5% threshold\"\n  ],\n  \"answer\": \"India\",\n  \"source_data\": {\"file\": \"gdp_raw.csv\"}\n}"
     },
     "browser": {
       "name": "Browser Dataset",
@@ -375,7 +376,7 @@
       "scale": "5K+ trajectories",
       "tags": ["Web Agent", "Task Planning", "Trajectories"],
       "brief": "Trajectory dataset collected from real user browser operations, covering e-commerce shopping, information retrieval, form filling, content creation, and more. Each trajectory includes complete action sequences, DOM snapshots, and user intent annotations.",
-      "structure": "JSONL format. Fields: task_description, actions (array with action_type/element/value/screenshot), dom_snapshots, outcome"
+      "structure": "{\n  \"task_description\": \"Search for noise-canceling headphones on Amazon and add to cart\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"noise-canceling headphones\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}"
     },
     "openclaw": {
       "name": "Openclaw Dataset",
@@ -383,7 +384,7 @@
       "scale": "3K+ trajectories",
       "tags": ["GUI Agent", "Cross-platform", "Control"],
       "brief": "A cross-platform GUI control agent training dataset covering Windows, macOS, Android, and iOS. Each trajectory includes screenshot sequences, action events, UI element localization, and task goal descriptions.",
-      "structure": "JSONL format. Fields: platform, task, steps (array: screenshot/action/bbox/reasoning), platform_version, app_name"
+      "structure": "{\n  \"platform\": \"android\",\n  \"task\": \"Enable dark mode in Settings\",\n  \"steps\": [\n    {\"screenshot\": \"ss_01.png\", \"action\": \"tap\", \"bbox\": [120,340,200,380]}\n  ],\n  \"platform_version\": \"Android 14\",\n  \"app_name\": \"Settings\"\n}"
     },
     "search-eval": {
       "name": "Search Evaluation Dataset",
@@ -391,7 +392,7 @@
       "scale": "5K+ samples",
       "tags": ["Multi-hop Reasoning", "Search Eval", "Diverse Queries"],
       "brief": "A multi-hop reasoning evaluation dataset for search-augmented generation (RAG) systems. Each question requires retrieving and synthesizing multiple information sources, covering fact-checking, comparative analysis, causal reasoning, and more.",
-      "structure": "JSONL format. Fields: query, reasoning_type, required_sources (count), evidence_urls (array), answer, evaluation_rubric"
+      "structure": "{\n  \"query\": \"How effective are COVID vaccines against Omicron variant?\",\n  \"reasoning_type\": \"comparative\",\n  \"required_sources\": 3,\n  \"evidence_urls\": [\n    \"https://doi.org/10.1038/...\",\n    \"https://www.thelancet.com/...\"\n  ],\n  \"answer\": \"mRNA vaccines show reduced neutralizing titers...\",\n  \"evaluation_rubric\": \"Must compare at least two vaccine types\"\n}"
     }
   }
 }

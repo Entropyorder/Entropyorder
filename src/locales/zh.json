@@ -305,12 +305,13 @@
       "scale": "3K+ 样本",
       "tags": ["科学推理", "多领域", "评估基准"],
       "brief": "HLE（Hard-Level Evaluation）数据集是面向前沿大模型的高难度科学推理评估基准。题目由领域专家精心设计与审核，覆盖 12+ 学科，要求模型具备深层推理能力而非表面匹配。每道题配有完整推理链标注与难度评级。",
-      "structure": "JSONL 格式，每条包含：query（问题）、rubric（评分标准）、answer（参考答案与推理链）、domain（学科领域）、difficulty（难度等级 1-5）",
+      "structure": "{\n  \"query\": \"在标准条件下，以下哪个反应的 ΔG° 最负？\",\n  \"rubric\": \"需给出正确选项及热力学推导过程\",\n  \"answer\": \"选项 C，推理链：...\",\n  \"domain\": \"chemistry\",\n  \"difficulty\": 4\n}",
       "paper": {
         "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
         "authors": "Rein et al.",
         "venue": "arXiv 2023",
-        "url": "https://arxiv.org/abs/2311.12022"
+        "url": "https://arxiv.org/abs/2311.12022",
+        "img": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80"
       }
     },
     "sfe": {
@@ -319,7 +320,7 @@
       "scale": "5K+ 样本",
       "tags": ["科研场景", "真实问题", "专家标注"],
       "brief": "SFE（Scientific Frontiers Evaluation）数据集从真实科研场景中提取问题，由一线研究人员标注。与合成数据不同，这些问题具有真实的约束条件、不确定性和前沿性，是对模型科研辅助能力的直接考验。",
-      "structure": "JSONL 格式，每条包含：query（科研问题）、context（研究背景）、rubric（评分标准）、answer（专家推理过程与结论）、field（研究领域）"
+      "structure": "{\n  \"query\": \"CRISPR-Cas9 在体编辑后脱靶率如何量化？\",\n  \"context\": \"基于小鼠肝脏 AAV 递送实验\",\n  \"rubric\": \"需引用至少两种检测方法并比较灵敏度\",\n  \"answer\": \"专家推理过程与结论...\",\n  \"field\": \"molecular_biology\"\n}"
     },
     "microvqa": {
       "name": "MicroVQA 数据集",
@@ -327,7 +328,7 @@
       "scale": "2K+ 样本",
       "tags": ["生物学", "显微镜", "多模态"],
       "brief": "MicroVQA 是专属于生物学显微成像的视觉问答数据集，涵盖细胞学、组织学、病理学等子领域。每条样本包含高分辨率显微镜图像及由生物学家标注的多轮问答对，要求模型具备微观图像理解与专业术语推理能力。",
-      "structure": "JSONL 格式，每条包含：image_path（显微镜图像路径）、qa_pairs（多轮问答数组）、magnification（放大倍数）、tissue_type（组织类型）、staining（染色方法）"
+      "structure": "{\n  \"image_path\": \"microscopy/cell_042.tiff\",\n  \"qa_pairs\": [\n    {\"q\": \"图中箭头所指结构是什么？\", \"a\": \"线粒体\"}\n  ],\n  \"magnification\": \"400x\",\n  \"tissue_type\": \"liver\",\n  \"staining\": \"H&E\"\n}"
     },
     "crosslingual-k12qa": {
       "name": "跨语言 K12QA 数据集",
@@ -335,7 +336,7 @@
       "scale": "10K+ 样本",
       "tags": ["多语言", "K12", "习题校对"],
       "brief": "覆盖全球 20+ 种语言的 K12 教育习题数据集。题目由母语为对应语言的教育专家从各国正版教材与习题册中采集，经多轮校对后保留原始题目逻辑与文化语境，是评估模型跨语言教育能力的理想基准。",
-      "structure": "JSONL 格式，每条包含：question（题目）、options（选项数组）、answer（正确答案）、explanation（解析）、language（ISO 639 语言代码）、grade（年级）、subject（学科）"
+      "structure": "{\n  \"question\": \"若 f(x)=x³-3x+1，求 f(x) 在 [-2,2] 上的最大值\",\n  \"options\": [\"A. -1\", \"B. 1\", \"C. 3\", \"D. 5\"],\n  \"answer\": \"C\",\n  \"explanation\": \"f'(x)=3x²-3，令 f'(x)=0...\",\n  \"language\": \"zh\",\n  \"grade\": 11,\n  \"subject\": \"math\"\n}"
     },
     "tri-modal": {
       "name": "三模态对齐数据集",
@@ -343,7 +344,7 @@
       "scale": "2K+ 样本",
       "tags": ["视频", "音频", "文本对齐"],
       "brief": "面向多模态模型的三模态对齐数据集，提供视频、音频、文本三路信号的帧级对齐标注。适用于训练跨模态检索、多模态理解与生成任务，覆盖教育、新闻、科普等多样化场景。",
-      "structure": "JSONL 格式，每条包含：video_segments（视频片段时间戳）、audio_segments（音频片段时间戳）、text_transcript（文本转录）、alignment_map（跨模态对齐映射）、category（场景类别）"
+      "structure": "{\n  \"video_segments\": [{\"start\": 0.0, \"end\": 3.2}],\n  \"audio_segments\": [{\"start\": 0.1, \"end\": 3.1}],\n  \"text_transcript\": \"今天我们讨论...\",\n  \"alignment_map\": {\"v0\": \"a0\", \"v0\": \"t0\"},\n  \"category\": \"education\"\n}"
     },
     "proactive-video": {
       "name": "Proactive Streaming Video",
@@ -351,7 +352,7 @@
       "scale": "1K+ 样本",
       "tags": ["流式视频", "主动推断", "实时理解"],
       "brief": "挑战模型在流式视频播放中进行主动理解与预测的能力。模型需在视频未完整播放时做出预判，并在后续帧中验证或修正。模拟人类在观看视频时主动推理的认知过程。",
-      "structure": "JSONL 格式，每条包含：video_url（视频源）、timestamps（关键时间戳）、predictions（预测问题数组）、ground_truth（真实结果）、reasoning_trace（推理过程）"
+      "structure": "{\n  \"video_url\": \"https://example.com/stream_001.mp4\",\n  \"timestamps\": [1.2, 5.8, 12.3],\n  \"predictions\": [\n    {\"at\": 5.8, \"question\": \"下一步会发生什么？\"}\n  ],\n  \"ground_truth\": \"角色打开门进入房间\",\n  \"reasoning_trace\": \"基于前序帧的运动方向推测...\"\n}"
     },
     "science-video-qa": {
       "name": "科学视频问答数据集",
@@ -359,7 +360,7 @@
       "scale": "1K+ 样本",
       "tags": ["科学实验", "视频QA", "多模态"],
       "brief": "专门针对科学实验视频的问答数据集，涵盖化学实验、生物操作、物理演示等。每个视频配有步骤分解、现象解释和安全提示标注，适合评估模型对科学过程的深层理解能力。",
-      "structure": "JSONL 格式，每条包含：video_url（实验视频）、questions（问题数组，含时间戳定位）、steps（实验步骤分解）、phenomena（关键现象描述）、safety_notes（安全提示）"
+      "structure": "{\n  \"video_url\": \"https://example.com/exp_chem_03.mp4\",\n  \"questions\": [\n    {\"t\": 12.5, \"q\": \"此时溶液颜色为何变化？\"}\n  ],\n  \"steps\": [\"加入 5mL HCl\", \"搅拌 30s\", \"观察沉淀\"],\n  \"phenomena\": [\"溶液由无色变为淡黄色\"],\n  \"safety_notes\": [\"佩戴护目镜\"]\n}"
     },
     "chart-reasoning": {
       "name": "图文推理 QA 数据集",
@@ -367,7 +368,7 @@
       "scale": "2K+ 样本",
       "tags": ["图表理解", "深度推理", "多步推导"],
       "brief": "针对复杂图表理解的深度推理数据集。每条样本包含一个或多个相关图表，以及需要多步推导才能回答的问题。覆盖柱状图、折线图、饼图、散点图、热力图等多种图表类型。",
-      "structure": "JSONL 格式，每条包含：chart_image（图表图像路径）、chart_type（图表类型）、question（推理问题）、reasoning_steps（推理步骤数组）、answer（最终答案）、source_data（原始数据）"
+      "structure": "{\n  \"chart_image\": \"charts/bar_gdp_2024.png\",\n  \"chart_type\": \"bar\",\n  \"question\": \"哪个国家增速超过 5% 且 GDP 低于 3 万亿？\",\n  \"reasoning_steps\": [\n    \"筛选 GDP < 3T 的国家\",\n    \"比较增速与 5% 阈值\"\n  ],\n  \"answer\": \"印度\",\n  \"source_data\": {\"file\": \"gdp_raw.csv\"}\n}"
     },
     "browser": {
       "name": "Browser 数据集",
@@ -375,7 +376,7 @@
       "scale": "5K+ 轨迹",
       "tags": ["Web Agent", "任务规划", "操作轨迹"],
       "brief": "从真实用户浏览器操作中采集的轨迹数据集，覆盖电商购物、信息检索、表单填写、内容创作等多种 Web 任务。每条轨迹包含完整的操作序列、DOM 快照和用户意图标注。",
-      "structure": "JSONL 格式，每条包含：task_description（任务描述）、actions（操作序列数组，含 action_type/element/value/screenshot）、dom_snapshots（DOM 快照）、outcome（任务结果）"
+      "structure": "{\n  \"task_description\": \"在京东搜索降噪耳机并加入购物车\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"降噪耳机\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}"
     },
     "openclaw": {
       "name": "Openclaw 数据集",
@@ -383,7 +384,7 @@
       "scale": "3K+ 轨迹",
       "tags": ["GUI Agent", "跨平台", "操作控制"],
       "brief": "跨平台 GUI 控制智能体训练数据集，覆盖 Windows、macOS、Android、iOS 四大平台。每条轨迹包含屏幕截图序列、操作动作、UI 元素定位和任务目标描述。",
-      "structure": "JSONL 格式，每条包含：platform（目标平台）、task（任务描述）、steps（步骤数组：screenshot/action/bbox/reasoning）、platform_version（系统版本）、app_name（应用名称）"
+      "structure": "{\n  \"platform\": \"android\",\n  \"task\": \"在设置中开启深色模式\",\n  \"steps\": [\n    {\"screenshot\": \"ss_01.png\", \"action\": \"tap\", \"bbox\": [120,340,200,380]}\n  ],\n  \"platform_version\": \"Android 14\",\n  \"app_name\": \"Settings\"\n}"
     },
     "search-eval": {
       "name": "搜索评测数据集",
@@ -391,7 +392,7 @@
       "scale": "5K+ 样本",
       "tags": ["多跳推理", "搜索评测", "多源Query"],
       "brief": "面向搜索增强生成（RAG）系统的多跳推理评测数据集。每个问题需要检索并整合多个信息源才能回答，覆盖事实核查、比较分析、因果推理等任务类型。",
-      "structure": "JSONL 格式，每条包含：query（查询问题）、reasoning_type（推理类型）、required_sources（所需信息源数量）、evidence_urls（证据 URL 数组）、answer（参考答案）、evaluation_rubric（评分标准）"
+      "structure": "{\n  \"query\": \"COVID 疫苗对 Omicron 变种的效力如何？\",\n  \"reasoning_type\": \"comparative\",\n  \"required_sources\": 3,\n  \"evidence_urls\": [\n    \"https://doi.org/10.1038/...\",\n    \"https://www.thelancet.com/...\"\n  ],\n  \"answer\": \"mRNA 疫苗中和抗体滴度下降...\",\n  \"evaluation_rubric\": \"需对比至少两种疫苗\"\n}"
     }
   }
 }
