@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Brain, Layers, Rocket } from 'lucide-react';
-import { stagger, offset } from '../animations/tokens.js';
+import { stagger, offset, duration } from '../animations/tokens.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
 
 const STEP_ICONS = [Brain, Layers, Rocket];
@@ -38,7 +38,7 @@ export function Timeline({ steps }) {
               initial={{ opacity: 0, y: offset.medium }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.65, delay: getChildProps(idx).delay, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: duration.normal, delay: getChildProps(idx).delay, ease: [0.16, 1, 0.3, 1] }}
               className={`relative flex items-center ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} flex-row gap-6 md:gap-12`}
             >
               {/* Desktop: left-side text */}
