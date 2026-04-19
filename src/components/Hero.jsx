@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
 import logoUrl from '/logo.png';
+import { duration, offset } from '../animations/tokens.js';
+import * as presets from '../animations/presets.js';
 
 // Floating geometric shape
 function FloatShape({ className, delay = 0, duration = 8 }) {
@@ -111,9 +113,9 @@ export function Hero() {
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto">
         {/* Logo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: -10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: duration.slow, ease: [0.16, 1, 0.3, 1] }}
           className="mb-10"
         >
           <img
@@ -125,9 +127,9 @@ export function Hero() {
 
         {/* Main title — very large */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: offset.large }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: duration.slow, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6"
         >
           <h1 className="text-7xl sm:text-8xl md:text-[110px] lg:text-[120px] font-bold tracking-tight leading-[1.05]">
@@ -145,9 +147,9 @@ export function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: offset.medium }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: duration.slow * 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="text-lg sm:text-xl md:text-2xl text-slate-500 dark:text-slate-400 max-w-lg leading-relaxed"
         >
           {t('hero.subtitle')}
@@ -157,7 +159,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.75 }}
+          transition={{ duration: duration.normal, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 flex items-center gap-2"
         >
           {['Data', 'Intelligence', 'Future'].map((word, i) => (
@@ -176,7 +178,7 @@ export function Hero() {
         onClick={scrollToExpert}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
+        transition={{ delay: 1.3, duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-slate-400 hover:text-brand-500 dark:text-slate-500 dark:hover:text-brand-400 transition-colors group"
         aria-label="Scroll down"
       >
