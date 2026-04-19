@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { spring } from '../animations/tokens.js';
 
-export function DatasetCard({ dataset, onContact }) {
+export function DatasetCard({ dataset, onViewDetail }) {
   const { t } = useTranslation();
 
   return (
@@ -60,15 +60,15 @@ export function DatasetCard({ dataset, onContact }) {
         </div>
 
         <button
-          onClick={() => onContact(dataset)}
-          aria-label={`${t('products.card.contact')} - ${dataset.name}`}
+          onClick={() => onViewDetail(dataset)}
+          aria-label={`${t('products.card.viewDetail')} - ${dataset.name}`}
           className="relative w-full overflow-hidden rounded-xl px-4 py-2.5 text-base font-semibold text-white
             bg-gradient-to-r from-brand-600 to-accent-500
             hover:from-brand-500 hover:to-cyan-400
             shadow-sm hover:shadow-brand-500/35 hover:shadow-md
             transition-all duration-300"
         >
-          {t('products.card.contact')}
+          {t('products.card.viewDetail')}
         </button>
       </div>
     </motion.div>

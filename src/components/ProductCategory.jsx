@@ -4,7 +4,7 @@ import { offset, duration } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
 
 // clip-path parallelogram that tiles all cards flat, each with a staggered float
-function ParallelogramCards({ datasets, onContact }) {
+function ParallelogramCards({ datasets, onViewDetail }) {
   return (
     <div
       className="relative overflow-hidden"
@@ -34,7 +34,7 @@ function ParallelogramCards({ datasets, onContact }) {
               delay: i * 0.55,
             }}
           >
-            <DatasetCard dataset={ds} onContact={onContact} />
+            <DatasetCard dataset={ds} onViewDetail={onViewDetail} />
           </motion.div>
         ))}
       </div>
@@ -42,7 +42,7 @@ function ParallelogramCards({ datasets, onContact }) {
   );
 }
 
-export function ProductCategory({ title, artifact: Artifact, datasets, direction, onContact, index = 0 }) {
+export function ProductCategory({ title, artifact: Artifact, datasets, direction, onViewDetail, index = 0 }) {
   const isLeft = direction === 'left';
   const sectionNum = String(index + 1).padStart(2, '0');
 
@@ -89,7 +89,7 @@ export function ProductCategory({ title, artifact: Artifact, datasets, direction
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: duration.normal, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
         >
-          <ParallelogramCards datasets={datasets} onContact={onContact} />
+          <ParallelogramCards datasets={datasets} onViewDetail={onViewDetail} />
         </motion.div>
       </div>
     </div>

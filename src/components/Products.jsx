@@ -10,7 +10,7 @@ function ensureArray(val) {
   return Array.isArray(val) ? val : [];
 }
 
-export function Products({ onContact }) {
+export function Products({ onViewDetail }) {
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [activeTab, setActiveTab] = useState(0);
@@ -112,7 +112,7 @@ export function Products({ onContact }) {
                   artifact={cat.artifact}
                   datasets={cat.datasets}
                   direction={idx % 2 === 0 ? 'left' : 'right'}
-                  onContact={onContact}
+                  onViewDetail={onViewDetail}
                   index={idx}
                 />
               </div>

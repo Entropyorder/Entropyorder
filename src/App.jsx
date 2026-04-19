@@ -8,6 +8,7 @@ import { AI4SS4AI } from './components/AI4SS4AI.jsx';
 import { Blog } from './components/Blog.jsx';
 import { Footer } from './components/Footer.jsx';
 import { ContactModal } from './components/ContactModal.jsx';
+import { DatasetDetailModal } from './components/DatasetDetailModal.jsx';
 import { duration, ease } from './animations/tokens.js';
 import './App.css';
 
@@ -75,6 +76,7 @@ const slideVariants = {
 function App() {
   const prefersReducedMotion = useReducedMotion();
   const [selectedDataset, setSelectedDataset] = useState(null);
+  const [selectedDetail, setSelectedDetail] = useState(null);
   const [activeTab, setActiveTab] = useState('home');
   const mainRef = useRef(null);
 
@@ -100,7 +102,7 @@ function App() {
           <WaveDivider />
           <ExpertDataValue />
           <DiagonalDivider />
-          <Products onContact={setSelectedDataset} />
+          <Products onViewDetail={setSelectedDetail} />
           <DiagonalDivider />
         </main>
       )}
@@ -131,6 +133,16 @@ function App() {
       <Footer />
       {selectedDataset && (
         <ContactModal dataset={selectedDataset} onClose={() => setSelectedDataset(null)} />
+      )}
+      {selectedDetail && (
+        <DatasetDetailModal
+          dataset={selectedDetail}
+          onClose={() => setSelectedDetail(null)}
+          onContactSample={(ds) => {
+            setSelectedDetail(null);
+            setSelectedDataset(ds);
+          }}
+        />
       )}
     </div>
     </MotionConfig>
