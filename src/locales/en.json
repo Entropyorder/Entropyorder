@@ -122,6 +122,11 @@
     "tag": "Why Expert Data",
     "title": "Expert Knowledge Is the Foundation of Capability Breakthroughs",
     "subtitle": "High-quality expert annotations outperform crowd-sourced data in training efficiency, reasoning depth, and domain precision",
+    "methodologyImages": [
+      { "title": "Knowledge Graph Construction" },
+      { "title": "Expert Precision Annotation" },
+      { "title": "Multi-expert Cross-review" }
+    ],
     "stats": [
       { "value": "50+", "label": "Domain Experts" },
       { "value": "4", "label": "Datasets" },
@@ -150,58 +155,66 @@
           "img": "papers/gpqa.png"
         },
         {
-          "title": "SCBench: A KV Cache-Centric Benchmark for Long Context",
-          "authors": "Li et al.",
-          "venue": "arXiv 2025",
-          "url": "https://arxiv.org/abs/2412.12119",
-          "img": "papers/scbench.png"
-        },
-        {
           "title": "MMLU-Pro: A More Robust and Challenging MultiTask Language Understanding Benchmark",
           "authors": "Wang et al.",
           "venue": "arXiv 2024",
           "url": "https://arxiv.org/abs/2406.08064",
+          "img": "papers/scbench.png"
+        },
+        {
+          "title": "SCBench: A KV Cache-Centric Benchmark for Long Context",
+          "authors": "Li et al.",
+          "venue": "arXiv 2025",
+          "url": "https://arxiv.org/abs/2412.12119",
           "img": "papers/mmlu_pro.png"
         }
       ],
-      "steps": [
+      "detailedSteps": [
         {
-          "title": "LLM Paper Decomposition",
-          "desc": "Frontier LLM parses paper structure, key concepts, and reasoning logic — outputs structured summary and concept inventory",
+          "title": "Paper Preprocessing & Structured Parsing",
+          "desc": "Frontier LLM performs section-aware paper decomposition, splitting abstract, methods, experiments, and conclusions, outputting structured summaries, core concept lists, and key entity-relation candidate sets",
           "type": "ai",
           "badge": "AI"
         },
         {
-          "title": "Expert Paper Reading",
-          "desc": "Domain experts conduct deep reading to capture implicit assumptions, contextual details, and disciplinary nuances",
+          "title": "Domain Expert Deep Reading & Understanding",
+          "desc": "Matching perfectly aligned domain experts (PhD-level+) from expert pool, focusing on methodological details, implicit assumptions, academic lineage, and knowledge boundaries in the paper",
           "type": "human",
-          "badge": "Human"
+          "badge": "Expert"
         },
         {
-          "title": "Knowledge Graph Construction",
-          "desc": "Merges LLM parsing and expert understanding into explicit knowledge graphs and implicit association graphs",
+          "title": "Collaborative Knowledge Graph Construction",
+          "desc": "AI extracts entity-relation-entity triples using ontology-guided + section-aware prompting from AutoQG paper. Human experts review, supplement omissions, and distinguish explicit vs implicit association graphs requiring domain knowledge",
           "type": "hybrid",
-          "badge": "AI + Human"
+          "badge": "AI + Expert"
         },
         {
-          "title": "Expert Question Writing",
-          "desc": "Based on the graphs, experts craft highly discriminative questions with complete reasoning chain answers",
+          "title": "High-Discriminative Question Design via Reasoning Chains",
+          "desc": "Based on multi-hop reasoning paths in knowledge graphs combined with expert domain knowledge, design high-discriminative questions with complex reasoning chains near disciplinary boundaries",
           "type": "human",
-          "badge": "Human"
+          "badge": "Expert"
         },
         {
-          "title": "Multi-expert Cross-review",
-          "desc": "Multiple experts independently review each item, scoring quality, difficulty, and uniqueness for consistency",
+          "title": "AI Difficulty Calibration & Consistency Verification",
+          "desc": "Frontier models cross-verify question difficulty: send questions all models can answer back for revision, send questions all models get wrong for human verification of answer correctness",
+          "type": "ai",
+          "badge": "AI"
+        },
+        {
+          "title": "Multi-expert Cross-Blind Review",
+          "desc": "Double-blind review protocol: each question scored by at least three independent experts across relevance, answerability, distractor quality, fluency, reasoning depth, evidence traceability, with automatic reliability testing",
           "type": "human",
-          "badge": "Multi-expert"
+          "badge": "Expert"
         },
         {
-          "title": "Difficulty Judgment",
-          "desc": "Gemini 3.1 Pro · GPT-5.4",
-          "type": "gate",
-          "badge": "AI Judge"
+          "title": "Final Decision & Data Ingestion",
+          "desc": "Based on disciplinary balance, difficulty gradient, question type, and other concerns, senior experts make final decision on ingestion",
+          "type": "human",
+          "badge": "Expert"
         }
-      ]
+      ],
+      "quote": "Ten million mediocre conversations can't compare with a thousand corner cases polished by top experts"
+    },
     }
   },
   "ai4ss": {
