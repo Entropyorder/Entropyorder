@@ -41,8 +41,10 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
       href={paper.url}
       target="_blank"
       rel="noreferrer"
-      onHoverStart={() => onHover(index)}
-      onHoverEnd={() => onHover(null)}
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => onHover(null)}
+      onTouchStart={() => onHover(index)}
+      onTouchEnd={() => onHover(null)}
       initial={{ opacity: 0, y: 30 + index * 15, scale: 0.9 }}
       animate={
         isInView
@@ -58,7 +60,8 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
       }
       transition={{
         type: 'spring',
-        ...spring.snappy,
+        stiffness: 300,
+        damping: 25,
       }}
       className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-bottom"
       style={{
@@ -72,13 +75,14 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
         className="w-full h-full object-cover object-top"
         loading="lazy"
       />
-      {/* Persistent info bar — always visible */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+      {/* Persistent info bar — hidden on hover */}
+      <div className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
         <h4 className="text-white font-semibold text-xs leading-snug line-clamp-1 mb-0.5">{paper.title}</h4>
         <span className="text-white/60 text-[10px]">{paper.authors} · {paper.venue}</span>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+      {/* Hover overlay */}
+      <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+      <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
         <h4 className="text-white font-bold text-sm leading-snug mb-1 line-clamp-2">{paper.title}</h4>
         <div className="flex items-center justify-between">
           <span className="text-white/70 text-xs">{paper.authors} · {paper.venue}</span>
