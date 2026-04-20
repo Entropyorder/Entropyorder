@@ -7,11 +7,14 @@ import { duration, offset } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
 
 // Floating geometric shape
-function FloatShape({ className, delay = 0, duration = 8 }) {
+function FloatShape({ className, delay = 0, duration = 8, rotateAmount = 0 }) {
   return (
     <motion.div
       className={className}
-      animate={{ y: [0, -18, 0], rotate: [0, 5, 0] }}
+      animate={{
+        y: [0, -14, 0],
+        rotate: [0, rotateAmount, 0],
+      }}
       transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
     />
   );
@@ -72,41 +75,40 @@ export function Hero() {
       />
 
       {/* ── Layer 3: Floating geometric shapes ────────── */}
-      {/* Large ring top-right */}
-      <FloatShape
-        duration={10}
-        delay={0}
-        className="pointer-events-none absolute top-16 right-[8%] w-64 h-64 rounded-full border border-brand-400/15 dark:border-brand-400/20"
-      />
-      {/* Medium ring */}
-      <FloatShape
-        duration={13}
-        delay={2}
-        className="pointer-events-none absolute top-24 right-[10%] w-44 h-44 rounded-full border border-accent-400/15 dark:border-accent-400/20"
-      />
-      {/* Small filled circle top-right */}
-      <FloatShape
-        duration={9}
-        delay={1}
-        className="pointer-events-none absolute top-28 right-[12%] w-3 h-3 rounded-full bg-brand-400/30 dark:bg-brand-400/50"
-      />
-      {/* Large ring bottom-left */}
+      {/* Large ring - top left area */}
       <FloatShape
         duration={11}
-        delay={3}
-        className="pointer-events-none absolute bottom-24 left-[6%] w-56 h-56 rounded-full border border-brand-500/10 dark:border-brand-500/15"
+        delay={0}
+        rotateAmount={3}
+        className="pointer-events-none absolute top-20 left-[8%] w-48 h-48 rounded-full border border-brand-400/12 dark:border-brand-400/18"
       />
-      {/* Small accent dot */}
+      {/* Medium ring - bottom right area */}
+      <FloatShape
+        duration={14}
+        delay={2}
+        rotateAmount={-4}
+        className="pointer-events-none absolute bottom-32 right-[10%] w-36 h-36 rounded-full border border-accent-400/10 dark:border-accent-400/16"
+      />
+      {/* Small ring - top right */}
+      <FloatShape
+        duration={9}
+        delay={1.2}
+        rotateAmount={2}
+        className="pointer-events-none absolute top-32 right-[18%] w-20 h-20 rounded-full border border-brand-400/8 dark:border-brand-400/12"
+      />
+      {/* Tilted square - bottom left */}
+      <FloatShape
+        duration={13}
+        delay={0.8}
+        rotateAmount={5}
+        className="pointer-events-none absolute bottom-28 left-[12%] w-16 h-16 border border-brand-500/8 dark:border-brand-500/12 rotate-45"
+      />
+      {/* Tiny accent dot - near logo */}
       <FloatShape
         duration={7}
         delay={1.5}
-        className="pointer-events-none absolute bottom-32 left-[10%] w-2 h-2 rounded-full bg-accent-400/50 dark:bg-accent-400/70"
-      />
-      {/* Medium tilted square bottom-right */}
-      <FloatShape
-        duration={12}
-        delay={0.5}
-        className="pointer-events-none absolute bottom-40 right-[5%] w-20 h-20 border border-brand-400/10 dark:border-brand-400/15 rotate-45"
+        rotateAmount={0}
+        className="pointer-events-none absolute top-[40%] right-[25%] w-2.5 h-2.5 rounded-full bg-accent-400/40 dark:bg-accent-400/60"
       />
 
       {/* ── Layer 4: Main content ──────────────────────── */}
