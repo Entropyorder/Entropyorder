@@ -6,8 +6,8 @@ import { useScrollReveal } from '../animations/useScrollReveal.js';
 const BASE = import.meta.env.BASE_URL;
 
 const METHODOLOGY_IMAGES = [
-  { src: `${BASE}methodology/knowledge-graph.png`, key: 'graph' },
   { src: `${BASE}methodology/expert-tagging.png`, key: 'tagging' },
+  { src: `${BASE}methodology/knowledge-graph.png`, key: 'graph' },
   { src: `${BASE}methodology/cross-review.png`, key: 'review' },
 ];
 

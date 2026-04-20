@@ -28,9 +28,15 @@ const STEP_META = {
   },
 };
 
+const FINAL_META = {
+  iconBg: 'from-emerald-500 to-teal-500',
+  glow: 'rgba(16,185,129,0.4)',
+  badgeCls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
+};
+
 function PipelineStep({ step, index, delay, isFinal }) {
   const isHuman = step.type === 'human';
-  const meta = STEP_META[step.type] || STEP_META.human;
+  const meta = isFinal ? FINAL_META : (STEP_META[step.type] || STEP_META.human);
   const Icon = isFinal ? Database : (STEP_ICONS[step.type] || Users);
 
   if (isFinal) {

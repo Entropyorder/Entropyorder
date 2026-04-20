@@ -123,8 +123,8 @@
     "title": "Expert Knowledge Is the Foundation of Capability Breakthroughs",
     "subtitle": "High-quality expert annotations outperform crowd-sourced data in training efficiency, reasoning depth, and domain precision",
     "methodologyImages": [
-      { "title": "Knowledge Graph Construction" },
       { "title": "Expert Precision Annotation" },
+      { "title": "Knowledge Graph Construction" },
       { "title": "Multi-expert Cross-review" }
     ],
     "stats": [
