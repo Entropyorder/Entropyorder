@@ -2,3 +2,7 @@
 node_modules/
 dist/
 dev.log
+issues.md
+temp/
+.claude/
+docs/
