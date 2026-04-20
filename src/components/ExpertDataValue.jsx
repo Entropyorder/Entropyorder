@@ -70,7 +70,7 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
       }}
     >
       <img
-        src={paper.img}
+        src={`${import.meta.env.BASE_URL}${paper.img}`}
         alt={paper.title}
         className="w-full h-full object-cover object-top"
         loading="lazy"

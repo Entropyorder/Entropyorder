@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { stagger, offset, duration } from '../animations/tokens.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
 
+const BASE = import.meta.env.BASE_URL;
+
 const METHODOLOGY_IMAGES = [
-  { src: '/methodology/knowledge-graph.png', key: 'graph' },
-  { src: '/methodology/expert-tagging.png', key: 'tagging' },
-  { src: '/methodology/cross-review.png', key: 'review' },
+  { src: `${BASE}methodology/knowledge-graph.png`, key: 'graph' },
+  { src: `${BASE}methodology/expert-tagging.png`, key: 'tagging' },
+  { src: `${BASE}methodology/cross-review.png`, key: 'review' },
 ];
 
 function MethodologyCard({ image, title, index, delay }) {
