@@ -170,7 +170,7 @@ export function ExpertDataValue() {
         </motion.div>
 
         {/* Detailed Pipeline + Papers (two-column) */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center">
           {/* Left: Detailed Pipeline */}
           <div className="flex-[2] min-w-0">
             <div className="relative rounded-2xl overflow-hidden

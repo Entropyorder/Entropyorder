@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Bot, Users, Network } from 'lucide-react';
+import { Bot, Users, Network, Database } from 'lucide-react';
 import { stagger, offset, duration } from '../animations/tokens.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
 
@@ -31,7 +31,7 @@ const STEP_META = {
 function PipelineStep({ step, index, delay, isFinal }) {
   const isHuman = step.type === 'human';
   const meta = STEP_META[step.type] || STEP_META.human;
-  const Icon = STEP_ICONS[step.type] || Users;
+  const Icon = isFinal ? Database : (STEP_ICONS[step.type] || Users);
 
   if (isFinal) {
     return (
