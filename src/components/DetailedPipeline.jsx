@@ -28,10 +28,48 @@ const STEP_META = {
   },
 };
 
-function PipelineStep({ step, index, delay }) {
+function PipelineStep({ step, index, delay, isFinal }) {
   const isHuman = step.type === 'human';
   const meta = STEP_META[step.type] || STEP_META.human;
   const Icon = STEP_ICONS[step.type] || Users;
+
+  if (isFinal) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: offset.medium }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: duration.normal, delay, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col items-center"
+      >
+        {/* Icon */}
+        <div className="flex-shrink-0 mb-4">
+          <div
+            className={`relative w-16 h-16 rounded-2xl flex items-center justify-center
+              bg-gradient-to-br ${meta.iconBg} shadow-lg`}
+            style={{ boxShadow: `0 4px 24px ${meta.glow}` }}
+          >
+            <Icon className="w-8 h-8 text-white" strokeWidth={1.8} />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug">
+              {step.title}
+            </h3>
+            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${meta.badgeCls}`}>
+              {step.badge}
+            </span>
+          </div>
+          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
+            {step.desc}
+          </p>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -87,6 +125,7 @@ export function DetailedPipeline() {
           step={step}
           index={i}
           delay={getChildProps(i).delay}
+          isFinal={i === steps.length - 1}
         />
       ))}
     </div>

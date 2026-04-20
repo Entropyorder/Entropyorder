@@ -16,9 +16,9 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
   const isOtherHovered = isAnyHovered && !isHovered;
 
   const stackOffsets = [
-    { x: -6, y: -4, rotate: -3 },
-    { x: 4, y: 2, rotate: 1.5 },
-    { x: 12, y: 8, rotate: 5 },
+    { x: -8, y: -6, rotate: -4 },
+    { x: 5, y: 3, rotate: 2 },
+    { x: 15, y: 10, rotate: 6 },
   ];
   const stack = stackOffsets[index] || stackOffsets[0];
 
@@ -26,9 +26,9 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
   const fanOffsets = Array.from({ length: totalCards }, (_, i) => {
     const delta = i - centerIndex;
     return {
-      x: delta * 28,
-      y: Math.abs(delta) * 5,
-      rotate: delta * 5,
+      x: delta * 32,
+      y: Math.abs(delta) * 6,
+      rotate: delta * 6,
     };
   });
   const fan = fanOffsets[index] || fanOffsets[0];
@@ -63,7 +63,7 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
       className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-bottom"
       style={{
         zIndex: isHovered ? 20 : 3 - index,
-        aspectRatio: '3/4',
+        aspectRatio: '2/3',
       }}
     >
       <img
@@ -168,7 +168,7 @@ export function ExpertDataValue() {
         {/* Detailed Pipeline + Papers (two-column) */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
           {/* Left: Detailed Pipeline */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-[2] min-w-0">
             <div className="relative rounded-2xl overflow-hidden
               bg-slate-50/80 dark:bg-[#0a1422]/80
               border border-slate-100 dark:border-white/[0.06]
@@ -181,7 +181,7 @@ export function ExpertDataValue() {
 
           {/* Right: Papers */}
           {papers.length > 0 && (
-            <div className="w-full lg:w-[320px] xl:w-[350px] flex-shrink-0">
+            <div className="flex-1 w-full lg:w-[360px] xl:w-[400px] flex-shrink-0">
               <motion.div
                 {...presets.fadeIn(duration.normal, 0.2)}
                 className="mb-5"
@@ -190,7 +190,7 @@ export function ExpertDataValue() {
                   {t('expertData.pipeline.papersLabel', 'Related Publications')}
                 </span>
               </motion.div>
-              <div className="relative" style={{ height: 440 }}>
+              <div className="relative" style={{ height: 500 }}>
                 {papers.map((paper, i) => (
                   <PaperCard
                     key={i}
