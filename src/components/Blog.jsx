@@ -57,39 +57,54 @@ function BlogCard({ post, onOpen }) {
   );
 }
 
-function ArticleModal({ post, onClose }) {
+function ArticleDrawer({ post, onClose }) {
   return (
     <AnimatePresence>
+      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 py-8"
+        className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm"
+      />
+
+      {/* Drawer */}
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        className="fixed inset-y-0 right-0 z-[110] w-full max-w-4xl bg-white dark:bg-slate-900 shadow-2xl"
       >
-        <motion.div
-          initial={{ scale: 0.92, opacity: 0, y: offset.small }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.92, opacity: 0, y: offset.small }}
-          transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
-          onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-2xl max-h-[85vh] rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden flex flex-col"
-        >
-          <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-50 leading-snug">{post.title}</h2>
-              <span className="text-sm text-slate-400 dark:text-slate-500 mt-1 block">{post.date}</span>
-            </div>
-            <button onClick={onClose} className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <X className="w-5 h-5 text-slate-600 dark:text-slate-300" />
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto p-6">
-            <div className="article-prose max-w-none">
-              <ReactMarkdown>{post.content}</ReactMarkdown>
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onClose}
+                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              </button>
+              <span className="text-sm text-slate-400 dark:text-slate-500">
+                {post.date}
+              </span>
             </div>
           </div>
-        </motion.div>
+
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-6 py-8 md:px-12 md:py-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-50 mb-6 leading-tight">
+                {post.title}
+              </h1>
+              <div className="article-prose max-w-none">
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              </div>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
@@ -144,7 +159,7 @@ export function Blog() {
       </div>
 
       {selectedPost && (
-        <ArticleModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+        <ArticleDrawer post={selectedPost} onClose={() => setSelectedPost(null)} />
       )}
     </section>
   );
