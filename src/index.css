@@ -1,3 +1,7 @@
+/* Global fonts */
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.330.0/style.css');
+@import url('https://rsms.me/inter/inter.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,13 +12,6 @@
   }
   body {
     @apply antialiased bg-page-bg text-slate-800 dark:bg-page-bg-dark dark:text-slate-50;
-    font-family: 'Space Grotesk', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-  }
-
-  /* Chinese text falls back to Noto Sans SC */
-  :lang(zh),
-  .font-zh {
-    font-family: 'Noto Sans SC', 'Space Grotesk', system-ui, sans-serif;
   }
 }
 
@@ -25,5 +22,24 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+}
+
+@keyframes ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }

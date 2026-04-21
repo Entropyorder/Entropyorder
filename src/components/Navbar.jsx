@@ -1,26 +1,31 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme.js';
 import { spring } from '../animations/tokens.js';
 import logoUrl from '/logo.png';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 
-export function Navbar({ activeTab, onTabChange, sectionIds }) {
+export function Navbar({ sectionIds }) {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(window.scrollY);
+  const [scrollY, setScrollY] = useState(typeof window !== 'undefined' ? window.scrollY : 0);
   const [visibleSection, setVisibleSection] = useState('home');
   const toggleRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHome = location.pathname === '/';
 
   const navItems = [
-    { key: 'home', tab: 'home', label: t('nav.home') },
-    { key: 'products', tab: 'home', label: t('nav.products') },
-    { key: 'blog', tab: 'blog', label: t('nav.blog') },
-    { key: 'ai4ss', tab: 'ai4ss', label: t('nav.ai4ss') },
+    { key: 'home', label: t('nav.home'), kind: 'route', path: '/' },
+    { key: 'products', label: t('nav.products'), kind: 'section', sectionId: 'products' },
+    { key: 'blog', label: t('nav.blog'), kind: 'route', path: '/blog' },
+    { key: 'ai4ss', label: t('nav.ai4ss'), kind: 'route', path: '/ai4ss' },
   ];
 
   const isScrolled = scrollY > 80;
@@ -33,7 +38,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
   }, []);
 
   useEffect(() => {
-    if (activeTab !== 'home') {
+    if (!isHome) {
       setVisibleSection(null);
       return;
     }
@@ -57,7 +62,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, [activeTab, sectionIds]);
+  }, [isHome, sectionIds, location.pathname]);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -83,24 +88,41 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
   };
 
   const isActive = (item) => {
-    if (item.tab !== 'home') return activeTab === item.tab;
-    if (activeTab !== 'home') return false;
-    return visibleSection === item.key;
+    if (item.kind === 'route') {
+      if (item.path === '/') return isHome && (!visibleSection || visibleSection === 'home');
+      return location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+    }
+    return isHome && visibleSection === item.sectionId;
+  };
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const navbarH = 64;
+    const y = el.getBoundingClientRect().top + window.scrollY - navbarH;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (item.tab !== 'home') {
-      onTabChange(item.tab);
+    if (item.kind === 'route') {
+      if (item.path === '/') {
+        if (isHome) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          navigate('/');
+        }
+      } else {
+        navigate(item.path);
+      }
       return;
     }
-    onTabChange('home');
-    const target = document.getElementById(item.key);
-    if (target) {
-      const navbarH = 64;
-      const y = target.getBoundingClientRect().top + window.scrollY - navbarH;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    // Section: scroll in home, or navigate + scrollTo state
+    if (isHome) {
+      scrollToSection(item.sectionId);
+    } else {
+      navigate('/', { state: { scrollTo: item.sectionId } });
     }
   };
 
@@ -111,12 +133,6 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
     : theme === 'dark'
     ? 'bg-transparent border-b border-transparent'
     : 'bg-white/70 backdrop-blur-xl border-b border-slate-200/40';
-
-  const textColor = isScrolled
-    ? ''
-    : theme === 'dark'
-    ? 'text-white dark:text-white'
-    : '';
 
   const logoTextColor = isScrolled
     ? 'text-slate-700 dark:text-slate-200'
@@ -142,8 +158,6 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
     ? 'bg-white/15 dark:bg-white/15'
     : 'bg-brand-50';
 
-  const iconColor = isScrolled ? undefined : isLightNotScrolled ? 'text-slate-600' : 'text-white';
-
   const langBtnCls = isScrolled
     ? 'text-xs font-semibold text-slate-600 dark:text-slate-400 min-w-[36px]'
     : theme === 'dark'
@@ -160,7 +174,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
     <nav className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${navBg}`}>
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a
-          href="#home"
+          href="/"
           onClick={(e) => handleNavClick(e, navItems[0])}
           className="flex items-center gap-2.5 group"
         >
@@ -176,13 +190,11 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
             {navItems.map((item) => (
               <a
                 key={item.key}
-                href={`#${item.key}`}
+                href={item.kind === 'route' ? item.path : `#${item.sectionId}`}
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive(item) ? 'page' : undefined}
                 className={`relative px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                  isActive(item)
-                    ? `${activeTextCls}`
-                    : navTextBase
+                  isActive(item) ? `${activeTextCls}` : navTextBase
                 }`}
               >
                 {isActive(item) && (
@@ -252,7 +264,7 @@ export function Navbar({ activeTab, onTabChange, sectionIds }) {
             {navItems.map((item) => (
               <a
                 key={item.key}
-                href={`#${item.key}`}
+                href={item.kind === 'route' ? item.path : `#${item.sectionId}`}
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive(item) ? 'page' : undefined}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${

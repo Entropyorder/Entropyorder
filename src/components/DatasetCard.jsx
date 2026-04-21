@@ -28,9 +28,12 @@ export function DatasetCard({ dataset, onViewDetail }) {
       <div className="relative p-5 z-[2]">
         {/* Title + scale badge */}
         <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="text-base font-semibold text-slate-800 dark:text-slate-50 leading-snug">
+          <motion.h3
+            layoutId={dataset.id ? `dataset-title-${dataset.id}` : undefined}
+            className="font-display text-base font-semibold text-slate-800 dark:text-slate-50 leading-snug"
+          >
             {dataset.name}
-          </h3>
+          </motion.h3>
           <span className="shrink-0 px-2.5 py-0.5 text-xs font-bold rounded-full
             bg-brand-50 text-brand-700 border border-brand-200/70
             dark:bg-brand-400/15 dark:text-brand-200 dark:border-brand-400/25">

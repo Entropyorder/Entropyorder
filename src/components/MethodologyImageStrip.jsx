@@ -2,13 +2,12 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { stagger, offset, duration } from '../animations/tokens.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
-
-const BASE = import.meta.env.BASE_URL;
+import { publicAsset } from '../utils/assets.js';
 
 const METHODOLOGY_IMAGES = [
-  { src: `${BASE}methodology/expert-tagging.png`, key: 'tagging' },
-  { src: `${BASE}methodology/knowledge-graph.png`, key: 'graph' },
-  { src: `${BASE}methodology/cross-review.png`, key: 'review' },
+  { src: publicAsset('methodology/expert-tagging.png'), key: 'tagging' },
+  { src: publicAsset('methodology/knowledge-graph.png'), key: 'graph' },
+  { src: publicAsset('methodology/cross-review.png'), key: 'review' },
 ];
 
 function MethodologyCard({ image, title, index, delay }) {

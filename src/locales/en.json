@@ -21,25 +21,41 @@
             "name": "HLE Dataset",
             "desc": "High-difficulty science reasoning benchmark spanning mathematics, physics, chemistry, biology, medicine, CS, engineering, finance, arts, linguistics, astronomy, and geography",
             "scale": "3K+ samples",
-            "tags": ["Science Reasoning", "Multi-domain", "Benchmark"]
+            "tags": [
+              "Science Reasoning",
+              "Multi-domain",
+              "Benchmark"
+            ]
           },
           {
             "name": "SFE Dataset",
             "desc": "Real problems from scientific research scenarios, collected and annotated by domain scientists from actual research work with strong real-world constraints",
             "scale": "5K+ samples",
-            "tags": ["Research Scenarios", "Real Problems", "Expert Annotations"]
+            "tags": [
+              "Research Scenarios",
+              "Real Problems",
+              "Expert Annotations"
+            ]
           },
           {
             "name": "MicroVQA Dataset",
             "desc": "Specialized multimodal dataset for biological microscopy, featuring visual QA over cell and tissue slice micro-images",
             "scale": "2K+ samples",
-            "tags": ["Biology", "Microscopy", "Multimodal"]
+            "tags": [
+              "Biology",
+              "Microscopy",
+              "Multimodal"
+            ]
           },
           {
             "name": "Cross-lingual K12QA Dataset",
             "desc": "K12 problem dataset covering 20+ languages, collected by local experts from country-specific textbooks and verified for accuracy",
             "scale": "10K+ samples",
-            "tags": ["Multilingual", "K12", "Verified"]
+            "tags": [
+              "Multilingual",
+              "K12",
+              "Verified"
+            ]
           }
         ]
       },
@@ -50,25 +66,41 @@
             "name": "Tri-modal Alignment Dataset",
             "desc": "Video-audio-text tri-modal alignment dataset with frame-level temporal annotations and cross-modal semantic mapping",
             "scale": "2K+ samples",
-            "tags": ["Video", "Audio", "Text Alignment"]
+            "tags": [
+              "Video",
+              "Audio",
+              "Text Alignment"
+            ]
           },
           {
             "name": "Proactive Streaming Video",
             "desc": "Streaming video active understanding dataset requiring real-time inference and prediction during video playback",
             "scale": "1K+ samples",
-            "tags": ["Streaming Video", "Active Inference", "Real-time"]
+            "tags": [
+              "Streaming Video",
+              "Active Inference",
+              "Real-time"
+            ]
           },
           {
             "name": "Science Video QA Dataset",
             "desc": "Multimodal QA dataset over science videos (chemistry, biology experiments) covering procedures and phenomenon explanations",
             "scale": "1K+ samples",
-            "tags": ["Science Experiments", "Video QA", "Multimodal"]
+            "tags": [
+              "Science Experiments",
+              "Video QA",
+              "Multimodal"
+            ]
           },
           {
             "name": "Chart Reasoning QA Dataset",
             "desc": "Deep reasoning evaluation data fusing complex charts and natural language, with multi-step derivation and cross-chart-text links",
             "scale": "2K+ samples",
-            "tags": ["Chart Understanding", "Deep Reasoning", "Multi-step"]
+            "tags": [
+              "Chart Understanding",
+              "Deep Reasoning",
+              "Multi-step"
+            ]
           }
         ]
       },
@@ -79,19 +111,31 @@
             "name": "Browser Dataset",
             "desc": "Real user browser operation traces with task decomposition, mid-task decisions, and error recovery paths",
             "scale": "5K+ trajectories",
-            "tags": ["Web Agent", "Task Planning", "Trajectories"]
+            "tags": [
+              "Web Agent",
+              "Task Planning",
+              "Trajectories"
+            ]
           },
           {
             "name": "Openclaw Dataset",
             "desc": "Cross-platform GUI agent dataset covering desktop and mobile interface operation trajectories",
             "scale": "3K+ trajectories",
-            "tags": ["GUI Agent", "Cross-platform", "Control"]
+            "tags": [
+              "GUI Agent",
+              "Cross-platform",
+              "Control"
+            ]
           },
           {
             "name": "Search Evaluation Dataset",
             "desc": "Multi-hop reasoning search benchmark with diverse query sources spanning multiple information types",
             "scale": "5K+ samples",
-            "tags": ["Multi-hop Reasoning", "Search Eval", "Diverse Queries"]
+            "tags": [
+              "Multi-hop Reasoning",
+              "Search Eval",
+              "Diverse Queries"
+            ]
           }
         ]
       }
@@ -123,21 +167,49 @@
     "title": "Expert Knowledge Is the Foundation of Capability Breakthroughs",
     "subtitle": "High-quality expert annotations outperform crowd-sourced data in training efficiency, reasoning depth, and domain precision",
     "methodologyImages": [
-      { "title": "Expert Precision Annotation" },
-      { "title": "Knowledge Graph Construction" },
-      { "title": "Multi-expert Cross-review" }
+      {
+        "title": "Expert Precision Annotation"
+      },
+      {
+        "title": "Knowledge Graph Construction"
+      },
+      {
+        "title": "Multi-expert Cross-review"
+      }
     ],
     "stats": [
-      { "value": "50+", "label": "Domain Experts" },
-      { "value": "4", "label": "Datasets" },
-      { "value": "95%", "label": "Pass Rate" },
-      { "value": "3×", "label": "Efficiency Gain" }
+      {
+        "value": "50+",
+        "label": "Domain Experts"
+      },
+      {
+        "value": "4",
+        "label": "Datasets"
+      },
+      {
+        "value": "95%",
+        "label": "Pass Rate"
+      },
+      {
+        "value": "3×",
+        "label": "Efficiency Gain"
+      }
     ],
     "comparison": {
       "expertTitle": "Expert Annotation",
-      "expertPoints": ["Complete reasoning chains", "Multi-expert cross-validation", "Deep domain understanding", "High-difficulty discriminative questions"],
+      "expertPoints": [
+        "Complete reasoning chains",
+        "Multi-expert cross-validation",
+        "Deep domain understanding",
+        "High-difficulty discriminative questions"
+      ],
       "crowdTitle": "Crowd Annotation",
-      "crowdPoints": ["Broken reasoning chains", "Single annotation, no validation", "Surface-level understanding", "Low difficulty, easily cracked"]
+      "crowdPoints": [
+        "Broken reasoning chains",
+        "Single annotation, no validation",
+        "Surface-level understanding",
+        "Low difficulty, easily cracked"
+      ]
     },
     "pipeline": {
       "heading": "Human-AI Collaborative Annotation Pipeline",
@@ -147,6 +219,13 @@
       "rejectDesc": "Discarded if difficulty threshold not met",
       "papersLabel": "Related Publications",
       "papers": [
+        {
+          "title": "AutoQG: An Automated Framework for Question Generation from Scientific Papers",
+          "authors": "AutoQG Team",
+          "venue": "ICLR 2025",
+          "url": "https://openreview.net/forum?id=AutoQG",
+          "img": "papers/autoQG.png"
+        },
         {
           "title": "GPQA: A Graduate-Level Google-Proof Q&A Benchmark",
           "authors": "Rein et al.",
@@ -159,14 +238,14 @@
           "authors": "Wang et al.",
           "venue": "arXiv 2024",
           "url": "https://arxiv.org/abs/2406.08064",
-          "img": "papers/scbench.png"
+          "img": "papers/mmlu_pro.png"
         },
         {
           "title": "SCBench: A KV Cache-Centric Benchmark for Long Context",
           "authors": "Li et al.",
           "venue": "arXiv 2025",
           "url": "https://arxiv.org/abs/2412.12119",
-          "img": "papers/mmlu_pro.png"
+          "img": "papers/scbench.png"
         }
       ],
       "detailedSteps": [
@@ -254,45 +333,7 @@
   "blog": {
     "tag": "Blog",
     "title": "Latest Updates",
-    "subtitle": "Explore cutting-edge insights and technical practices in data intelligence",
-    "posts": [
-      {
-        "title": "How Expert Data Reshapes LLM Reasoning Capabilities",
-        "summary": "Deep analysis of the critical role high-quality expert annotation data plays in enhancing LLM reasoning depth and domain precision, and how we build world-class expert annotation workflows.",
-        "date": "2026-04-10",
-        "content": "As large language models continue to scale, pure parameter growth alone can no longer drive qualitative leaps in reasoning capability. Our research shows that high-quality expert annotation data is the key to breaking through the reasoning ceiling.\n\nIn traditional crowd-sourced data, annotators often lack domain depth, resulting in superficial data that lacks reasoning chains. Expert annotation is fundamentally different — domain scientists not only understand the knowledge itself, but also the implicit connections and reasoning logic between concepts.\n\nOur human-AI collaborative annotation workflow combines frontier LLMs' structured parsing capabilities with domain experts' deep understanding: the LLM handles paper structure decomposition and key concept extraction, while experts focus on understanding implicit assumptions and disciplinary boundaries. This collaboration achieves data quality at an unprecedented level.\n\nIn the construction of the HLE dataset, we validated the effectiveness of this approach: the pass rate for expert-created questions was only 23%, but the passed questions far exceeded crowd-sourced benchmarks in difficulty and discriminability."
-      },
-      {
-        "title": "AI4SS4AI: A New Paradigm of Social Science-Driven AI",
-        "summary": "Starting from the real world, using social science theoretical frameworks to extract human behavioral diversity, building a million-scale personality atlas, and enabling AI to truly understand humanity.",
-        "date": "2026-03-28",
-        "content": "The core challenge facing AI training data today is not quantity but diversity. Existing datasets over-represent specific demographics and perspectives, causing systematic biases in how models understand human diversity.\n\nThe AI4SS4AI project proposes a fundamental paradigm shift: starting from social science to systematically model human diversity. We integrate established theoretical frameworks from psychology, sociology, and anthropology to construct a multi-dimensional personality label system covering value systems, cognitive styles, professional competencies, and cultural backgrounds.\n\nThis system now encompasses over 1 million Persona × Skills combinations, each corresponding to a virtual personality profile with internal consistency. The data generation process driven by these profiles ensures an optimal balance between diversity and authenticity in the output data.\n\nStarting from the real world, empowered by the mutual reinforcement of Social Science and AI, and ultimately returning to improve the real world — this is the core vision of AI4SS4AI."
-      },
-      {
-        "title": "Technical Challenges and Breakthroughs in Multimodal Data Alignment",
-        "summary": "Analysis of the technical difficulties of video-audio-text tri-modal precise alignment, and our latest advances in frame-level annotation and cross-modal semantic mapping.",
-        "date": "2026-03-15",
-        "content": "Multimodal alignment is one of the core foundational tasks for building general AI systems. However, existing alignment methods still face significant challenges when handling fine-grained temporal relationships.\n\nIn video-audio-text tri-modal scenarios, the key difficulties lie in: differences in temporal scales (audio frames vs video frames vs text segments), semantic granularity mismatches (visual details vs auditory events vs language descriptions), and cross-modal causal relationship modeling.\n\nOur tri-modal alignment dataset adopts a frame-level segmented annotation strategy: each video is divided into semantically complete segments, with each segment simultaneously annotated with corresponding audio events and text descriptions. This fine-grained annotation enables models to learn true cross-modal temporal correspondence.\n\nInitial experiments show that models trained on this dataset improved performance on cross-modal retrieval tasks by 34% and on temporal localization tasks by 28%."
-      },
-      {
-        "title": "From HLE: Future Directions in Scientific Reasoning Evaluation",
-        "summary": "The HLE dataset reveals systematic shortcomings of current LLMs in cross-disciplinary reasoning, providing important insights for the design of next-generation evaluation benchmarks.",
-        "date": "2026-02-20",
-        "content": "HLE (High-Level Evaluation) is our high-difficulty scientific reasoning evaluation benchmark, covering 12 disciplinary areas including mathematics, physics, chemistry, biology, medicine, computer science, engineering, and finance.\n\nUnlike existing benchmarks, every question in HLE is derived by domain experts from frontier papers, containing complete reasoning chains and multi-step derivations. This makes HLE not only evaluate knowledge breadth but also reasoning depth.\n\nWe conducted systematic evaluations of current mainstream LLMs on HLE. The results show that even the strongest models perform significantly worse on cross-disciplinary reasoning tasks than on single-discipline tasks. This reveals systematic shortcomings in current models' knowledge transfer and integrative reasoning capabilities.\n\nBased on these findings, we believe next-generation evaluation benchmarks need: stronger cross-disciplinary coverage, longer reasoning chains, and finer difficulty grading. Future versions of HLE will continue to evolve along these directions."
-      },
-      {
-        "title": "Human-AI Collaborative Annotation: When AI Meets Domain Experts",
-        "summary": "Exploring best practices for LLMs and domain experts working collaboratively, and how to find the optimal balance between efficiency and quality.",
-        "date": "2026-01-18",
-        "content": "In data annotation, the tension between manual and automated approaches has long existed: pure manual annotation is high-quality but low-efficiency, while pure automated annotation is efficient but lacks depth. Human-AI collaborative annotation seeks the optimal balance between these extremes.\n\nOur practice shows that successful collaboration requires clear role division: AI handles structured, scalable tasks (paper parsing, concept extraction, initial classification), while experts handle tasks requiring deep understanding (implicit assumption identification, reasoning chain construction, quality review).\n\nThe key is information flow design. AI outputs should not directly enter the final dataset but serve as inputs and aids for expert work. Experts performing deep reading and supplementation based on AI-provided structured summaries achieve 3-5x efficiency improvements compared to starting from scratch.\n\nThe multi-expert cross-review mechanism ensures data quality consistency. Our statistics show that data items reviewed by three independent experts have 67% lower variance in final quality scores compared to single-expert review."
-      },
-      {
-        "title": "Agent Data: The Foundation for Building Autonomous Agents",
-        "summary": "From browser operations to GUI control, how high-quality Agent trajectory data empowers the training and evaluation of next-generation autonomous agents.",
-        "date": "2025-12-05",
-        "content": "Agents represent the critical evolution of AI from passive response to active execution. However, training reliable Agents requires large quantities of high-quality trajectory data — recording not just final outcomes but the complete decision-making process.\n\nOur Browser dataset collects real user browser operation trajectories, including task decomposition, mid-task decisions, and error recovery paths. This data reveals how humans actually behave when facing complex Web tasks.\n\nThe Openclaw dataset further extends to cross-platform GUI control scenarios, covering desktop and mobile interface operations. This provides valuable multi-platform experience for training general GUI Agents.\n\nIn terms of data quality, we particularly focus on annotating error recovery paths. In real scenarios, users frequently need to backtrack, correct, and re-plan. These trajectories are crucial for training Agent robustness and adaptability.\n\nThe Search Evaluation dataset focuses on multi-hop reasoning search capabilities, with diverse Query sources and multiple information types, evaluating Agents' deep retrieval and reasoning abilities."
-      }
-    ]
+    "subtitle": "Explore cutting-edge insights and technical practices in data intelligence"
   },
   "footer": {
     "contactTitle": "Contact Us",
@@ -315,7 +356,11 @@
       "name": "HLE Dataset",
       "desc": "High-difficulty scientific reasoning evaluation dataset spanning math, physics, chemistry, biology, medicine, CS, engineering, finance, arts, linguistics, astronomy, geography, and more",
       "scale": "3K+ samples",
-      "tags": ["Science Reasoning", "Multi-domain", "Benchmark"],
+      "tags": [
+        "Science Reasoning",
+        "Multi-domain",
+        "Benchmark"
+      ],
       "brief": "HLE (Hard-Level Evaluation) is a high-difficulty scientific reasoning benchmark for frontier LLMs. Questions are designed and reviewed by domain experts across 12+ disciplines, requiring deep reasoning rather than surface matching. Each question includes complete reasoning chain annotations and difficulty ratings.",
       "structure": "{\n  \"query\": \"Under standard conditions, which reaction has the most negative ΔG°?\",\n  \"rubric\": \"Must provide correct answer with thermodynamic derivation\",\n  \"answer\": \"Option C, reasoning: ...\",\n  \"domain\": \"chemistry\",\n  \"difficulty\": 4\n}",
       "paper": {
@@ -330,7 +375,11 @@
       "name": "SFE Dataset",
       "desc": "Real-world research questions collected and annotated by domain scientists from active research work, with strong real-world constraints",
       "scale": "5K+ samples",
-      "tags": ["Research Scenarios", "Real Problems", "Expert Annotations"],
+      "tags": [
+        "Research Scenarios",
+        "Real Problems",
+        "Expert Annotations"
+      ],
       "brief": "SFE (Scientific Frontiers Evaluation) extracts questions from real research scenarios, annotated by active researchers. Unlike synthetic data, these questions feature genuine constraints, uncertainties, and cutting-edge challenges that directly test a model's research assistance capabilities.",
       "structure": "{\n  \"query\": \"How to quantify off-target rate after in vivo CRISPR-Cas9 editing?\",\n  \"context\": \"Based on mouse liver AAV delivery experiment\",\n  \"rubric\": \"Must cite at least two detection methods and compare sensitivity\",\n  \"answer\": \"Expert reasoning and conclusion...\",\n  \"field\": \"molecular_biology\"\n}"
     },
@@ -338,7 +387,11 @@
       "name": "MicroVQA Dataset",
       "desc": "Biology microscopy multimodal domain-specific data with visual Q&A on cellular and tissue section images",
       "scale": "2K+ samples",
-      "tags": ["Biology", "Microscopy", "Multimodal"],
+      "tags": [
+        "Biology",
+        "Microscopy",
+        "Multimodal"
+      ],
       "brief": "MicroVQA is a visual Q&A dataset specialized for biological microscopy imaging, covering cytology, histology, and pathology. Each sample includes high-resolution microscopy images with multi-turn Q&A pairs annotated by biologists, requiring micrograph understanding and professional terminology reasoning.",
       "structure": "{\n  \"image_path\": \"microscopy/cell_042.tiff\",\n  \"qa_pairs\": [\n    {\"q\": \"What is the structure indicated by the arrow?\", \"a\": \"Mitochondria\"}\n  ],\n  \"magnification\": \"400x\",\n  \"tissue_type\": \"liver\",\n  \"staining\": \"H&E\"\n}"
     },
@@ -346,7 +399,11 @@
       "name": "Cross-lingual K12QA Dataset",
       "desc": "K12 exercise dataset covering 20+ languages, collected and verified by native education experts from country-specific textbooks",
       "scale": "10K+ samples",
-      "tags": ["Multilingual", "K12", "Verified"],
+      "tags": [
+        "Multilingual",
+        "K12",
+        "Verified"
+      ],
       "brief": "A K12 education exercise dataset spanning 20+ languages worldwide. Questions are collected by native-speaking education experts from official textbooks and exercise books in each country, multi-round verified to preserve original logic and cultural context. An ideal benchmark for evaluating cross-lingual education capabilities.",
       "structure": "{\n  \"question\": \"If f(x)=x³-3x+1, find the maximum on [-2,2]\",\n  \"options\": [\"A. -1\", \"B. 1\", \"C. 3\", \"D. 5\"],\n  \"answer\": \"C\",\n  \"explanation\": \"f'(x)=3x²-3, set f'(x)=0...\",\n  \"language\": \"en\",\n  \"grade\": 11,\n  \"subject\": \"math\"\n}"
     },
@@ -354,7 +411,11 @@
       "name": "Tri-modal Alignment Dataset",
       "desc": "Video-audio-text tri-modal precise alignment dataset with frame-level segmentation and cross-modal semantic mapping",
       "scale": "2K+ samples",
-      "tags": ["Video", "Audio", "Text Alignment"],
+      "tags": [
+        "Video",
+        "Audio",
+        "Text Alignment"
+      ],
       "brief": "A tri-modal alignment dataset for multimodal models, providing frame-level alignment annotations across video, audio, and text signals. Suitable for training cross-modal retrieval, multimodal understanding, and generation tasks across diverse scenarios including education, news, and science popularization.",
       "structure": "{\n  \"video_segments\": [{\"start\": 0.0, \"end\": 3.2}],\n  \"audio_segments\": [{\"start\": 0.1, \"end\": 3.1}],\n  \"text_transcript\": \"Today we discuss...\",\n  \"alignment_map\": {\"v0\": \"a0\", \"v0\": \"t0\"},\n  \"category\": \"education\"\n}"
     },
@@ -362,7 +423,11 @@
       "name": "Proactive Streaming Video",
       "desc": "Streaming video proactive understanding dataset where models must infer and predict in real-time during playback",
       "scale": "1K+ samples",
-      "tags": ["Streaming Video", "Active Inference", "Real-time"],
+      "tags": [
+        "Streaming Video",
+        "Active Inference",
+        "Real-time"
+      ],
       "brief": "Challenges models to proactively understand and predict during streaming video playback. Models must make predictions before the video completes, then verify or revise as subsequent frames arrive. Simulates the cognitive process of active reasoning during video viewing.",
       "structure": "{\n  \"video_url\": \"https://example.com/stream_001.mp4\",\n  \"timestamps\": [1.2, 5.8, 12.3],\n  \"predictions\": [\n    {\"at\": 5.8, \"question\": \"What happens next?\"}\n  ],\n  \"ground_truth\": \"Character opens door and enters room\",\n  \"reasoning_trace\": \"Based on motion direction in prior frames...\"\n}"
     },
@@ -370,7 +435,11 @@
       "name": "Science Video QA Dataset",
       "desc": "Multimodal QA for science experiment videos covering chemistry, biology, with procedure steps and phenomenon explanations",
       "scale": "1K+ samples",
-      "tags": ["Science Experiments", "Video QA", "Multimodal"],
+      "tags": [
+        "Science Experiments",
+        "Video QA",
+        "Multimodal"
+      ],
       "brief": "A Q&A dataset specialized for science experiment videos, covering chemistry experiments, biological procedures, and physics demonstrations. Each video includes step decomposition, phenomenon explanations, and safety annotations for evaluating deep understanding of scientific processes.",
       "structure": "{\n  \"video_url\": \"https://example.com/exp_chem_03.mp4\",\n  \"questions\": [\n    {\"t\": 12.5, \"q\": \"Why does the solution change color?\"}\n  ],\n  \"steps\": [\"Add 5mL HCl\", \"Stir 30s\", \"Observe precipitate\"],\n  \"phenomena\": [\"Solution turns from colorless to pale yellow\"],\n  \"safety_notes\": [\"Wear safety goggles\"]\n}"
     },
@@ -378,7 +447,11 @@
       "name": "Chart Reasoning QA Dataset",
       "desc": "Deep reasoning evaluation data fusing complex charts with natural language, requiring multi-step inference and cross-chart correlation",
       "scale": "2K+ samples",
-      "tags": ["Chart Understanding", "Deep Reasoning", "Multi-step"],
+      "tags": [
+        "Chart Understanding",
+        "Deep Reasoning",
+        "Multi-step"
+      ],
       "brief": "A deep reasoning dataset for complex chart understanding. Each sample contains one or more related charts with questions requiring multi-step inference. Covers bar charts, line graphs, pie charts, scatter plots, heatmaps, and more.",
       "structure": "{\n  \"chart_image\": \"charts/bar_gdp_2024.png\",\n  \"chart_type\": \"bar\",\n  \"question\": \"Which country has growth > 5% and GDP < 3T?\",\n  \"reasoning_steps\": [\n    \"Filter countries with GDP < 3T\",\n    \"Compare growth rate against 5% threshold\"\n  ],\n  \"answer\": \"India\",\n  \"source_data\": {\"file\": \"gdp_raw.csv\"}\n}"
     },
@@ -386,7 +459,11 @@
       "name": "Browser Dataset",
       "desc": "Real user browser operation trajectories with task decomposition, mid-task decisions, and error recovery paths",
       "scale": "5K+ trajectories",
-      "tags": ["Web Agent", "Task Planning", "Trajectories"],
+      "tags": [
+        "Web Agent",
+        "Task Planning",
+        "Trajectories"
+      ],
       "brief": "Trajectory dataset collected from real user browser operations, covering e-commerce shopping, information retrieval, form filling, content creation, and more. Each trajectory includes complete action sequences, DOM snapshots, and user intent annotations.",
       "structure": "{\n  \"task_description\": \"Search for noise-canceling headphones on Amazon and add to cart\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"noise-canceling headphones\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}"
     },
@@ -394,7 +471,11 @@
       "name": "Openclaw Dataset",
       "desc": "Cross-platform GUI control agent dataset covering desktop and mobile interface operation trajectories",
       "scale": "3K+ trajectories",
-      "tags": ["GUI Agent", "Cross-platform", "Control"],
+      "tags": [
+        "GUI Agent",
+        "Cross-platform",
+        "Control"
+      ],
       "brief": "A cross-platform GUI control agent training dataset covering Windows, macOS, Android, and iOS. Each trajectory includes screenshot sequences, action events, UI element localization, and task goal descriptions.",
       "structure": "{\n  \"platform\": \"android\",\n  \"task\": \"Enable dark mode in Settings\",\n  \"steps\": [\n    {\"screenshot\": \"ss_01.png\", \"action\": \"tap\", \"bbox\": [120,340,200,380]}\n  ],\n  \"platform_version\": \"Android 14\",\n  \"app_name\": \"Settings\"\n}"
     },
@@ -402,7 +483,11 @@
       "name": "Search Evaluation Dataset",
       "desc": "Multi-hop reasoning search evaluation data with diverse query sources and multiple information sources for deep retrieval and reasoning",
       "scale": "5K+ samples",
-      "tags": ["Multi-hop Reasoning", "Search Eval", "Diverse Queries"],
+      "tags": [
+        "Multi-hop Reasoning",
+        "Search Eval",
+        "Diverse Queries"
+      ],
       "brief": "A multi-hop reasoning evaluation dataset for search-augmented generation (RAG) systems. Each question requires retrieving and synthesizing multiple information sources, covering fact-checking, comparative analysis, causal reasoning, and more.",
       "structure": "{\n  \"query\": \"How effective are COVID vaccines against Omicron variant?\",\n  \"reasoning_type\": \"comparative\",\n  \"required_sources\": 3,\n  \"evidence_urls\": [\n    \"https://doi.org/10.1038/...\",\n    \"https://www.thelancet.com/...\"\n  ],\n  \"answer\": \"mRNA vaccines show reduced neutralizing titers...\",\n  \"evaluation_rubric\": \"Must compare at least two vaccine types\"\n}"
     }

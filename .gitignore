@@ -1,8 +1,33 @@
-.worktrees/
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+dist-ssr/
+*.local
+
+# Worktrees & local runtime state
+.worktrees/
 dev.log
+*.log
+
+# Editor / tooling
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Project-local stuff (not for repo)
 issues.md
 temp/
 .claude/
 docs/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Coverage / test artifacts
+coverage/

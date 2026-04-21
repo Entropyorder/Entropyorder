@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 import { ProductCategory } from './ProductCategory.jsx';
 import { ExpertArtifact } from './Artifacts/ExpertArtifact.jsx';
@@ -9,11 +10,17 @@ import { DATASET_CATEGORIES } from '../data/datasets.js';
 
 const ARTIFACTS = { ExpertArtifact, MultimodalArtifact, AgentArtifact };
 
-export function Products({ onViewDetail }) {
+export function Products() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [activeTab, setActiveTab] = useState(0);
   const sectionRefs = useRef([]);
+
+  const onViewDetail = (dataset) => {
+    navigate(`/datasets/${dataset.id}`, { state: { backgroundLocation: location } });
+  };
 
   const categories = DATASET_CATEGORIES.map((cat) => ({
     key: cat.key,

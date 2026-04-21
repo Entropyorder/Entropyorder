@@ -30,8 +30,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Space Grotesk', 'Noto Sans SC', 'system-ui', '-apple-system', 'sans-serif'],
-        zh: ['Noto Sans SC', 'Space Grotesk', 'system-ui', 'sans-serif'],
+        sans: ['Inter', '"LXGW WenKai"', 'system-ui', '-apple-system', 'sans-serif'],
+        zh: ['"LXGW WenKai"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', '"LXGW WenKai"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -1,13 +1,95 @@
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
 import logoUrl from '/logo.png';
 import { duration, offset } from '../animations/tokens.js';
 import * as presets from '../animations/presets.js';
 
-// Floating geometric shape
-function FloatShape({ className, delay = 0, duration = 8, rotateAmount = 0 }) {
+// Floating geometric shape - with dark mode glow
+function FloatShape({ className, delay = 0, duration = 8, rotateAmount = 0, type = 'ring', strokeWidth = 2 }) {
+  const prefersReducedMotion = useReducedMotion()
+
+  if (type === 'ring') {
+    return (
+      <motion.div
+        className={className}
+        animate={{
+          y: [0, -14, 0],
+          rotate: [0, rotateAmount, 0],
+        }}
+        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Light mode: simple border */}
+        <div
+          className="absolute inset-0 rounded-full border border-brand-400/12 dark:hidden"
+        />
+        {/* Dark mode: conic-gradient ring with glow */}
+        <div
+          className="hidden dark:block absolute inset-0 rounded-full"
+          style={{
+            background: 'conic-gradient(from 0deg, #3b82f6, #22d3ee, #818cf8, #3b82f6)',
+            mask: `radial-gradient(farthest-side, transparent calc(100% - ${strokeWidth}px), #000 calc(100% - ${strokeWidth}px))`,
+            WebkitMask: `radial-gradient(farthest-side, transparent calc(100% - ${strokeWidth}px), #000 calc(100% - ${strokeWidth}px))`,
+            filter: 'drop-shadow(0 0 12px rgba(59,130,246,0.35)) drop-shadow(0 0 24px rgba(34,211,238,0.18))',
+            animation: prefersReducedMotion ? 'none' : 'ring-spin 18s linear infinite',
+          }}
+        />
+      </motion.div>
+    )
+  }
+
+  if (type === 'square') {
+    return (
+      <motion.div
+        className={className}
+        animate={{
+          y: [0, -12, 0],
+          rotate: [45, 45 + rotateAmount, 45],
+        }}
+        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Light mode */}
+        <div className="absolute inset-0 border border-brand-500/8 dark:hidden" />
+        {/* Dark mode */}
+        <div
+          className="hidden dark:block absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, transparent, rgba(59,130,246,0.18), transparent)',
+            border: '1px solid transparent',
+            borderImage: 'linear-gradient(135deg, #3b82f6, #22d3ee) 1',
+            filter: 'drop-shadow(0 0 8px rgba(59,130,246,0.25))',
+            animation: prefersReducedMotion ? 'none' : 'shimmer 6s ease-in-out infinite',
+          }}
+        />
+      </motion.div>
+    )
+  }
+
+  if (type === 'dot') {
+    return (
+      <motion.div
+        className={className}
+        animate={{
+          y: [0, -8, 0],
+        }}
+        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        {/* Light mode */}
+        <div className="w-full h-full rounded-full bg-accent-400/40 dark:hidden" />
+        {/* Dark mode */}
+        <div
+          className="hidden dark:block w-full h-full rounded-full"
+          style={{
+            background: 'radial-gradient(circle, #22d3ee 0%, transparent 70%)',
+            boxShadow: '0 0 12px 2px rgba(34,211,238,0.5)',
+          }}
+        />
+      </motion.div>
+    )
+  }
+
+  // Fallback to simple div
   return (
     <motion.div
       className={className}
@@ -17,7 +99,7 @@ function FloatShape({ className, delay = 0, duration = 8, rotateAmount = 0 }) {
       }}
       transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
     />
-  );
+  )
 }
 
 export function Hero() {
@@ -80,35 +162,43 @@ export function Hero() {
         duration={11}
         delay={0}
         rotateAmount={3}
-        className="pointer-events-none absolute top-20 left-[8%] w-48 h-48 rounded-full border border-brand-400/12 dark:border-brand-400/18"
+        type="ring"
+        strokeWidth={2}
+        className="pointer-events-none absolute top-20 left-[8%] w-48 h-48"
       />
       {/* Medium ring - bottom right area */}
       <FloatShape
         duration={14}
         delay={2}
         rotateAmount={-4}
-        className="pointer-events-none absolute bottom-32 right-[10%] w-36 h-36 rounded-full border border-accent-400/10 dark:border-accent-400/16"
+        type="ring"
+        strokeWidth={1.5}
+        className="pointer-events-none absolute bottom-32 right-[10%] w-36 h-36"
       />
       {/* Small ring - top right */}
       <FloatShape
         duration={9}
         delay={1.2}
         rotateAmount={2}
-        className="pointer-events-none absolute top-32 right-[18%] w-20 h-20 rounded-full border border-brand-400/8 dark:border-brand-400/12"
+        type="ring"
+        strokeWidth={1}
+        className="pointer-events-none absolute top-32 right-[18%] w-20 h-20"
       />
       {/* Tilted square - bottom left */}
       <FloatShape
         duration={13}
         delay={0.8}
         rotateAmount={5}
-        className="pointer-events-none absolute bottom-28 left-[12%] w-16 h-16 border border-brand-500/8 dark:border-brand-500/12 rotate-45"
+        type="square"
+        className="pointer-events-none absolute bottom-28 left-[12%] w-16 h-16"
       />
       {/* Tiny accent dot - near logo */}
       <FloatShape
         duration={7}
         delay={1.5}
         rotateAmount={0}
-        className="pointer-events-none absolute top-[40%] right-[25%] w-2.5 h-2.5 rounded-full bg-accent-400/40 dark:bg-accent-400/60"
+        type="dot"
+        className="pointer-events-none absolute top-[40%] right-[25%] w-2.5 h-2.5"
       />
 
       {/* ── Layer 4: Main content ──────────────────────── */}
@@ -134,7 +224,7 @@ export function Hero() {
           transition={{ duration: duration.slow, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6"
         >
-          <h1 className="text-7xl sm:text-8xl md:text-[110px] lg:text-[120px] font-bold tracking-tight leading-[1.05]">
+          <h1 className="font-display text-7xl sm:text-8xl md:text-[110px] lg:text-[120px] font-bold tracking-tight leading-[1.05]">
             <span className="gradient-text">熵基</span>
             <span className="gradient-text">秩序</span>
           </h1>

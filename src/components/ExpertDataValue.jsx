@@ -7,33 +7,12 @@ import * as presets from '../animations/presets.js';
 import { useScrollReveal } from '../animations/useScrollReveal.js';
 import { MethodologyImageStrip } from './MethodologyImageStrip.jsx';
 import { DetailedPipeline } from './DetailedPipeline.jsx';
+import { publicAsset } from '../utils/assets.js';
 
-function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
+// Punch-hole bookmark card — A4 ratio, image hero with translucent text overlay
+function BookmarkCard({ paper, index }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const isHovered = hoveredIndex === index;
-  const isAnyHovered = hoveredIndex !== null;
-  const isOtherHovered = isAnyHovered && !isHovered;
-
-  const stackOffsets = [
-    { x: -8, y: -6, rotate: -4 },
-    { x: 5, y: 3, rotate: 2 },
-    { x: 15, y: 10, rotate: 6 },
-  ];
-  const stack = stackOffsets[index] || stackOffsets[0];
-
-  const centerIndex = Math.floor(totalCards / 2);
-  const fanOffsets = Array.from({ length: totalCards }, (_, i) => {
-    const delta = i - centerIndex;
-    return {
-      x: delta * 32,
-      y: Math.abs(delta) * 6,
-      rotate: delta * 6,
-    };
-  });
-  const fan = fanOffsets[index] || fanOffsets[0];
-
-  const target = isAnyHovered ? fan : stack;
 
   return (
     <motion.a
@@ -41,52 +20,63 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
       href={paper.url}
       target="_blank"
       rel="noreferrer"
-      onMouseEnter={() => onHover(index)}
-      onMouseLeave={() => onHover(null)}
-      onTouchStart={() => onHover(index)}
-      onTouchEnd={() => onHover(null)}
-      initial={{ opacity: 0, y: 30 + index * 15, scale: 0.9 }}
-      animate={
-        isInView
-          ? {
-              x: target.x,
-              y: target.y,
-              rotate: target.rotate,
-              opacity: 1,
-              scale: isHovered ? 1.04 : isOtherHovered ? 0.95 : 1,
-              filter: isOtherHovered ? 'brightness(0.88)' : 'brightness(1)',
-            }
-          : { opacity: 0, y: 30 + index * 15, scale: 0.9 }
-      }
-      transition={{
-        type: 'spring',
-        stiffness: 300,
-        damping: 25,
-      }}
-      className="absolute w-full rounded-xl overflow-hidden shadow-2xl cursor-pointer group origin-bottom"
-      style={{
-        zIndex: isHovered ? 20 : 3 - index,
-        aspectRatio: '2/3',
-      }}
+      initial={{ opacity: 0, x: 20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+      transition={{ duration: duration.normal, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.06, y: -4, rotate: -0.5 }}
+      whileTap={{ scale: 1.02 }}
+      style={{ aspectRatio: '210 / 297', transformOrigin: 'center center' }}
+      className="group relative block rounded-md overflow-hidden mx-auto max-w-[200px] w-full
+        bg-white dark:bg-slate-800
+        border border-slate-200/80 dark:border-white/10
+        shadow-md hover:shadow-2xl hover:shadow-brand-500/15
+        hover:z-10
+        transition-shadow duration-300"
     >
-      <img
-        src={`${import.meta.env.BASE_URL}${paper.img}`}
-        alt={paper.title}
-        className="w-full h-full object-cover object-top"
-        loading="lazy"
-      />
-      {/* Persistent info bar — hidden on hover */}
-      <div className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
-        <h4 className="text-white font-semibold text-xs leading-snug line-clamp-1 mb-0.5">{paper.title}</h4>
-        <span className="text-white/60 text-[10px]">{paper.authors} · {paper.venue}</span>
+      {/* Punch holes on left — overlay the content area */}
+      <div className="absolute left-0 top-0 bottom-0 w-5 flex flex-col justify-around items-center pointer-events-none z-20 py-3">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="w-2 h-2 rounded-full bg-page-bg dark:bg-page-bg-dark
+              shadow-[inset_0_1px_2px_rgba(0,0,0,0.18)]
+              border border-slate-200/60 dark:border-white/5"
+          />
+        ))}
       </div>
-      {/* Hover overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
-      <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-        <h4 className="text-white font-bold text-sm leading-snug mb-1 line-clamp-2">{paper.title}</h4>
-        <div className="flex items-center justify-between">
-          <span className="text-white/70 text-xs">{paper.authors} · {paper.venue}</span>
-          <ExternalLink className="w-3.5 h-3.5 text-white/60 flex-shrink-0 ml-2" />
+      {/* Binding strip */}
+      <div className="absolute left-5 top-0 bottom-0 w-px bg-slate-200/60 dark:bg-white/10 pointer-events-none z-20" />
+
+      {/* Full-bleed cover image */}
+      <div className="absolute inset-0 pl-6">
+        <img
+          src={publicAsset(paper.img)}
+          alt={paper.title}
+          className="w-full h-full object-cover object-top group-hover:scale-[1.05] transition-transform duration-500"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Translucent gradient text overlay — bottom half */}
+      <div className="absolute inset-x-0 bottom-0 pl-6 pt-12
+        bg-gradient-to-t from-black/85 via-black/55 to-transparent
+        pointer-events-none">
+        <div className="px-3 pb-2.5">
+          <h4 className="text-white text-[11px] font-semibold leading-snug line-clamp-2 drop-shadow">
+            {paper.title}
+          </h4>
+          <div className="mt-1 flex items-center gap-1 text-[9px] text-white/70">
+            <span className="truncate">{paper.authors}</span>
+            <span className="flex-shrink-0">·</span>
+            <span className="flex-shrink-0">{paper.venue}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Hover external-link cue */}
+      <div className="absolute top-1.5 right-1.5 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="p-1 rounded bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm shadow">
+          <ExternalLink className="w-3 h-3 text-slate-700 dark:text-slate-200" />
         </div>
       </div>
     </motion.a>
@@ -95,7 +85,6 @@ function PaperCard({ paper, index, hoveredIndex, onHover, totalCards }) {
 
 export function ExpertDataValue() {
   const { t } = useTranslation();
-  const [hoveredPaper, setHoveredPaper] = useState(null);
   const rawPapers = t('expertData.pipeline.papers', { returnObjects: true });
   const papers = Array.isArray(rawPapers) ? rawPapers : [];
   const { getChildProps: getStepProps } = useScrollReveal(stagger.normal * 0.9);
@@ -122,7 +111,7 @@ export function ExpertDataValue() {
             <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400 inline-block" />
             {t('expertData.tag')}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-50 mb-5 leading-tight">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-50 mb-5 leading-tight">
             {t('expertData.title')}
           </h2>
           <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
@@ -170,9 +159,9 @@ export function ExpertDataValue() {
         </motion.div>
 
         {/* Detailed Pipeline + Papers (two-column) */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-center">
-          {/* Left: Detailed Pipeline */}
-          <div className="flex-[2] min-w-0">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-stretch">
+          {/* Left: Pipeline + Comparison stacked, total height aligned with right column */}
+          <div className="flex-1 min-w-0 w-full flex flex-col gap-6">
             <div className="relative rounded-2xl overflow-hidden
               bg-slate-50/80 dark:bg-[#0a1422]/80
               border border-slate-100 dark:border-white/[0.06]
@@ -181,36 +170,71 @@ export function ExpertDataValue() {
               px-6 sm:px-10 py-8">
               <DetailedPipeline />
             </div>
+
+            {/* Expert vs Crowd Comparison — moved into left column to match right column height */}
+            {(() => {
+              const comp = t('expertData.comparison', { returnObjects: true });
+              if (!comp || !comp.expertPoints) return null;
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 flex-1">
+                  <motion.div
+                    {...presets.fadeLeft(offset.medium, duration.normal, 0.1)}
+                    className="relative rounded-2xl p-6 border-2 border-emerald-300/60 dark:border-emerald-600/40 bg-emerald-50/50 dark:bg-emerald-900/10"
+                  >
+                    <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5">
+                      <Check className="w-3 h-3" strokeWidth={3} />
+                      {comp.expertTitle}
+                    </div>
+                    <ul className="mt-3 space-y-3">
+                      {comp.expertPoints.map((point, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-emerald-700 dark:text-emerald-300">
+                          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+
+                  <motion.div
+                    {...presets.fadeRight(offset.medium, duration.normal, 0.2)}
+                    className="relative rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/20"
+                  >
+                    <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-slate-400 dark:bg-slate-600 text-white text-xs font-bold flex items-center gap-1.5">
+                      <XCircle className="w-3 h-3" strokeWidth={3} />
+                      {comp.crowdTitle}
+                    </div>
+                    <ul className="mt-3 space-y-3">
+                      {comp.crowdPoints.map((point, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400 dark:text-slate-500 line-through decoration-slate-300 dark:decoration-slate-600">
+                          <span className="mt-1 w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 flex-shrink-0" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
+              );
+            })()}
           </div>
 
-          {/* Right: Papers */}
+          {/* Right: single-column vertical bookmark stack */}
           {papers.length > 0 && (
-            <div className="flex-1 w-full lg:w-[360px] xl:w-[400px] flex-shrink-0">
-              <motion.div
-                {...presets.fadeIn(duration.normal, 0.2)}
-                className="mb-5"
-              >
+            <div className="w-full lg:w-[240px] flex-shrink-0">
+              <div className="mb-4 text-center">
                 <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
                   {t('expertData.pipeline.papersLabel', 'Related Publications')}
                 </span>
-              </motion.div>
-              <div className="relative" style={{ height: 500 }}>
+              </div>
+              <div className="space-y-5">
                 {papers.map((paper, i) => (
-                  <PaperCard
-                    key={i}
-                    paper={paper}
-                    index={i}
-                    hoveredIndex={hoveredPaper}
-                    onHover={setHoveredPaper}
-                    totalCards={papers.length}
-                  />
+                  <BookmarkCard key={i} paper={paper} index={i} />
                 ))}
               </div>
             </div>
           )}
         </div>
 
-        {/* Quote */}
+        {/* Quote — full width below both columns */}
         <motion.div
           initial={{ opacity: 0, y: offset.small }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -225,51 +249,6 @@ export function ExpertDataValue() {
             "{t('expertData.pipeline.quote')}"
           </p>
         </motion.div>
-
-        {/* Expert vs Crowd Comparison */}
-        {(() => {
-          const comp = t('expertData.comparison', { returnObjects: true });
-          if (!comp || !comp.expertPoints) return null;
-          return (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-              <motion.div
-                {...presets.fadeLeft(offset.medium, duration.normal, 0.1)}
-                className="relative rounded-2xl p-6 border-2 border-emerald-300/60 dark:border-emerald-600/40 bg-emerald-50/50 dark:bg-emerald-900/10"
-              >
-                <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5">
-                  <Check className="w-3 h-3" strokeWidth={3} />
-                  {comp.expertTitle}
-                </div>
-                <ul className="mt-3 space-y-3">
-                  {comp.expertPoints.map((point, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-emerald-700 dark:text-emerald-300">
-                      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
-              <motion.div
-                {...presets.fadeRight(offset.medium, duration.normal, 0.2)}
-                className="relative rounded-2xl p-6 border border-slate-200 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/20"
-              >
-                <div className="absolute -top-3 left-6 px-3 py-1 rounded-full bg-slate-400 dark:bg-slate-600 text-white text-xs font-bold flex items-center gap-1.5">
-                  <XCircle className="w-3 h-3" strokeWidth={3} />
-                  {comp.crowdTitle}
-                </div>
-                <ul className="mt-3 space-y-3">
-                  {comp.crowdPoints.map((point, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400 dark:text-slate-500 line-through decoration-slate-300 dark:decoration-slate-600">
-                      <span className="mt-1 w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 flex-shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
-          );
-        })()}
       </div>
     </section>
   );
