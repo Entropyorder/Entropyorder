@@ -146,17 +146,29 @@ export function ExpertDataValue() {
         {/* Methodology Image Strip */}
         <MethodologyImageStrip />
 
-        {/* Pipeline Heading */}
-        <motion.div
-          {...presets.fadeIn(duration.normal, 0.1)}
-          className="flex items-center gap-4 mb-10"
-        >
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-slate-200 dark:to-slate-700" />
-          <span className="text-sm font-bold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 whitespace-nowrap">
-            {t('expertData.pipeline.heading')}
-          </span>
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-slate-200 dark:to-slate-700" />
-        </motion.div>
+        {/* Headings row — aligned with columns below */}
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 mb-6">
+          <motion.div
+            {...presets.fadeIn(duration.normal, 0.1)}
+            className="flex-1 min-w-0 w-full flex items-center gap-4"
+          >
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-slate-200 dark:to-slate-700" />
+            <span className="text-sm font-bold uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 whitespace-nowrap">
+              {t('expertData.pipeline.heading')}
+            </span>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-slate-200 dark:to-slate-700" />
+          </motion.div>
+
+          {papers.length > 0 && (
+            <div className="w-full lg:w-[240px] flex-shrink-0 text-center"
+            >
+              <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500"
+              >
+                {t('expertData.pipeline.papersLabel', 'Related Publications')}
+              </span>
+            </div>
+          )}
+        </div>
 
         {/* Detailed Pipeline + Papers (two-column) */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-stretch">
@@ -176,7 +188,7 @@ export function ExpertDataValue() {
               const comp = t('expertData.comparison', { returnObjects: true });
               if (!comp || !comp.expertPoints) return null;
               return (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
                   <motion.div
                     {...presets.fadeLeft(offset.medium, duration.normal, 0.1)}
                     className="relative rounded-2xl p-6 border-2 border-emerald-300/60 dark:border-emerald-600/40 bg-emerald-50/50 dark:bg-emerald-900/10"
@@ -219,16 +231,13 @@ export function ExpertDataValue() {
 
           {/* Right: single-column vertical bookmark stack */}
           {papers.length > 0 && (
-            <div className="w-full lg:w-[240px] flex-shrink-0">
-              <div className="mb-4 text-center">
-                <span className="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
-                  {t('expertData.pipeline.papersLabel', 'Related Publications')}
-                </span>
-              </div>
-              <div className="space-y-5">
-                {papers.map((paper, i) => (
-                  <BookmarkCard key={i} paper={paper} index={i} />
-                ))}
+            <div className="w-full lg:w-[240px] flex-shrink-0 flex flex-col">
+              <div className="flex-1 flex flex-col justify-between">
+                {papers
+                  .filter((p) => !p.title?.includes('SCBench'))
+                  .map((paper, i) => (
+                    <BookmarkCard key={i} paper={paper} index={i} />
+                  ))}
               </div>
             </div>
           )}

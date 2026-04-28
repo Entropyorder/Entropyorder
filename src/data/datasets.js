@@ -14,18 +14,18 @@ export const DATASET_CATEGORIES = [
     key: 'expert',
     i18nKey: 'products.categories.expert',
     artifact: 'ExpertArtifact',
-    datasets: ['hle', 'sfe', 'microvqa', 'crosslingual-k12qa'],
+    datasets: ['hle', 'sfe', 'microvqa', 'crosslingual-k12qa', 'superchem-extension', 'crosslingual-k12-stem'],
   },
   {
     key: 'multimodal',
     i18nKey: 'products.categories.multimodal',
     artifact: 'MultimodalArtifact',
-    datasets: ['tri-modal', 'proactive-video', 'science-video-qa', 'chart-reasoning'],
+    datasets: ['multimodal-av', 'proactive-video', 'stem-video', 'infograph', 'crosslingual-multimodal'],
   },
   {
     key: 'agent',
     i18nKey: 'products.categories.agent',
     artifact: 'AgentArtifact',
-    datasets: ['browser', 'openclaw', 'search-eval'],
+    datasets: ['browser', 'openclaw', 'search-retrieval', 'oj-competition', 'game-interaction'],
   },
 ];

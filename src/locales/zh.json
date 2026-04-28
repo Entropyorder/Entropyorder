@@ -160,6 +160,15 @@
       "relatedPaper": "相关论文",
       "close": "关闭",
       "contactSample": "联系获取样例"
+    },
+    "filter": {
+      "searchPlaceholder": "搜索产品名称或简介...",
+      "capabilities": "能力领域",
+      "production": "生产方式",
+      "modalities": "数据模态",
+      "matchCount": "匹配 {{count}} 个产品",
+      "clear": "清除筛选",
+      "empty": "暂无匹配的数据集产品"
     }
   },
   "expertData": {
@@ -353,14 +362,23 @@
   },
   "datasets": {
     "hle": {
-      "name": "HLE 数据集",
-      "desc": "高难度科学推理评估数据集，涵盖数学、物理、化学、生物、医学、计算机、工程、金融、艺术、语言学、天文、地理等综合领域",
-      "scale": "3K+ 样本",
+      "name": "HLE",
+      "desc": "高水平多模态专家推理数据集，由清华大学专家团队进行构建，团队共有约60名活跃的清华大学在读硕博，在人在回路系统中进行数据构建，包含高质量解题思路（思维链），并辅以MAS多重质量验证把关。",
+      "scale": "存量 3,000",
       "tags": [
         "科学推理",
-        "多领域",
-        "评估基准"
+        "图片推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "400",
+      "sample": "熵基 HLE Sample",
       "brief": "HLE（Hard-Level Evaluation）数据集是面向前沿大模型的高难度科学推理评估基准。题目由领域专家精心设计与审核，覆盖 12+ 学科，要求模型具备深层推理能力而非表面匹配。每道题配有完整推理链标注与难度评级。",
       "structure": "{\n  \"query\": \"在标准条件下，以下哪个反应的 ΔG° 最负？\",\n  \"rubric\": \"需给出正确选项及热力学推导过程\",\n  \"answer\": \"选项 C，推理链：...\",\n  \"domain\": \"chemistry\",\n  \"difficulty\": 4\n}",
       "paper": {
@@ -372,88 +390,217 @@
       }
     },
     "sfe": {
-      "name": "SFE 数据集",
-      "desc": "科研场景下真实问题数据集，由领域科学家从实际研究工作中采集与标注，具有强现实约束",
-      "scale": "5K+ 样本",
+      "name": "SFE",
+      "desc": "SFE 基准，旨在对 MLLM 从感知到推理的科学认知能力进行评估。数据由清华大学等 top 985 高校的副高级以上职称教授、高年级研究生根据自身科研经验创制，涵盖 5 个学科（天文学、化学、地球科学、生命科学、材料科学），专注于科学信号感知、科学属性理解和科学比较推理。",
+      "scale": "存量 3,000",
       "tags": [
-        "科研场景",
-        "真实问题",
-        "专家标注"
+        "科学推理",
+        "图片推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "1,000",
+      "sample": "",
       "brief": "SFE（Scientific Frontiers Evaluation）数据集从真实科研场景中提取问题，由一线研究人员标注。与合成数据不同，这些问题具有真实的约束条件、不确定性和前沿性，是对模型科研辅助能力的直接考验。",
       "structure": "{\n  \"query\": \"CRISPR-Cas9 在体编辑后脱靶率如何量化？\",\n  \"context\": \"基于小鼠肝脏 AAV 递送实验\",\n  \"rubric\": \"需引用至少两种检测方法并比较灵敏度\",\n  \"answer\": \"专家推理过程与结论...\",\n  \"field\": \"molecular_biology\"\n}"
     },
     "microvqa": {
-      "name": "MicroVQA 数据集",
-      "desc": "生物学显微镜多模态专有领域数据，含细胞、组织切片等微观图像的视觉问答",
-      "scale": "2K+ 样本",
+      "name": "MicroVQA",
+      "desc": "显微镜视觉辅助科学发现的问答数据集，聚焦显微图像、微观细胞结构等任务，题目难度高，适用于提升模型在科学图像理解方面的能力。",
+      "scale": "存量 3,000",
       "tags": [
-        "生物学",
-        "显微镜",
-        "多模态"
+        "科学推理",
+        "图片推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "1,000",
+      "sample": "",
       "brief": "MicroVQA 是专属于生物学显微成像的视觉问答数据集，涵盖细胞学、组织学、病理学等子领域。每条样本包含高分辨率显微镜图像及由生物学家标注的多轮问答对，要求模型具备微观图像理解与专业术语推理能力。",
       "structure": "{\n  \"image_path\": \"microscopy/cell_042.tiff\",\n  \"qa_pairs\": [\n    {\"q\": \"图中箭头所指结构是什么？\", \"a\": \"线粒体\"}\n  ],\n  \"magnification\": \"400x\",\n  \"tissue_type\": \"liver\",\n  \"staining\": \"H&E\"\n}"
     },
     "crosslingual-k12qa": {
-      "name": "跨语言 K12QA 数据集",
-      "desc": "覆盖 20+ 语种的 K12 习题数据集，专家从对应国家习题册采集并校对，保留原版题目逻辑",
-      "scale": "10K+ 样本",
+      "name": "跨语言 K12QA",
+      "desc": "覆盖 20+ 语种的 K12 习题数据集，专家从对应国家习题册采集并校对，保留原版题目逻辑。",
+      "scale": "存量 6,000",
       "tags": [
-        "多语言",
-        "K12",
-        "习题校对"
+        "多语言理解",
+        "图片推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "2,000",
+      "sample": "",
       "brief": "覆盖全球 20+ 种语言的 K12 教育习题数据集。题目由母语为对应语言的教育专家从各国正版教材与习题册中采集，经多轮校对后保留原始题目逻辑与文化语境，是评估模型跨语言教育能力的理想基准。",
       "structure": "{\n  \"question\": \"若 f(x)=x³-3x+1，求 f(x) 在 [-2,2] 上的最大值\",\n  \"options\": [\"A. -1\", \"B. 1\", \"C. 3\", \"D. 5\"],\n  \"answer\": \"C\",\n  \"explanation\": \"f'(x)=3x²-3，令 f'(x)=0...\",\n  \"language\": \"zh\",\n  \"grade\": 11,\n  \"subject\": \"math\"\n}"
     },
-    "tri-modal": {
-      "name": "三模态对齐数据集",
-      "desc": "视频-音频-文本三模态精准对齐数据集，含帧级分片标注与跨模态语义映射",
-      "scale": "2K+ 样本",
+    "superchem-extension": {
+      "name": "SuperChem-Extension",
+      "desc": "化学领域深度扩展数据集，涵盖高难度化学推理题目，由领域专家构建，用于定向增强模型在化学学科上的专业推理能力。",
+      "scale": "存量 1,000",
       "tags": [
-        "视频",
-        "音频",
-        "文本对齐"
+        "科学推理",
+        "图片推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": ""
+    },
+    "crosslingual-k12-stem": {
+      "name": "跨语言K12 STEM数据集",
+      "desc": "面向K12阶段的多语言STEM学科数据集，题目覆盖数学、物理、化学、生物等核心科目，支持模型在多语言教育场景下的学科推理能力提升。",
+      "scale": "存量 6,000",
+      "tags": [
+        "科学推理",
+        "图片推理",
+        "多语言理解"
+      ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "2,000",
+      "sample": "熵基 Multilingual K12 STEM QA Sample 2026.04.02"
+    },
+    "multimodal-av": {
+      "name": "多模态（音视频对齐）数据",
+      "desc": "专家构建的专业化音视频描述、分析和对齐数据集。每段切片、描述与QA对构建均由专家在熵基自研的人在回路系统中进行，质量有保证。",
+      "scale": "存量 1,000",
+      "tags": [
+        "音频推理",
+        "视频推理",
+        "长视频推理"
+      ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "熵基 MultiModal(Video-Audio) DataSet Sample",
       "brief": "面向多模态模型的三模态对齐数据集，提供视频、音频、文本三路信号的帧级对齐标注。适用于训练跨模态检索、多模态理解与生成任务，覆盖教育、新闻、科普等多样化场景。",
       "structure": "{\n  \"video_segments\": [{\"start\": 0.0, \"end\": 3.2}],\n  \"audio_segments\": [{\"start\": 0.1, \"end\": 3.1}],\n  \"text_transcript\": \"今天我们讨论...\",\n  \"alignment_map\": {\"v0\": \"a0\", \"v0\": \"t0\"},\n  \"category\": \"education\"\n}"
     },
     "proactive-video": {
-      "name": "Proactive Streaming Video",
-      "desc": "流式视频主动理解数据集，模型需在视频播放过程中进行实时推断与预测",
-      "scale": "1K+ 样本",
+      "name": "流式视频主动回应数据",
+      "desc": "考察模型是否有能力在流式视频输入中在合适的时间点进行回复。本数据集全部由专家构建（纯人工，模型不具备构建能力），多轮校对，时长覆盖15s-30min，场景多样任务多样，proactive方向是模型能力绝对的前沿。",
+      "scale": "存量 1,000",
       "tags": [
-        "流式视频",
-        "主动推断",
-        "实时理解"
+        "长视频推理",
+        "流式视频推理",
+        "视频推理",
+        "Agent"
       ],
+      "production": [
+        "专家构建（纯人工）"
+      ],
+      "modalities": [
+        "text",
+        "video",
+        "audio"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "熵基 StreamingQA 流式视频理解 Sample",
       "brief": "挑战模型在流式视频播放中进行主动理解与预测的能力。模型需在视频未完整播放时做出预判，并在后续帧中验证或修正。模拟人类在观看视频时主动推理的认知过程。",
       "structure": "{\n  \"video_url\": \"https://example.com/stream_001.mp4\",\n  \"timestamps\": [1.2, 5.8, 12.3],\n  \"predictions\": [\n    {\"at\": 5.8, \"question\": \"下一步会发生什么？\"}\n  ],\n  \"ground_truth\": \"角色打开门进入房间\",\n  \"reasoning_trace\": \"基于前序帧的运动方向推测...\"\n}"
     },
-    "science-video-qa": {
-      "name": "科学视频问答数据集",
-      "desc": "覆盖化学、生物实验等科学视频的多模态 QA 数据，含操作步骤与现象解释",
-      "scale": "1K+ 样本",
+    "stem-video": {
+      "name": "STEM专业视频推理",
+      "desc": "由专家构建的STEM学科专业视频理解数据集，考察模型对理工科教学、实验等视频内容的深度推理与知识关联能力。",
+      "scale": "存量 1,000",
       "tags": [
-        "科学实验",
-        "视频QA",
-        "多模态"
+        "科学推理",
+        "视频推理",
+        "长视频推理"
       ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "video"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "熵基 Discipline Video QA Sample",
       "brief": "专门针对科学实验视频的问答数据集，涵盖化学实验、生物操作、物理演示等。每个视频配有步骤分解、现象解释和安全提示标注，适合评估模型对科学过程的深层理解能力。",
       "structure": "{\n  \"video_url\": \"https://example.com/exp_chem_03.mp4\",\n  \"questions\": [\n    {\"t\": 12.5, \"q\": \"此时溶液颜色为何变化？\"}\n  ],\n  \"steps\": [\"加入 5mL HCl\", \"搅拌 30s\", \"观察沉淀\"],\n  \"phenomena\": [\"溶液由无色变为淡黄色\"],\n  \"safety_notes\": [\"佩戴护目镜\"]\n}"
     },
-    "chart-reasoning": {
-      "name": "图文推理 QA 数据集",
-      "desc": "复杂图表与自然语言深度融合的推理评测数据，含多步推导与跨图文关联",
-      "scale": "2K+ 样本",
+    "infograph": {
+      "name": "信息图InfoGraph",
+      "desc": "专家构建的信息图理解数据集，涵盖图表、流程图、统计图等多种信息图类型，考察模型对复杂视觉信息的解读与推理能力。",
+      "scale": "存量 10,000",
       "tags": [
-        "图表理解",
-        "深度推理",
-        "多步推导"
+        "图片生成"
       ],
+      "production": [
+        "互联网提取",
+        "人工构建",
+        "生成"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "10,000",
+      "weeklyOutput": "20,000",
+      "sample": "熵基 Infograph Sample",
       "brief": "针对复杂图表理解的深度推理数据集。每条样本包含一个或多个相关图表，以及需要多步推导才能回答的问题。覆盖柱状图、折线图、饼图、散点图、热力图等多种图表类型。",
       "structure": "{\n  \"chart_image\": \"charts/bar_gdp_2024.png\",\n  \"chart_type\": \"bar\",\n  \"question\": \"哪个国家增速超过 5% 且 GDP 低于 3 万亿？\",\n  \"reasoning_steps\": [\n    \"筛选 GDP < 3T 的国家\",\n    \"比较增速与 5% 阈值\"\n  ],\n  \"answer\": \"印度\",\n  \"source_data\": {\"file\": \"gdp_raw.csv\"}\n}"
+    },
+    "crosslingual-multimodal": {
+      "name": "跨语言多模态多任务评测数据集",
+      "desc": "覆盖多语言、多模态输入形式的综合评测数据集，任务类型多样，用于系统评估模型在跨语言场景下的多模态理解与泛化能力。",
+      "scale": "存量 6,000",
+      "tags": [
+        "多语言理解",
+        "图片推理"
+      ],
+      "production": [
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "3,000",
+      "sample": "熵基 Multilingual Multitask Multimodal Sample"
     },
     "browser": {
       "name": "Browser 数据集",
@@ -465,31 +612,97 @@
         "操作轨迹"
       ],
       "brief": "从真实用户浏览器操作中采集的轨迹数据集，覆盖电商购物、信息检索、表单填写、内容创作等多种 Web 任务。每条轨迹包含完整的操作序列、DOM 快照和用户意图标注。",
-      "structure": "{\n  \"task_description\": \"在京东搜索降噪耳机并加入购物车\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"降噪耳机\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}"
+      "structure": "{\n  \"task_description\": \"在京东搜索降噪耳机并加入购物车\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"降噪耳机\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}",
+      "production": [
+        "互联网提取"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "5,000",
+      "weeklyOutput": "-",
+      "sample": ""
     },
     "openclaw": {
-      "name": "Openclaw 数据集",
-      "desc": "跨平台 GUI 控制智能体数据集，覆盖桌面与移动端的界面操作轨迹",
-      "scale": "3K+ 轨迹",
+      "name": "OpenClaw轨迹数据",
+      "desc": "记录 OpenClaw 在结构化任务中的操作轨迹，包含完整的 workspace, sessions 等，用于训练和评估模型的规划、执行与纠错能力，适用于Agent能力建设。",
+      "scale": "存量 30,000",
       "tags": [
-        "GUI Agent",
-        "跨平台",
-        "操作控制"
+        "工具调用",
+        "Agent"
       ],
+      "production": [
+        "多渠道获取",
+        "人工构建（HITL）"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "30,000",
+      "weeklyOutput": "3,000",
+      "sample": "",
       "brief": "跨平台 GUI 控制智能体训练数据集，覆盖 Windows、macOS、Android、iOS 四大平台。每条轨迹包含屏幕截图序列、操作动作、UI 元素定位和任务目标描述。",
       "structure": "{\n  \"platform\": \"android\",\n  \"task\": \"在设置中开启深色模式\",\n  \"steps\": [\n    {\"screenshot\": \"ss_01.png\", \"action\": \"tap\", \"bbox\": [120,340,200,380]}\n  ],\n  \"platform_version\": \"Android 14\",\n  \"app_name\": \"Settings\"\n}"
     },
-    "search-eval": {
-      "name": "搜索评测数据集",
-      "desc": "多跳推理搜索评测数据，Query 来源多样、涵盖多类信息源，考察深层检索与推理能力",
-      "scale": "5K+ 样本",
+    "search-retrieval": {
+      "name": "信息检索数据",
+      "desc": "长链信息推理和检索数据，构建有两种形式，一种是专家采集自多跳（大于5跳）的互联网角落，另一种则由专家蒸馏真实用户的模糊检索需求，保证数据的多样性。",
+      "scale": "存量 2,000",
       "tags": [
-        "多跳推理",
-        "搜索评测",
-        "多源Query"
+        "信息检索",
+        "工具调用",
+        "Agent"
       ],
+      "production": [
+        "多渠道获取",
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text"
+      ],
+      "inventory": "2,000",
+      "weeklyOutput": "800",
+      "sample": "SearchQA- Sample",
       "brief": "面向搜索增强生成（RAG）系统的多跳推理评测数据集。每个问题需要检索并整合多个信息源才能回答，覆盖事实核查、比较分析、因果推理等任务类型。",
       "structure": "{\n  \"query\": \"COVID 疫苗对 Omicron 变种的效力如何？\",\n  \"reasoning_type\": \"comparative\",\n  \"required_sources\": 3,\n  \"evidence_urls\": [\n    \"https://doi.org/10.1038/...\",\n    \"https://www.thelancet.com/...\"\n  ],\n  \"answer\": \"mRNA 疫苗中和抗体滴度下降...\",\n  \"evaluation_rubric\": \"需对比至少两种疫苗\"\n}"
+    },
+    "oj-competition": {
+      "name": "OJ竞赛题",
+      "desc": "seed-2.0-pro pass@2 = 0的优质竞赛题，经过专家构建并补充testcase，补充量级为每题1000余条testcase，全方位无死角地评估赛题难度，带更新后的submissions状况和多层次专家补充的submissions、reference code等字段，定向增强模型能力。",
+      "scale": "存量 6,000",
+      "tags": [
+        "代码能力"
+      ],
+      "production": [
+        "多渠道获取",
+        "专家构建（HITL）"
+      ],
+      "modalities": [
+        "text"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "3,000",
+      "sample": "OJ Data Sample"
+    },
+    "game-interaction": {
+      "name": "游戏屏幕互动数据",
+      "desc": "游戏界面操作与交互数据，涵盖多种游戏场景下的屏幕理解与动作决策，用于提升模型在GUI感知和游戏Agent方向的能力。",
+      "scale": "存量 2,000",
+      "tags": [
+        "世界模型"
+      ],
+      "production": [
+        "人工构建"
+      ],
+      "modalities": [
+        "image",
+        "video"
+      ],
+      "inventory": "2,000",
+      "weeklyOutput": "1,000",
+      "sample": ""
     }
   }
 }

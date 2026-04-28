@@ -6,10 +6,7 @@ import * as presets from '../animations/presets.js';
 // clip-path parallelogram that tiles all cards flat, each with a staggered float
 function ParallelogramCards({ datasets, onViewDetail }) {
   return (
-    <div
-      className="relative overflow-hidden"
-      style={{ clipPath: 'polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%)' }}
-    >
+    <div className="relative" style={{ clipPath: 'polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%)' }}>
       {/* Band background */}
       <div className="absolute inset-0
         bg-gradient-to-br from-brand-50 via-page-bg to-cyan-50/50
@@ -33,6 +30,7 @@ function ParallelogramCards({ datasets, onViewDetail }) {
               ease: 'easeInOut',
               delay: i * 0.55,
             }}
+            className="relative z-10"
           >
             <DatasetCard dataset={ds} onViewDetail={onViewDetail} />
           </motion.div>

@@ -160,6 +160,15 @@
       "relatedPaper": "Related Paper",
       "close": "Close",
       "contactSample": "Request Sample"
+    },
+    "filter": {
+      "searchPlaceholder": "Search by name or description...",
+      "capabilities": "Capabilities",
+      "production": "Production",
+      "modalities": "Modalities",
+      "matchCount": "{{count}} product(s) matched",
+      "clear": "Clear Filters",
+      "empty": "No matching datasets found"
     }
   },
   "expertData": {
@@ -353,14 +362,23 @@
   },
   "datasets": {
     "hle": {
-      "name": "HLE Dataset",
-      "desc": "High-difficulty scientific reasoning evaluation dataset spanning math, physics, chemistry, biology, medicine, CS, engineering, finance, arts, linguistics, astronomy, geography, and more",
-      "scale": "3K+ samples",
+      "name": "HLE",
+      "desc": "High-level multimodal expert reasoning dataset built by a Tsinghua University expert team of ~60 active masters/PhD students through a human-in-the-loop system. Features high-quality reasoning chains with MAS multi-layered quality verification.",
+      "scale": "Inventory 3,000",
       "tags": [
         "Science Reasoning",
-        "Multi-domain",
-        "Benchmark"
+        "Image Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "400",
+      "sample": "Entropy HLE Sample",
       "brief": "HLE (Hard-Level Evaluation) is a high-difficulty scientific reasoning benchmark for frontier LLMs. Questions are designed and reviewed by domain experts across 12+ disciplines, requiring deep reasoning rather than surface matching. Each question includes complete reasoning chain annotations and difficulty ratings.",
       "structure": "{\n  \"query\": \"Under standard conditions, which reaction has the most negative ΔG°?\",\n  \"rubric\": \"Must provide correct answer with thermodynamic derivation\",\n  \"answer\": \"Option C, reasoning: ...\",\n  \"domain\": \"chemistry\",\n  \"difficulty\": 4\n}",
       "paper": {
@@ -372,88 +390,217 @@
       }
     },
     "sfe": {
-      "name": "SFE Dataset",
-      "desc": "Real-world research questions collected and annotated by domain scientists from active research work, with strong real-world constraints",
-      "scale": "5K+ samples",
+      "name": "SFE",
+      "desc": "SFE benchmark for evaluating MLLM scientific cognition from perception to reasoning. Data created by professors (associate level and above) and senior grad students from Tsinghua and other top-985 universities based on their research experience, covering 5 disciplines (astronomy, chemistry, earth science, life science, materials science).",
+      "scale": "Inventory 3,000",
       "tags": [
-        "Research Scenarios",
-        "Real Problems",
-        "Expert Annotations"
+        "Science Reasoning",
+        "Image Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "1,000",
+      "sample": "",
       "brief": "SFE (Scientific Frontiers Evaluation) extracts questions from real research scenarios, annotated by active researchers. Unlike synthetic data, these questions feature genuine constraints, uncertainties, and cutting-edge challenges that directly test a model's research assistance capabilities.",
       "structure": "{\n  \"query\": \"How to quantify off-target rate after in vivo CRISPR-Cas9 editing?\",\n  \"context\": \"Based on mouse liver AAV delivery experiment\",\n  \"rubric\": \"Must cite at least two detection methods and compare sensitivity\",\n  \"answer\": \"Expert reasoning and conclusion...\",\n  \"field\": \"molecular_biology\"\n}"
     },
     "microvqa": {
-      "name": "MicroVQA Dataset",
-      "desc": "Biology microscopy multimodal domain-specific data with visual Q&A on cellular and tissue section images",
-      "scale": "2K+ samples",
+      "name": "MicroVQA",
+      "desc": "Microscope visual question answering dataset for scientific discovery, focusing on microscopic images and cellular structures with high difficulty, designed to enhance model capabilities in scientific image understanding.",
+      "scale": "Inventory 3,000",
       "tags": [
-        "Biology",
-        "Microscopy",
-        "Multimodal"
+        "Science Reasoning",
+        "Image Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "3,000",
+      "weeklyOutput": "1,000",
+      "sample": "",
       "brief": "MicroVQA is a visual Q&A dataset specialized for biological microscopy imaging, covering cytology, histology, and pathology. Each sample includes high-resolution microscopy images with multi-turn Q&A pairs annotated by biologists, requiring micrograph understanding and professional terminology reasoning.",
       "structure": "{\n  \"image_path\": \"microscopy/cell_042.tiff\",\n  \"qa_pairs\": [\n    {\"q\": \"What is the structure indicated by the arrow?\", \"a\": \"Mitochondria\"}\n  ],\n  \"magnification\": \"400x\",\n  \"tissue_type\": \"liver\",\n  \"staining\": \"H&E\"\n}"
     },
     "crosslingual-k12qa": {
-      "name": "Cross-lingual K12QA Dataset",
-      "desc": "K12 exercise dataset covering 20+ languages, collected and verified by native education experts from country-specific textbooks",
-      "scale": "10K+ samples",
+      "name": "Cross-lingual K12QA",
+      "desc": "K12 exercise dataset covering 20+ languages, collected and verified by native education experts from country-specific textbooks, preserving original problem logic.",
+      "scale": "Inventory 6,000",
       "tags": [
-        "Multilingual",
-        "K12",
-        "Verified"
+        "Multilingual Understanding",
+        "Image Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "2,000",
+      "sample": "",
       "brief": "A K12 education exercise dataset spanning 20+ languages worldwide. Questions are collected by native-speaking education experts from official textbooks and exercise books in each country, multi-round verified to preserve original logic and cultural context. An ideal benchmark for evaluating cross-lingual education capabilities.",
       "structure": "{\n  \"question\": \"If f(x)=x³-3x+1, find the maximum on [-2,2]\",\n  \"options\": [\"A. -1\", \"B. 1\", \"C. 3\", \"D. 5\"],\n  \"answer\": \"C\",\n  \"explanation\": \"f'(x)=3x²-3, set f'(x)=0...\",\n  \"language\": \"en\",\n  \"grade\": 11,\n  \"subject\": \"math\"\n}"
     },
-    "tri-modal": {
-      "name": "Tri-modal Alignment Dataset",
-      "desc": "Video-audio-text tri-modal precise alignment dataset with frame-level segmentation and cross-modal semantic mapping",
-      "scale": "2K+ samples",
+    "superchem-extension": {
+      "name": "SuperChem-Extension",
+      "desc": "Deep chemistry domain extension dataset covering high-difficulty chemistry reasoning problems, built by domain experts to directionally enhance model capabilities in chemistry.",
+      "scale": "Inventory 1,000",
       "tags": [
-        "Video",
-        "Audio",
-        "Text Alignment"
+        "Science Reasoning",
+        "Image Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": ""
+    },
+    "crosslingual-k12-stem": {
+      "name": "Cross-lingual K12 STEM Dataset",
+      "desc": "Multilingual K12 STEM dataset covering math, physics, chemistry, and biology, supporting cross-lingual subject reasoning capabilities in educational scenarios.",
+      "scale": "Inventory 6,000",
+      "tags": [
+        "Science Reasoning",
+        "Image Reasoning",
+        "Multilingual Understanding"
+      ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "2,000",
+      "sample": "Entropy Multilingual K12 STEM QA Sample 2026.04.02"
+    },
+    "multimodal-av": {
+      "name": "Multimodal (Video-Audio Alignment) Data",
+      "desc": "Expert-built specialized audio-visual description, analysis, and alignment dataset. Every segment, description, and QA pair is constructed by experts in Entropy's proprietary HITL system with guaranteed quality.",
+      "scale": "Inventory 1,000",
+      "tags": [
+        "Audio Reasoning",
+        "Video Reasoning",
+        "Long Video Reasoning"
+      ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image",
+        "video",
+        "audio"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "Entropy MultiModal(Video-Audio) DataSet Sample",
       "brief": "A tri-modal alignment dataset for multimodal models, providing frame-level alignment annotations across video, audio, and text signals. Suitable for training cross-modal retrieval, multimodal understanding, and generation tasks across diverse scenarios including education, news, and science popularization.",
       "structure": "{\n  \"video_segments\": [{\"start\": 0.0, \"end\": 3.2}],\n  \"audio_segments\": [{\"start\": 0.1, \"end\": 3.1}],\n  \"text_transcript\": \"Today we discuss...\",\n  \"alignment_map\": {\"v0\": \"a0\", \"v0\": \"t0\"},\n  \"category\": \"education\"\n}"
     },
     "proactive-video": {
-      "name": "Proactive Streaming Video",
-      "desc": "Streaming video proactive understanding dataset where models must infer and predict in real-time during playback",
-      "scale": "1K+ samples",
+      "name": "Proactive Streaming Video Data",
+      "desc": "Evaluates models' ability to respond at appropriate moments during streaming video input. Entirely expert-built (pure human effort, models incapable of construction), multi-round proofread, covering 15s-30min durations with diverse scenes and tasks — the absolute frontier of proactive model capabilities.",
+      "scale": "Inventory 1,000",
       "tags": [
-        "Streaming Video",
-        "Active Inference",
-        "Real-time"
+        "Long Video Reasoning",
+        "Streaming Video Reasoning",
+        "Video Reasoning",
+        "Agent"
       ],
+      "production": [
+        "Expert-built (Pure Human)"
+      ],
+      "modalities": [
+        "text",
+        "video",
+        "audio"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "Entropy StreamingQA Sample",
       "brief": "Challenges models to proactively understand and predict during streaming video playback. Models must make predictions before the video completes, then verify or revise as subsequent frames arrive. Simulates the cognitive process of active reasoning during video viewing.",
       "structure": "{\n  \"video_url\": \"https://example.com/stream_001.mp4\",\n  \"timestamps\": [1.2, 5.8, 12.3],\n  \"predictions\": [\n    {\"at\": 5.8, \"question\": \"What happens next?\"}\n  ],\n  \"ground_truth\": \"Character opens door and enters room\",\n  \"reasoning_trace\": \"Based on motion direction in prior frames...\"\n}"
     },
-    "science-video-qa": {
-      "name": "Science Video QA Dataset",
-      "desc": "Multimodal QA for science experiment videos covering chemistry, biology, with procedure steps and phenomenon explanations",
-      "scale": "1K+ samples",
+    "stem-video": {
+      "name": "STEM Professional Video Reasoning",
+      "desc": "Expert-built STEM discipline video understanding dataset, evaluating deep reasoning and knowledge association capabilities on STEM education and experiment video content.",
+      "scale": "Inventory 1,000",
       "tags": [
-        "Science Experiments",
-        "Video QA",
-        "Multimodal"
+        "Science Reasoning",
+        "Video Reasoning",
+        "Long Video Reasoning"
       ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "video"
+      ],
+      "inventory": "1,000",
+      "weeklyOutput": "500",
+      "sample": "Entropy Discipline Video QA Sample",
       "brief": "A Q&A dataset specialized for science experiment videos, covering chemistry experiments, biological procedures, and physics demonstrations. Each video includes step decomposition, phenomenon explanations, and safety annotations for evaluating deep understanding of scientific processes.",
       "structure": "{\n  \"video_url\": \"https://example.com/exp_chem_03.mp4\",\n  \"questions\": [\n    {\"t\": 12.5, \"q\": \"Why does the solution change color?\"}\n  ],\n  \"steps\": [\"Add 5mL HCl\", \"Stir 30s\", \"Observe precipitate\"],\n  \"phenomena\": [\"Solution turns from colorless to pale yellow\"],\n  \"safety_notes\": [\"Wear safety goggles\"]\n}"
     },
-    "chart-reasoning": {
-      "name": "Chart Reasoning QA Dataset",
-      "desc": "Deep reasoning evaluation data fusing complex charts with natural language, requiring multi-step inference and cross-chart correlation",
-      "scale": "2K+ samples",
+    "infograph": {
+      "name": "InfoGraph",
+      "desc": "Expert-built infographic understanding dataset covering charts, flowcharts, statistical graphs and more, evaluating the interpretation and reasoning capabilities on complex visual information.",
+      "scale": "Inventory 10,000",
       "tags": [
-        "Chart Understanding",
-        "Deep Reasoning",
-        "Multi-step"
+        "Image Generation"
       ],
+      "production": [
+        "Web Extraction",
+        "Human-built",
+        "Generation"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "10,000",
+      "weeklyOutput": "20,000",
+      "sample": "Entropy Infograph Sample",
       "brief": "A deep reasoning dataset for complex chart understanding. Each sample contains one or more related charts with questions requiring multi-step inference. Covers bar charts, line graphs, pie charts, scatter plots, heatmaps, and more.",
       "structure": "{\n  \"chart_image\": \"charts/bar_gdp_2024.png\",\n  \"chart_type\": \"bar\",\n  \"question\": \"Which country has growth > 5% and GDP < 3T?\",\n  \"reasoning_steps\": [\n    \"Filter countries with GDP < 3T\",\n    \"Compare growth rate against 5% threshold\"\n  ],\n  \"answer\": \"India\",\n  \"source_data\": {\"file\": \"gdp_raw.csv\"}\n}"
+    },
+    "crosslingual-multimodal": {
+      "name": "Cross-lingual Multimodal Multi-task Evaluation Dataset",
+      "desc": "Comprehensive evaluation dataset covering multilingual and multimodal inputs with diverse task types, for systematically assessing model cross-lingual multimodal understanding and generalization.",
+      "scale": "Inventory 6,000",
+      "tags": [
+        "Multilingual Understanding",
+        "Image Reasoning"
+      ],
+      "production": [
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "3,000",
+      "sample": "Entropy Multilingual Multitask Multimodal Sample"
     },
     "browser": {
       "name": "Browser Dataset",
@@ -465,31 +612,97 @@
         "Trajectories"
       ],
       "brief": "Trajectory dataset collected from real user browser operations, covering e-commerce shopping, information retrieval, form filling, content creation, and more. Each trajectory includes complete action sequences, DOM snapshots, and user intent annotations.",
-      "structure": "{\n  \"task_description\": \"Search for noise-canceling headphones on Amazon and add to cart\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"noise-canceling headphones\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}"
+      "structure": "{\n  \"task_description\": \"Search for noise-canceling headphones on Amazon and add to cart\",\n  \"actions\": [\n    {\"action_type\": \"click\", \"element\": \"#search\", \"value\": \"noise-canceling headphones\"}\n  ],\n  \"dom_snapshots\": [\"<html>...</html>\"],\n  \"outcome\": \"success\"\n}",
+      "production": [
+        "Web Extraction"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "5,000",
+      "weeklyOutput": "-",
+      "sample": ""
     },
     "openclaw": {
-      "name": "Openclaw Dataset",
-      "desc": "Cross-platform GUI control agent dataset covering desktop and mobile interface operation trajectories",
-      "scale": "3K+ trajectories",
+      "name": "OpenClaw Trajectory Data",
+      "desc": "Records OpenClaw operational trajectories in structured tasks, including complete workspaces and sessions. Used for training and evaluating model planning, execution, and error correction capabilities for Agent development.",
+      "scale": "Inventory 30,000",
       "tags": [
-        "GUI Agent",
-        "Cross-platform",
-        "Control"
+        "Tool Use",
+        "Agent"
       ],
+      "production": [
+        "Multi-source Acquisition",
+        "Human-built (HITL)"
+      ],
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "inventory": "30,000",
+      "weeklyOutput": "3,000",
+      "sample": "",
       "brief": "A cross-platform GUI control agent training dataset covering Windows, macOS, Android, and iOS. Each trajectory includes screenshot sequences, action events, UI element localization, and task goal descriptions.",
       "structure": "{\n  \"platform\": \"android\",\n  \"task\": \"Enable dark mode in Settings\",\n  \"steps\": [\n    {\"screenshot\": \"ss_01.png\", \"action\": \"tap\", \"bbox\": [120,340,200,380]}\n  ],\n  \"platform_version\": \"Android 14\",\n  \"app_name\": \"Settings\"\n}"
     },
-    "search-eval": {
-      "name": "Search Evaluation Dataset",
-      "desc": "Multi-hop reasoning search evaluation data with diverse query sources and multiple information sources for deep retrieval and reasoning",
-      "scale": "5K+ samples",
+    "search-retrieval": {
+      "name": "Information Retrieval Data",
+      "desc": "Long-chain information reasoning and retrieval data built in two forms: expert-collected from multi-hop (>5 hops) internet corners, and expert-distilled from real user fuzzy search needs ensuring diversity.",
+      "scale": "Inventory 2,000",
       "tags": [
-        "Multi-hop Reasoning",
-        "Search Eval",
-        "Diverse Queries"
+        "Information Retrieval",
+        "Tool Use",
+        "Agent"
       ],
+      "production": [
+        "Multi-source Acquisition",
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text"
+      ],
+      "inventory": "2,000",
+      "weeklyOutput": "800",
+      "sample": "SearchQA Sample",
       "brief": "A multi-hop reasoning evaluation dataset for search-augmented generation (RAG) systems. Each question requires retrieving and synthesizing multiple information sources, covering fact-checking, comparative analysis, causal reasoning, and more.",
       "structure": "{\n  \"query\": \"How effective are COVID vaccines against Omicron variant?\",\n  \"reasoning_type\": \"comparative\",\n  \"required_sources\": 3,\n  \"evidence_urls\": [\n    \"https://doi.org/10.1038/...\",\n    \"https://www.thelancet.com/...\"\n  ],\n  \"answer\": \"mRNA vaccines show reduced neutralizing titers...\",\n  \"evaluation_rubric\": \"Must compare at least two vaccine types\"\n}"
+    },
+    "oj-competition": {
+      "name": "OJ Competition Problems",
+      "desc": "High-quality competition problems where seed-2.0-pro pass@2 = 0, supplemented with expert-built testcases (~1,000 per problem). Comprehensively evaluates problem difficulty with updated submissions and multi-level expert-supplemented reference code.",
+      "scale": "Inventory 6,000",
+      "tags": [
+        "Code Capability"
+      ],
+      "production": [
+        "Multi-source Acquisition",
+        "Expert-built (HITL)"
+      ],
+      "modalities": [
+        "text"
+      ],
+      "inventory": "6,000",
+      "weeklyOutput": "3,000",
+      "sample": "OJ Data Sample"
+    },
+    "game-interaction": {
+      "name": "Game Screen Interaction Data",
+      "desc": "Game interface operation and interaction data covering multiple game scenarios for screen understanding and action decision-making, enhancing model capabilities in GUI perception and game Agent scenarios.",
+      "scale": "Inventory 2,000",
+      "tags": [
+        "World Model"
+      ],
+      "production": [
+        "Human-built"
+      ],
+      "modalities": [
+        "image",
+        "video"
+      ],
+      "inventory": "2,000",
+      "weeklyOutput": "1,000",
+      "sample": ""
     }
   }
 }
