@@ -477,7 +477,9 @@
       ],
       "inventory": "1,000",
       "weeklyOutput": "500",
-      "sample": ""
+      "sample": "",
+      "brief": "SuperChem-Extension is a deep chemistry domain extension of the SuperChem benchmark, maintaining the same distribution. Fields include uuid, field, question_type, bilingual question text (question_en/question_zh) and options (options_en/options_zh), answers (answer_en/answer_zh), full explanations (explanation_en/explanation_zh), with multimodal support. Covers organic, inorganic, physical, and analytical chemistry subfields with high-difficulty problems.",
+      "structure": "{\n  \"uuid\": \"superchem-ext-0001\",\n  \"field\": \"organic_chemistry\",\n  \"question_type\": \"multiple_choice\",\n  \"question_en\": \"Which of the following is the major product of the Diels-Alder reaction between butadiene and maleic anhydride?\",\n  \"question_zh\": \"以下哪个是丁二烯与马来酸酐发生狄尔斯-阿尔德反应的主要产物？\",\n  \"question_images\": {},\n  \"options_en\": {\"A\": \"4-cyclohexene-1,2-dicarboxylic anhydride\", \"B\": \"cyclohexane-1,2-dicarboxylic acid\", \"C\": \"3-cyclohexene-1,2-diol\", \"D\": \"bicyclo[2.2.1]hept-5-ene-2,3-dicarboxylic anhydride\"},\n  \"options_zh\": {\"A\": \"4-环己烯-1,2-二甲酸酐\", \"B\": \"环己烷-1,2-二甲酸\", \"C\": \"3-环己烯-1,2-二醇\", \"D\": \"双环[2.2.1]庚-5-烯-2,3-二甲酸酐\"},\n  \"options_images\": {},\n  \"answer_en\": [\"A\"],\n  \"answer_zh\": [\"A\"],\n  \"explanation_en\": \"The Diels-Alder reaction between butadiene (diene) and maleic anhydride (dienophile) yields 4-cyclohexene-1,2-dicarboxylic anhydride via a concerted [4+2] cycloaddition.\",\n  \"explanation_zh\": \"丁二烯（二烯体）与马来酸酐（亲二烯体）通过协同的[4+2]环加成反应，生成4-环己烯-1,2-二甲酸酐。\",\n  \"explanation_images\": {}\n}"
     },
     "crosslingual-k12-stem": {
       "name": "Cross-lingual K12 STEM Dataset",
@@ -497,7 +499,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "2,000",
-      "sample": "Entropy Multilingual K12 STEM QA Sample 2026.04.02"
+      "sample": "Entropy Multilingual K12 STEM QA Sample 2026.04.02",
+      "brief": "A multilingual K12 STEM Q&A dataset covering mathematics, physics, chemistry, and biology in Vietnamese, Indonesian, Malay, Thai, and more. Each entry includes subject classification, difficulty level (Easy/Medium/Hard), question text, answer, and optional image. Questions are collected by native education experts from official textbooks, preserving original problem logic and cultural context.",
+      "structure": "{\n  \"language\": \"vi\",\n  \"subject\": \"Mathematic\",\n  \"difficulty\": \"Hard\",\n  \"question\": \"Hình chữ nhật ABCD có cạnh AD = 2 cm. Hình tròn tâm D, bán kính DA và hình tròn tâm C bán kính CB có vị trí như hình vẽ. Hãy tính cạnh CD biết rằng diện tích phần AEB bằng diện tích phần MEN.\",\n  \"answer\": \"3.14 cm\",\n  \"image\": \"\"\n}"
     },
     "multimodal-av": {
       "name": "Multimodal (Video-Audio Alignment) Data",
@@ -608,7 +612,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "3,000",
-      "sample": "Entropy Multilingual Multitask Multimodal Sample"
+      "sample": "Entropy Multilingual Multitask Multimodal Sample",
+      "brief": "A comprehensive evaluation dataset covering multilingual and multimodal inputs across 11 task categories including Cultural & Multilingual Understanding, Perception & Classification, General VQA, Visual Reasoning, and Scientific & Mathematical Reasoning. Each entry includes task_id, query language, difficulty level, question type (short_answer/multiple_choice), question text, answer, and optional image. Languages span Hungarian, French, Arabic, and other low-resource languages.",
+      "structure": "{\n  \"id\": \"610892865299\",\n  \"task_category\": \"Cultural & Multilingual Understanding\",\n  \"task_id\": \"low_resource_language_eval\",\n  \"query_language\": \"hu\",\n  \"difficulty\": \"easy\",\n  \"question_type\": \"short_answer\",\n  \"question\": \"Milyen virág óriási képe látható a bal oldali épület falára vetítve?\",\n  \"answer\": \"Napraforgó\",\n  \"image\": \"ID_6F88BA50FF574374B57CBFBAD354653F\"\n}"
     },
     "browser": {
       "name": "Browser Dataset",
@@ -692,7 +698,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "3,000",
-      "sample": "OJ Data Sample"
+      "sample": "OJ Data Sample",
+      "brief": "This dataset contains competition problem submissions from an Online Judge system, covering C++17 and PyPy3. Each record includes complete source code, evaluation status (AC/WA/CE/RE), runtime (ms), memory usage (MB), and rejudge results against expert-supplied test cases. All problems achieve seed-2.0-pro pass@2 = 0, making this dataset ideal for evaluating code generation and competition-level programming capabilities.",
+      "structure": "{\n  \"code\": \"#include <bits/stdc++.h>\\nusing namespace std;\\nusing ll = long long;\\nint main() {\\n    ll n, a, b;\\n    cin >> n >> a >> b;\\n    ll ans = 0;\\n    for (ll i = 1; i <= n; i++) {\\n        if (i % a == 0 || i % b == 0) ans += i;\\n    }\\n    cout << ans << endl;\\n    return 0;\\n}\",\n  \"language\": \"C++17\",\n  \"result\": \"Wrong Answer\",\n  \"time(ms)\": 123,\n  \"memory(MB)\": 3.2,\n  \"original_result\": \"Error\",\n  \"_rejudge_passed\": 12,\n  \"_rejudge_total\": 38\n}"
     },
     "game-interaction": {
       "name": "Game Screen Interaction Data",
@@ -710,7 +718,9 @@
       ],
       "inventory": "2,000",
       "weeklyOutput": "1,000",
-      "sample": ""
+      "sample": "",
+      "brief": "Game screen interaction and operation data covering diverse gaming scenarios for screen understanding and action decision-making. Each recording includes game video (Video), frame-level action details (Action+Camera JSON), and game metadata (System Info). Frames capture camera position/rotation (Euler angles and quaternions), camera intrinsics (fx/fy/cx/cy), player world coordinates, mouse absolute/relative displacement, and keyboard events. Designed for training interactive world models and enhancing GUI perception and game Agent capabilities.",
+      "structure": "{\n  \"frame\": 0,\n  \"time\": \"2026-03-20 16:25:29.860\",\n  \"fps\": 29.99,\n  \"route_type\": 1,\n  \"camera\": {\n    \"position\": [-28.5, 1.691, -7.149],\n    \"rotation_oula\": [0.0, 76.02, 0.0],\n    \"rotation_quaternion\": [0.0, 0.707, 0.0, 0.707],\n    \"follow_offset\": [0.0, 2.5, -5.0],\n    \"intrinsics\": {\"fx\": 1080.0, \"fy\": 1080.0, \"cx\": 960.0, \"cy\": 540.0},\n    \"speed\": [1.25, 0.0, -3.5]\n  },\n  \"character\": {\n    \"position\": [-28.5, 0.251, -7.149],\n    \"rotation_oula\": [0.0, 76.02, 0.0],\n    \"rotation_quaternion\": [0.0, 0.707, 0.0, 0.707],\n    \"speed\": [0.707, 0.0, 0.707]\n  },\n  \"input\": {\n    \"mouse_x\": [0.5],\n    \"mouse_y\": [0.5],\n    \"mouse_dx\": [0.026],\n    \"mouse_dy\": [0.01],\n    \"keyCode\": [87]\n  },\n  \"metric_scale\": 1.0\n}"
     }
   }
 }

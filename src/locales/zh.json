@@ -477,7 +477,9 @@
       ],
       "inventory": "1,000",
       "weeklyOutput": "500",
-      "sample": ""
+      "sample": "",
+      "brief": "SuperChem-Extension 是 SuperChem 基准数据集的化学领域深度扩展版本，与 SuperChem 保持同分布。字段包括 uuid、学科领域（field）、题目类型（question_type）、中英文双语的题目文本（question_en/question_zh）及选项（options_en/options_zh）、答案（answer_en/answer_zh）、完整解析（explanation_en/explanation_zh），并支持图文多模态输入。数据覆盖有机化学、无机化学、物理化学、分析化学等多个化学子领域，题型涵盖选择题、填空题、计算题及复杂推理题。该数据集的独特价值在于其高难度定位和双语设计，适用于模型能力提升评测、化学教育智能辅导系统开发以及多模态化学理解能力的基准测试。",
+      "structure": "{\n  \"uuid\": \"superchem-ext-0001\",\n  \"field\": \"organic_chemistry\",\n  \"question_type\": \"multiple_choice\",\n  \"question_en\": \"Which of the following is the major product of the Diels-Alder reaction between butadiene and maleic anhydride?\",\n  \"question_zh\": \"以下哪个是丁二烯与马来酸酐发生狄尔斯-阿尔德反应的主要产物？\",\n  \"question_images\": {},\n  \"options_en\": {\"A\": \"4-cyclohexene-1,2-dicarboxylic anhydride\", \"B\": \"cyclohexane-1,2-dicarboxylic acid\", \"C\": \"3-cyclohexene-1,2-diol\", \"D\": \"bicyclo[2.2.1]hept-5-ene-2,3-dicarboxylic anhydride\"},\n  \"options_zh\": {\"A\": \"4-环己烯-1,2-二甲酸酐\", \"B\": \"环己烷-1,2-二甲酸\", \"C\": \"3-环己烯-1,2-二醇\", \"D\": \"双环[2.2.1]庚-5-烯-2,3-二甲酸酐\"},\n  \"options_images\": {},\n  \"answer_en\": [\"A\"],\n  \"answer_zh\": [\"A\"],\n  \"explanation_en\": \"The Diels-Alder reaction between butadiene (diene) and maleic anhydride (dienophile) yields 4-cyclohexene-1,2-dicarboxylic anhydride via a concerted [4+2] cycloaddition.\",\n  \"explanation_zh\": \"丁二烯（二烯体）与马来酸酐（亲二烯体）通过协同的[4+2]环加成反应，生成4-环己烯-1,2-二甲酸酐。\",\n  \"explanation_images\": {}\n}"
     },
     "crosslingual-k12-stem": {
       "name": "跨语言K12 STEM数据集",
@@ -497,7 +499,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "2,000",
-      "sample": "熵基 Multilingual K12 STEM QA Sample 2026.04.02"
+      "sample": "熵基 Multilingual K12 STEM QA Sample 2026.04.02",
+      "brief": "面向 K12 阶段的多语言 STEM 学科问答数据集，覆盖数学、物理、化学、生物等核心科目，支持越南语、印度尼西亚语、马来西亚语、泰语等多种语言。每道题包含学科分类、难度等级（Easy/Medium/Hard）、题目文本、答案及配图，题型涵盖选择题、填空题、计算题及复杂多步推理题。所有题目由对应国家的教育专家采集自正版教材与习题册，经多轮校对后保留原始题目逻辑与文化语境，是评估模型多语言教育场景下学科推理能力的理想基准。",
+      "structure": "{\n  \"language\": \"vi\",\n  \"subject\": \"Mathematic\",\n  \"difficulty\": \"Hard\",\n  \"question\": \"Hình chữ nhật ABCD có cạnh AD = 2 cm. Hình tròn tâm D, bán kính DA và hình tròn tâm C bán kính CB có vị trí như hình vẽ. Hãy tính cạnh CD biết rằng diện tích phần AEB bằng diện tích phần MEN.\",\n  \"answer\": \"3.14 cm\",\n  \"image\": \"\"\n}"
     },
     "multimodal-av": {
       "name": "多模态（音视频对齐）数据",
@@ -608,7 +612,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "3,000",
-      "sample": "熵基 Multilingual Multitask Multimodal Sample"
+      "sample": "熵基 Multilingual Multitask Multimodal Sample",
+      "brief": "覆盖多语言、多模态输入形式的综合评测数据集，涵盖 Cultural & Multilingual Understanding、Perception & Classification、General VQA、Visual Reasoning、Scientific & Mathematical Reasoning 等 11 个任务类别。每项任务包含 task_id 标识、query_language 查询语言、difficulty 难度等级、question_type 题型（short_answer/multiple_choice 等）、问题文本与答案，并支持图片输入。数据语言覆盖匈牙利语、法语、阿拉伯语等多种低资源语言，适用于系统评估模型在跨语言场景下的多模态理解与泛化能力。",
+      "structure": "{\n  \"id\": \"610892865299\",\n  \"task_category\": \"Cultural & Multilingual Understanding\",\n  \"task_id\": \"low_resource_language_eval\",\n  \"query_language\": \"hu\",\n  \"difficulty\": \"easy\",\n  \"question_type\": \"short_answer\",\n  \"question\": \"Milyen virág óriási képe látható a bal oldali épület falára vetítve?\",\n  \"answer\": \"Napraforgó\",\n  \"image\": \"ID_6F88BA50FF574374B57CBFBAD354653F\"\n}"
     },
     "browser": {
       "name": "Browser 数据集",
@@ -692,7 +698,9 @@
       ],
       "inventory": "6,000",
       "weeklyOutput": "3,000",
-      "sample": "OJ Data Sample"
+      "sample": "OJ Data Sample",
+      "brief": "该数据集包含 OJ 在线评测系统的竞赛题用户提交记录，涵盖 C++17 和 PyPy3 等多种编程语言。每条记录包含参赛者提交的完整源代码、评测状态（AC/WA/CE/RE 等）、运行耗时（ms）、内存占用（MB），以及经过专家补充的大量测试用例重判后的通过/总测试点对比。所有题目均为 seed-2.0-pro pass@2 = 0 的优质竞赛题，适合用于模型代码生成和竞赛级编程能力的评估与提升。",
+      "structure": "{\n  \"code\": \"#include <bits/stdc++.h>\\nusing namespace std;\\nusing ll = long long;\\nint main() {\\n    ll n, a, b;\\n    cin >> n >> a >> b;\\n    ll ans = 0;\\n    for (ll i = 1; i <= n; i++) {\\n        if (i % a == 0 || i % b == 0) ans += i;\\n    }\\n    cout << ans << endl;\\n    return 0;\\n}\",\n  \"language\": \"C++17\",\n  \"result\": \"Wrong Answer\",\n  \"time(ms)\": 123,\n  \"memory(MB)\": 3.2,\n  \"original_result\": \"Error\",\n  \"_rejudge_passed\": 12,\n  \"_rejudge_total\": 38\n}"
     },
     "game-interaction": {
       "name": "游戏屏幕互动数据",
@@ -710,7 +718,9 @@
       ],
       "inventory": "2,000",
       "weeklyOutput": "1,000",
-      "sample": ""
+      "sample": "",
+      "brief": "游戏界面操作与交互数据，涵盖多种游戏场景下的屏幕理解与动作决策。每段录制包含游戏视频（Video）、操作细节 JSON（Action+Camera JSON）和游戏元信息（System Info）三部分交付物。操作细节以帧为单位，逐帧记录相机位置/旋转（支持欧拉角和四元数）、相机内参（fx/fy/cx/cy）、玩家世界坐标、鼠标绝对/相对位移、键盘按键事件等完整字段。数据用于训练交互式世界模型，提升模型在 GUI 感知和游戏 Agent 方向的能力。",
+      "structure": "{\n  \"frame\": 0,\n  \"time\": \"2026-03-20 16:25:29.860\",\n  \"fps\": 29.99,\n  \"route_type\": 1,\n  \"camera\": {\n    \"position\": [-28.5, 1.691, -7.149],\n    \"rotation_oula\": [0.0, 76.02, 0.0],\n    \"rotation_quaternion\": [0.0, 0.707, 0.0, 0.707],\n    \"follow_offset\": [0.0, 2.5, -5.0],\n    \"intrinsics\": {\"fx\": 1080.0, \"fy\": 1080.0, \"cx\": 960.0, \"cy\": 540.0},\n    \"speed\": [1.25, 0.0, -3.5]\n  },\n  \"character\": {\n    \"position\": [-28.5, 0.251, -7.149],\n    \"rotation_oula\": [0.0, 76.02, 0.0],\n    \"rotation_quaternion\": [0.0, 0.707, 0.0, 0.707],\n    \"speed\": [0.707, 0.0, 0.707]\n  },\n  \"input\": {\n    \"mouse_x\": [0.5],\n    \"mouse_y\": [0.5],\n    \"mouse_dx\": [0.026],\n    \"mouse_dy\": [0.01],\n    \"keyCode\": [87]\n  },\n  \"metric_scale\": 1.0\n}"
     }
   }
 }
