@@ -28,7 +28,6 @@ export function ProductsPage() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCapabilities, setSelectedCapabilities] = useState([]);
-  const [selectedProductions, setSelectedProductions] = useState([]);
   const [selectedModalities, setSelectedModalities] = useState([]);
 
   const onViewDetail = (dataset) => {
@@ -47,24 +46,21 @@ export function ProductsPage() {
 
   const filterOptions = useMemo(() => {
     const capabilities = new Set();
-    const productions = new Set();
     const modalities = new Set();
     allCategories.forEach((cat) => {
       cat.datasets.forEach((ds) => {
         (ds.tags || []).forEach((tag) => capabilities.add(tag));
-        (ds.production || []).forEach((p) => productions.add(p));
         (ds.modalities || []).forEach((m) => modalities.add(m));
       });
     });
     return {
       capabilities: Array.from(capabilities),
-      productions: Array.from(productions),
       modalities: Array.from(modalities),
     };
   }, [allCategories]);
 
   const filteredCategories = useMemo(() => {
-    const hasAnyFilter = searchTerm || selectedCapabilities.length > 0 || selectedProductions.length > 0 || selectedModalities.length > 0;
+    const hasAnyFilter = searchTerm || selectedCapabilities.length > 0 || selectedModalities.length > 0;
     if (!hasAnyFilter) return allCategories;
 
     return allCategories.map((cat) => {
@@ -77,10 +73,6 @@ export function ProductsPage() {
           const dsTags = ds.tags || [];
           if (!selectedCapabilities.every((c) => dsTags.includes(c))) return false;
         }
-        if (selectedProductions.length > 0) {
-          const dsProd = ds.production || [];
-          if (!selectedProductions.every((p) => dsProd.includes(p))) return false;
-        }
         if (selectedModalities.length > 0) {
           const dsMod = ds.modalities || [];
           if (!selectedModalities.every((m) => dsMod.includes(m))) return false;
@@ -89,16 +81,15 @@ export function ProductsPage() {
       });
       return { ...cat, datasets: filteredDatasets };
     }).filter((cat) => cat.datasets.length > 0);
-  }, [allCategories, searchTerm, selectedCapabilities, selectedProductions, selectedModalities]);
+  }, [allCategories, searchTerm, selectedCapabilities, selectedModalities]);
 
-  const hasActiveFilters = searchTerm || selectedCapabilities.length > 0 || selectedProductions.length > 0 || selectedModalities.length > 0;
+  const hasActiveFilters = searchTerm || selectedCapabilities.length > 0 || selectedModalities.length > 0;
   const totalFiltered = filteredCategories.reduce((sum, cat) => sum + cat.datasets.length, 0);
   const totalDatasets = allCategories.reduce((sum, cat) => sum + cat.datasets.length, 0);
 
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedCapabilities([]);
-    setSelectedProductions([]);
     setSelectedModalities([]);
   };
 
@@ -150,7 +141,6 @@ export function ProductsPage() {
   const renderActiveTagCloud = () => {
     const allSelected = [
       ...selectedCapabilities.map((c) => ({ type: 'capability', value: c })),
-      ...selectedProductions.map((p) => ({ type: 'production', value: p })),
       ...selectedModalities.map((m) => ({ type: 'modality', value: m })),
     ];
 
@@ -179,7 +169,6 @@ export function ProductsPage() {
                 onClick={() => {
                   if (item.type === 'search') setSearchTerm('');
                   else if (item.type === 'capability') toggleItem(setSelectedCapabilities)(item.value);
-                  else if (item.type === 'production') toggleItem(setSelectedProductions)(item.value);
                   else if (item.type === 'modality') toggleItem(setSelectedModalities)(item.value);
                 }}
                 className="ml-0.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full p-0.5"
@@ -252,23 +241,6 @@ export function ProductsPage() {
                   className={pillCls(selectedCapabilities.includes(cap))}
                 >
                   {cap}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Production */}
-          <div className="relative pl-3">
-            <div className="absolute left-0 top-1 bottom-1 w-1 rounded-full bg-cyan-500" />
-            <span className={dimLabel}>{t('products.filter.production')}</span>
-            <div className="flex flex-wrap gap-2">
-              {filterOptions.productions.map((prod) => (
-                <button
-                  key={prod}
-                  onClick={() => toggleItem(setSelectedProductions)(prod)}
-                  className={pillCls(selectedProductions.includes(prod))}
-                >
-                  {prod}
                 </button>
               ))}
             </div>

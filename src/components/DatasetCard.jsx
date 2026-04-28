@@ -22,11 +22,38 @@ function getProductionBadgeStyle(prod) {
   return 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
 }
 
+function computeFlyoutTop(cardTop, flyoutHeight) {
+  const pad = 12;
+  const viewportH = window.innerHeight;
+  // Prefer top-aligned with card
+  let top = cardTop - pad;
+  // If bottom spills past viewport, shift up
+  if (top + flyoutHeight + pad > viewportH) {
+    top = Math.max(pad, viewportH - flyoutHeight - pad);
+  }
+  // If top goes above viewport, clamp
+  if (top < pad) top = pad;
+  return top;
+}
+
+function computeFlyoutLeft(cardLeft, cardWidth, flyoutWidth) {
+  const viewportW = window.innerWidth;
+  const pad = 16;
+  // Center the flyout horizontally over the card
+  let left = cardLeft + (cardWidth - flyoutWidth) / 2;
+  if (left < pad) left = pad;
+  if (left + flyoutWidth > viewportW - pad) left = viewportW - flyoutWidth - pad;
+  return left;
+}
+
 export function DatasetCard({ dataset }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const [showFlyout, setShowFlyout] = useState(false);
   const cardRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
+
+  const FLYOUT_WIDTH = 380;
 
   const updatePos = useCallback(() => {
     if (cardRef.current) {
@@ -60,6 +87,47 @@ export function DatasetCard({ dataset }) {
   }, [showFlyout, updatePos]);
 
   const hasPaper = dataset.paper && dataset.paper.title;
+
+  const handleRequestSample = () => {
+    const isZh = lang === 'zh';
+    const subject = encodeURIComponent(
+      isZh ? `[数据集咨询] ${dataset.name}` : `[Dataset Inquiry] ${dataset.name}`
+    );
+    const body = encodeURIComponent(
+      isZh
+        ? `熵基秩序团队您好，
+
+我对以下数据集感兴趣：
+
+数据集：${dataset.name}
+简介：${dataset.desc || ''}
+标签：${(dataset.tags || []).join('、')}
+生产方式：${(dataset.production || []).join('、')}
+存量：${dataset.inventory || ''}
+
+请提供样例数据及更多信息。
+
+此致
+[您的姓名]
+[您的单位]`
+        : `Dear EntropyOrder Team,
+
+I am interested in the following dataset:
+
+Dataset: ${dataset.name}
+Description: ${dataset.desc || ''}
+Tags: ${(dataset.tags || []).join(', ')}
+Production Method: ${(dataset.production || []).join(', ')}
+Inventory: ${dataset.inventory || ''}
+
+Please provide a sample and further details.
+
+Best regards,
+[Your Name]
+[Your Organization]`
+    );
+    window.open(`mailto:jscott2402@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  };
 
   return (
     <>
@@ -146,15 +214,11 @@ export function DatasetCard({ dataset }) {
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: duration.fast, ease: 'easeOut' }}
               onMouseLeave={handleLeave}
-              className="fixed z-[9999] rounded-2xl overflow-hidden
-                bg-white dark:bg-[#0d1a2d]
-                border border-slate-200/80 dark:border-white/[0.07]
-                shadow-[0_24px_80px_rgba(0,0,0,0.18)]
-                dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+              className="fixed z-[9999] rounded-2xl overflow-visible bg-white dark:bg-[#0d1a2d] border border-slate-200/80 dark:border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
               style={{
-                top: pos.top - 8,
-                left: pos.left - 8,
-                width: pos.width + 16,
+                width: FLYOUT_WIDTH,
+                top: computeFlyoutTop(pos.top, FLYOUT_WIDTH),
+                left: computeFlyoutLeft(pos.left, pos.width, FLYOUT_WIDTH),
               }}
             >
               <div className="px-5 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
@@ -270,6 +334,16 @@ export function DatasetCard({ dataset }) {
                     </a>
                   </section>
                 )}
+              </div>
+
+              {/* Request Sample Button */}
+              <div className="px-4 pb-3 pt-2">
+                <button
+                  onClick={handleRequestSample}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-accent-500 px-5 py-2.5 text-sm font-semibold text-white hover:from-brand-500 hover:to-cyan-400 shadow-sm hover:shadow-brand-500/35 hover:shadow-md transition-all"
+                >
+                  {t('products.detail.contactSample')}
+                </button>
               </div>
             </motion.div>
           )}
