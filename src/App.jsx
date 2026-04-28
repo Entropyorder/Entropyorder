@@ -9,6 +9,7 @@ import { HomePage } from './pages/HomePage.jsx';
 import { BlogListPage } from './pages/BlogListPage.jsx';
 import { BlogDetailPage } from './pages/BlogDetailPage.jsx';
 import { DatasetDetailPage } from './pages/DatasetDetailPage.jsx';
+import { ProductsPage } from './pages/ProductsPage.jsx';
 import { AI4SS4AIPage } from './pages/AI4SS4AIPage.jsx';
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 import './App.css';
@@ -49,7 +50,7 @@ function App() {
   return (
     <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
       <div className="min-h-screen bg-page-bg dark:bg-page-bg-dark text-slate-800 dark:text-slate-50 transition-colors">
-        <Navbar sectionIds={['home', 'products', 'expert-data']} />
+        <Navbar />
 
         {/* Background routes — always rendered (using bg location during overlay) */}
         <div
@@ -64,6 +65,7 @@ function App() {
         >
           <Routes location={routeLocation}>
             <Route path="/" element={<ErrorBoundary><HomePage /></ErrorBoundary>} />
+            <Route path="/products" element={<ErrorBoundary><ProductsPage /></ErrorBoundary>} />
             <Route path="/blog" element={<ErrorBoundary><BlogListPage /></ErrorBoundary>} />
             <Route path="/ai4ss" element={<ErrorBoundary><AI4SS4AIPage /></ErrorBoundary>} />
             {/* A safety net for unrecognized direct routes (e.g. random /foo) */}

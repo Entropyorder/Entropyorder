@@ -12,6 +12,9 @@
     "scrollHint": "See Our Expert Data Construction Pipeline"
   },
   "products": {
+    "pageTitle": "Products & Services",
+    "pageSubtitle": "We provide {{count}} high-quality dataset products",
+    "totalCount": "Total products",
     "title": "Products & Services",
     "categories": {
       "expert": {
@@ -164,11 +167,16 @@
     "filter": {
       "searchPlaceholder": "Search by name or description...",
       "capabilities": "Capabilities",
-      "production": "Production",
+      "production": "Production Methods",
       "modalities": "Modalities",
       "matchCount": "{{count}} product(s) matched",
-      "clear": "Clear Filters",
-      "empty": "No matching datasets found"
+      "clearAll": "Clear filters",
+      "activeFilters": "Active filters",
+      "empty": "No matching datasets found",
+      "modalitiesText": "Text",
+      "modalitiesImage": "Image",
+      "modalitiesVideo": "Video",
+      "modalitiesAudio": "Audio"
     }
   },
   "expertData": {

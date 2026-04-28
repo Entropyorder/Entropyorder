@@ -8,7 +8,7 @@ import { spring } from '../animations/tokens.js';
 import logoUrl from '/logo.png';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 
-export function Navbar({ sectionIds }) {
+export function Navbar() {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const isMobile = useMediaQuery('(max-width: 767px)');
@@ -20,10 +20,11 @@ export function Navbar({ sectionIds }) {
   const navigate = useNavigate();
 
   const isHome = location.pathname === '/';
+  const isProducts = location.pathname === '/products';
 
   const navItems = [
     { key: 'home', label: t('nav.home'), kind: 'route', path: '/' },
-    { key: 'products', label: t('nav.products'), kind: 'section', sectionId: 'products' },
+    { key: 'products', label: t('nav.products'), kind: 'route', path: '/products' },
     { key: 'blog', label: t('nav.blog'), kind: 'route', path: '/blog' },
     { key: 'ai4ss', label: t('nav.ai4ss'), kind: 'route', path: '/ai4ss' },
   ];
@@ -36,33 +37,6 @@ export function Navbar({ sectionIds }) {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!isHome) {
-      setVisibleSection(null);
-      return;
-    }
-    const ids = sectionIds || ['home', 'products'];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        let best = null;
-        let bestRatio = 0;
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > bestRatio) {
-            bestRatio = entry.intersectionRatio;
-            best = entry.target.id;
-          }
-        });
-        if (best) setVisibleSection(best);
-      },
-      { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.1, 0.2, 0.3, 0.5] }
-    );
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, [isHome, sectionIds, location.pathname]);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -88,42 +62,13 @@ export function Navbar({ sectionIds }) {
   };
 
   const isActive = (item) => {
-    if (item.kind === 'route') {
-      if (item.path === '/') return isHome && (!visibleSection || visibleSection === 'home');
-      return location.pathname === item.path || location.pathname.startsWith(item.path + '/');
-    }
-    return isHome && visibleSection === item.sectionId;
-  };
-
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const navbarH = 64;
-    const y = el.getBoundingClientRect().top + window.scrollY - navbarH;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    return location.pathname === item.path;
   };
 
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (item.kind === 'route') {
-      if (item.path === '/') {
-        if (isHome) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          navigate('/');
-        }
-      } else {
-        navigate(item.path);
-      }
-      return;
-    }
-    // Section: scroll in home, or navigate + scrollTo state
-    if (isHome) {
-      scrollToSection(item.sectionId);
-    } else {
-      navigate('/', { state: { scrollTo: item.sectionId } });
-    }
+    navigate(item.path);
   };
 
   const isLightNotScrolled = !isScrolled && theme !== 'dark';
@@ -190,7 +135,7 @@ export function Navbar({ sectionIds }) {
             {navItems.map((item) => (
               <a
                 key={item.key}
-                href={item.kind === 'route' ? item.path : `#${item.sectionId}`}
+                href={item.path}
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive(item) ? 'page' : undefined}
                 className={`relative px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
@@ -264,7 +209,7 @@ export function Navbar({ sectionIds }) {
             {navItems.map((item) => (
               <a
                 key={item.key}
-                href={item.kind === 'route' ? item.path : `#${item.sectionId}`}
+                href={item.path}
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive(item) ? 'page' : undefined}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${

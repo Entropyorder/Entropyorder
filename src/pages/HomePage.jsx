@@ -1,6 +1,5 @@
 import { Hero } from '../components/Hero.jsx';
 import { ExpertDataValue } from '../components/ExpertDataValue.jsx';
-import { Products } from '../components/Products.jsx';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -21,20 +20,6 @@ function WaveDivider() {
   );
 }
 
-function DiagonalDivider() {
-  return (
-    <div
-      className="relative z-10 overflow-hidden leading-none"
-      style={{ height: 56, marginTop: -1, marginBottom: -1 }}
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 1440 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0 w-full h-full">
-        <polygon points="0,56 1440,0 1440,56" className="fill-page-bg dark:fill-page-bg-dark" />
-      </svg>
-    </div>
-  );
-}
-
 export function HomePage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,7 +33,6 @@ export function HomePage() {
         const navbarH = 64;
         const y = el.getBoundingClientRect().top + window.scrollY - navbarH;
         window.scrollTo({ top: y, behavior: 'smooth' });
-        // Clear scrollTo state after consumption
         navigate(location.pathname, { replace: true, state: {} });
       }
     };
@@ -61,9 +45,6 @@ export function HomePage() {
       <Hero />
       <WaveDivider />
       <ExpertDataValue />
-      <DiagonalDivider />
-      <Products />
-      <DiagonalDivider />
     </main>
   );
 }

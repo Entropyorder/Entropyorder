@@ -12,6 +12,9 @@
     "scrollHint": "查看我们的专家数据构建流程"
   },
   "products": {
+    "pageTitle": "产品与服务",
+    "pageSubtitle": "我们提供 {{count}} 个高质量数据集产品",
+    "totalCount": "总产品数",
     "title": "产品与服务",
     "categories": {
       "expert": {
@@ -167,8 +170,13 @@
       "production": "生产方式",
       "modalities": "数据模态",
       "matchCount": "匹配 {{count}} 个产品",
-      "clear": "清除筛选",
-      "empty": "暂无匹配的数据集产品"
+      "clearAll": "清除筛选",
+      "activeFilters": "当前筛选",
+      "empty": "暂无匹配的数据集产品",
+      "modalitiesText": "文本",
+      "modalitiesImage": "图片",
+      "modalitiesVideo": "视频",
+      "modalitiesAudio": "音频"
     }
   },
   "expertData": {

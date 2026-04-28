@@ -3,6 +3,24 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { spring, duration } from '../animations/tokens.js';
+import { FileText, Image, Video, AudioLines } from 'lucide-react';
+
+const MODALITY_META = {
+  text: { Icon: FileText },
+  image: { Icon: Image },
+  video: { Icon: Video },
+  audio: { Icon: AudioLines },
+};
+
+function getProductionBadgeStyle(prod) {
+  if (prod.includes('专家') || prod.includes('Expert')) {
+    return 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800/50';
+  }
+  if (prod.includes('人工') || prod.includes('Human')) {
+    return 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800/50';
+  }
+  return 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
+}
 
 export function DatasetCard({ dataset }) {
   const { t } = useTranslation();
@@ -48,16 +66,17 @@ export function DatasetCard({ dataset }) {
       {/* Card */}
       <div ref={cardRef} onMouseEnter={handleEnter}>
         <motion.div
-          whileHover={{ y: -5, scale: 1.012 }}
+          whileHover={{ y: -6, scale: 1.015 }}
           transition={{ type: 'spring', ...spring.snappy }}
           className="group relative rounded-2xl overflow-hidden
             bg-white dark:bg-[#0d1a2d]
             border border-slate-200/80 dark:border-white/[0.07]
             shadow-[0_2px_16px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)]
             dark:shadow-[0_4px_32px_rgba(0,0,0,0.5)]
-            hover:shadow-[0_12px_40px_rgba(37,99,235,0.14),0_4px_12px_rgba(0,0,0,0.08)]
-            dark:hover:shadow-[0_12px_48px_rgba(37,99,235,0.22),0_4px_16px_rgba(0,0,0,0.6)]
-            transition-shadow duration-300"
+            hover:shadow-[0_16px_56px_rgba(37,99,235,0.16),0_6px_16px_rgba(0,0,0,0.1)]
+            dark:hover:shadow-[0_16px_56px_rgba(37,99,235,0.26),0_6px_16px_rgba(0,0,0,0.7)]
+            hover:border-brand-200 dark:hover:border-brand-500/40
+            transition-all duration-300"
         >
           <div className="h-[3px] w-full bg-gradient-to-r from-brand-500 via-accent-400 to-cyan-400" />
           <div className="card-shimmer" />
@@ -95,12 +114,21 @@ export function DatasetCard({ dataset }) {
               ))}
             </div>
             {(dataset.production && dataset.production.length > 0) && (
-              <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
+              <div className="flex flex-wrap gap-2 items-center">
                 {dataset.production.map((p) => (
-                  <span key={p} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 font-medium">
+                  <span key={p} className={`inline-flex items-center px-2 py-0.5 text-xs rounded-md font-medium border ${getProductionBadgeStyle(p)}`}>
                     {p}
                   </span>
                 ))}
+                {(dataset.modalities || []).map((mod, idx) => {
+                  const meta = MODALITY_META[mod];
+                  const Icon = meta?.Icon;
+                  return (
+                    <span key={`mod-${idx}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs rounded-md bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
+                      {Icon && <Icon className="w-3 h-3" />}
+                    </span>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -157,12 +185,21 @@ export function DatasetCard({ dataset }) {
                   ))}
                 </div>
                 {(dataset.production && dataset.production.length > 0) && (
-                  <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500">
+                  <div className="flex flex-wrap gap-2 items-center">
                     {dataset.production.map((p) => (
-                      <span key={p} className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 font-medium">
+                      <span key={p} className={`inline-flex items-center px-2 py-0.5 text-xs rounded-md font-medium border ${getProductionBadgeStyle(p)}`}>
                         {p}
                       </span>
                     ))}
+                    {(dataset.modalities || []).map((mod, idx) => {
+                      const meta = MODALITY_META[mod];
+                      const Icon = meta?.Icon;
+                      return (
+                        <span key={`mod-${idx}`} className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs rounded-md bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
+                          {Icon && <Icon className="w-3 h-3" />}
+                        </span>
+                      );
+                    })}
                   </div>
                 )}
               </div>
