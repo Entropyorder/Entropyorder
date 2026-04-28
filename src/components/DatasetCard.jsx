@@ -48,6 +48,7 @@ export function DatasetCard({ dataset }) {
   const [showFlyout, setShowFlyout] = useState(false);
   const cardRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
+  const flyoutIdRef = useRef(null);
 
   const FLYOUT_WIDTH = 456;
 
@@ -65,10 +66,25 @@ export function DatasetCard({ dataset }) {
   const handleEnter = useCallback(() => {
     updatePos();
     setShowFlyout(true);
+    // Dispatch a global event so other flyouts close
+    const id = Math.random().toString(36).slice(2);
+    flyoutIdRef.current = id;
+    window.dispatchEvent(new CustomEvent('flyout-open', { detail: { id } }));
   }, [updatePos]);
 
   const handleLeave = useCallback(() => {
     setShowFlyout(false);
+  }, []);
+
+  // Listen for global flyout-open: close if it's not ours
+  useEffect(() => {
+    const onFlyoutOpen = (e) => {
+      if (e.detail.id !== flyoutIdRef.current) {
+        setShowFlyout(false);
+      }
+    };
+    window.addEventListener('flyout-open', onFlyoutOpen);
+    return () => window.removeEventListener('flyout-open', onFlyoutOpen);
   }, []);
 
   useEffect(() => {
@@ -210,16 +226,16 @@ Best regards,
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: duration.fast, ease: 'easeOut' }}
               onMouseLeave={handleLeave}
-              className="fixed z-[9999] rounded-2xl bg-white dark:bg-[#0d1a2d] border border-slate-200/80 dark:border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+              className="fixed z-[9999] rounded-2xl bg-white dark:bg-[#0d1a2d] border border-slate-200/80 dark:border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden"
               style={{
                 width: FLYOUT_WIDTH,
                 top: computeFlyoutTop(pos.top),
                 left: computeFlyoutLeft(pos.left, pos.width, FLYOUT_WIDTH),
-                maxHeight: Math.max(300, Math.min(520, window.innerHeight - 24)),
-                overflowY: 'auto',
+                maxHeight: Math.max(340, Math.min(560, window.innerHeight - 24)),
               }}
             >
-              <div className="px-5 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
+              {/* Header — fixed, no scroll */}
+              <div className="px-5 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <h4 className="font-display text-lg font-bold text-slate-800 dark:text-slate-50">
                     {dataset.name}
@@ -266,7 +282,8 @@ Best regards,
                 )}
               </div>
 
-              <div className="p-5">
+              {/* Scrollable body */}
+              <div className="p-5 overflow-y-auto flex-1 min-h-0">
                 <div className="space-y-4">
                   <section>
                     <h5 className="text-xs font-bold uppercase tracking-[0.2em] text-brand-500 dark:text-brand-400 mb-2">
@@ -334,8 +351,8 @@ Best regards,
                 )}
               </div>
 
-              {/* Request Sample Button */}
-              <div className="px-4 pb-3 pt-2">
+              {/* Request Sample Button — fixed at bottom */}
+              <div className="shrink-0 border-t border-slate-100 dark:border-slate-800 p-4 bg-white dark:bg-[#0d1a2d] rounded-b-2xl">
                 <button
                   onClick={handleRequestSample}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-accent-500 px-5 py-2.5 text-sm font-semibold text-white hover:from-brand-500 hover:to-cyan-400 shadow-sm hover:shadow-brand-500/35 hover:shadow-md transition-all"
