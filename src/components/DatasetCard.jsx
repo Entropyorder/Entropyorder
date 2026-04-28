@@ -22,16 +22,12 @@ function getProductionBadgeStyle(prod) {
   return 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700';
 }
 
-function computeFlyoutTop(cardTop, flyoutHeight) {
+function computeFlyoutTop(cardTop) {
   const pad = 12;
   const viewportH = window.innerHeight;
-  // Prefer top-aligned with card
+  const maxH = Math.min(540, viewportH - pad * 2);
   let top = cardTop - pad;
-  // If bottom spills past viewport, shift up
-  if (top + flyoutHeight + pad > viewportH) {
-    top = Math.max(pad, viewportH - flyoutHeight - pad);
-  }
-  // If top goes above viewport, clamp
+  if (top + maxH + pad > viewportH) top = Math.max(pad, viewportH - maxH - pad);
   if (top < pad) top = pad;
   return top;
 }
@@ -53,7 +49,7 @@ export function DatasetCard({ dataset }) {
   const cardRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
 
-  const FLYOUT_WIDTH = 380;
+  const FLYOUT_WIDTH = 456;
 
   const updatePos = useCallback(() => {
     if (cardRef.current) {
@@ -89,7 +85,7 @@ export function DatasetCard({ dataset }) {
   const hasPaper = dataset.paper && dataset.paper.title;
 
   const handleRequestSample = () => {
-    const isZh = lang === 'zh';
+    const isZh = lang.startsWith('zh');
     const subject = encodeURIComponent(
       isZh ? `[数据集咨询] ${dataset.name}` : `[Dataset Inquiry] ${dataset.name}`
     );
@@ -214,11 +210,13 @@ Best regards,
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: duration.fast, ease: 'easeOut' }}
               onMouseLeave={handleLeave}
-              className="fixed z-[9999] rounded-2xl overflow-visible bg-white dark:bg-[#0d1a2d] border border-slate-200/80 dark:border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+              className="fixed z-[9999] rounded-2xl bg-white dark:bg-[#0d1a2d] border border-slate-200/80 dark:border-white/[0.07] shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
               style={{
                 width: FLYOUT_WIDTH,
-                top: computeFlyoutTop(pos.top, FLYOUT_WIDTH),
+                top: computeFlyoutTop(pos.top),
                 left: computeFlyoutLeft(pos.left, pos.width, FLYOUT_WIDTH),
+                maxHeight: Math.max(300, Math.min(520, window.innerHeight - 24)),
+                overflowY: 'auto',
               }}
             >
               <div className="px-5 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
