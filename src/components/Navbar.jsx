@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useTheme } from '../hooks/useTheme.js';
 import { spring } from '../animations/tokens.js';
 import logoUrl from '/logo.png';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
+import { useTheme } from '../context/ThemeContext.jsx';
+import { currentLang } from '../i18n.js';
 
 export function Navbar() {
   const { t, i18n } = useTranslation();
@@ -14,22 +15,17 @@ export function Navbar() {
   const isMobile = useMediaQuery('(max-width: 767px)');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrollY, setScrollY] = useState(typeof window !== 'undefined' ? window.scrollY : 0);
-  const [visibleSection, setVisibleSection] = useState('home');
   const toggleRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isHome = location.pathname === '/';
-  const isProducts = location.pathname === '/products';
-
   const navItems = [
-    { key: 'home', label: t('nav.home'), kind: 'route', path: '/' },
-    { key: 'products', label: t('nav.products'), kind: 'route', path: '/products' },
-    { key: 'blog', label: t('nav.blog'), kind: 'route', path: '/blog' },
-    { key: 'ai4ss', label: t('nav.ai4ss'), kind: 'route', path: '/ai4ss' },
+    { key: 'home', label: t('nav.home'), path: '/' },
+    { key: 'products', label: t('nav.products'), path: '/products' },
+    { key: 'blog', label: t('nav.blog'), path: '/blog' },
   ];
 
-  const isScrolled = scrollY > 80;
+  const isScrolled = scrollY > 60;
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -56,14 +52,18 @@ export function Navbar() {
     return () => document.body.classList.remove('overflow-hidden');
   }, [mobileOpen]);
 
+  // 规范语言：'zh' | 'en'（i18n.language 可能是 zh-CN / en-US）
+  const lang = currentLang();
   const toggleLang = () => {
-    const next = i18n.language === 'zh' ? 'en' : 'zh';
-    i18n.changeLanguage(next);
+    i18n.changeLanguage(lang === 'zh' ? 'en' : 'zh');
   };
 
-  const isActive = (item) => {
-    return location.pathname === item.path;
-  };
+  const isActive = (item) => location.pathname === item.path;
+
+  // 首页 hero 区不显示导航栏（logo 重复）—— 鼠标移到顶部 / 滚过 hero 后拉出
+  const isHome = location.pathname === '/';
+  const [peekZone, setPeekZone] = useState(false);
+  const hideNav = isHome && !isScrolled && !peekZone && !mobileOpen;
 
   const handleNavClick = (e, item) => {
     e.preventDefault();
@@ -71,65 +71,51 @@ export function Navbar() {
     navigate(item.path);
   };
 
-  const isLightNotScrolled = !isScrolled && theme !== 'dark';
-
-  const navBg = isScrolled
-    ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm border-b border-brand-600/10 dark:border-slate-700/60'
-    : theme === 'dark'
-    ? 'bg-transparent border-b border-transparent'
-    : 'bg-white/70 backdrop-blur-xl border-b border-slate-200/40';
-
-  const logoTextColor = isScrolled
-    ? 'text-slate-700 dark:text-slate-200'
-    : theme === 'dark'
-    ? 'text-white'
-    : 'text-slate-800';
-
-  const navTextBase = isScrolled
-    ? 'text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
-    : theme === 'dark'
-    ? 'text-white/80 hover:text-white dark:text-white/80 dark:hover:text-white'
-    : 'text-slate-600 hover:text-slate-800';
-
-  const activeTextCls = isScrolled
-    ? 'text-brand-600 dark:text-brand-400'
-    : theme === 'dark'
-    ? 'text-white dark:text-white'
-    : 'text-brand-600';
-
-  const activeBgCls = isScrolled
-    ? 'bg-brand-50 dark:bg-brand-900/30'
-    : theme === 'dark'
-    ? 'bg-white/15 dark:bg-white/15'
-    : 'bg-brand-50';
-
-  const langBtnCls = isScrolled
-    ? 'text-xs font-semibold text-slate-600 dark:text-slate-400 min-w-[36px]'
-    : theme === 'dark'
-    ? 'text-xs font-semibold text-white/90 dark:text-white/90 min-w-[36px]'
-    : 'text-xs font-semibold text-slate-600 min-w-[36px]';
-
-  const themeBtnHover = isScrolled
-    ? 'hover:bg-slate-100 dark:hover:bg-slate-800'
-    : theme === 'dark'
-    ? 'hover:bg-white/15 dark:hover:bg-white/15'
-    : 'hover:bg-slate-100';
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300 ${navBg}`}>
+    <>
+      {/* 顶部隐形触发区 — 首页未滚动时悬停拉出导航（z 低于导航自身） */}
+      {isHome && !isScrolled && !peekZone && (
+        <div
+          className="fixed top-0 left-0 right-0 h-16 z-40"
+          onMouseEnter={() => setPeekZone(true)}
+          aria-hidden="true"
+        />
+      )}
+      <nav
+        onMouseLeave={() => setPeekZone(false)}
+        className={`fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-500 ${
+          hideNav ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'
+        } ${
+          isScrolled
+            ? 'backdrop-blur-xl backdrop-saturate-150 border-b border-white/[0.07]'
+            : 'backdrop-blur-md border-b border-white/[0.04]'
+        }`}
+        style={{
+          backgroundColor: isScrolled
+            ? 'rgb(var(--nav-bg) / var(--nav-alpha-scrolled))'
+            : 'rgb(var(--nav-bg) / var(--nav-alpha-top))',
+        }}
+      >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand */}
         <a
           href="/"
           onClick={(e) => handleNavClick(e, navItems[0])}
           className="flex items-center gap-2.5 group"
         >
-          <img src={logoUrl} alt="EntropyOrder" className="h-7 w-auto transition-opacity group-hover:opacity-80" />
-          <span className={`font-semibold text-sm ${logoTextColor} tracking-tight`}>
+          <img
+            src={logoUrl}
+            alt="EntropyOrder"
+            className="h-6 w-auto transition-opacity group-hover:opacity-80"
+            style={{ filter: 'var(--logo-filter)' }}
+          />
+          <span className="font-semibold text-sm text-eo-ink tracking-tight">
             熵基秩序
-            <span className={`hidden sm:inline ${isScrolled ? 'text-slate-400 dark:text-slate-500' : theme === 'dark' ? 'text-white/60 dark:text-white/60' : 'text-slate-400'} font-light`}> · EntropyOrder</span>
+            <span className="hidden sm:inline text-eo-mute font-normal"> · EntropyOrder</span>
           </span>
         </a>
 
+        {/* Desktop nav */}
         {!isMobile && (
           <div className="flex items-center gap-1">
             {navItems.map((item) => (
@@ -138,47 +124,41 @@ export function Navbar() {
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item)}
                 aria-current={isActive(item) ? 'page' : undefined}
-                className={`relative px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-                  isActive(item) ? `${activeTextCls}` : navTextBase
+                className={`relative px-3 py-1.5 text-[13px] font-medium rounded-md transition-colors ${
+                  isActive(item) ? 'text-eo-ink' : 'text-eo-dim hover:text-eo-ink'
                 }`}
               >
                 {isActive(item) && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className={`absolute inset-0 rounded-lg ${activeBgCls}`}
+                    className="absolute inset-0 rounded-md bg-white/[0.08] border border-white/10"
                     transition={{ type: 'spring', ...spring.heavy }}
                   />
                 )}
                 <span className="relative">{item.label}</span>
               </a>
             ))}
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              className={`px-3 py-1.5 text-sm font-medium rounded-lg ${navTextBase} transition-colors`}
-            >
-              {t('nav.bench')}
-            </a>
           </div>
         )}
 
+        {/* Right controls */}
         <div className="flex items-center gap-1">
+          {/* 主题切换（浅/深），一次点击即生效 */}
           <button
             onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className={`p-2 rounded-lg ${themeBtnHover} transition-colors`}
+            aria-label={theme === 'dark' ? '切换到浅色模式' : '切换到深色模式'}
+            title={theme === 'dark' ? '浅色模式' : '深色模式'}
+            className="p-2 rounded-md text-eo-dim hover:text-eo-ink hover:bg-white/[0.06] transition-colors"
           >
-            {theme === 'dark'
-              ? <Sun className={`w-4 h-4 ${isScrolled ? 'text-slate-400' : 'text-white/80'}`} />
-              : <Moon className={`w-4 h-4 ${isScrolled ? 'text-slate-600' : isLightNotScrolled ? 'text-slate-600' : 'text-white/80'}`} />}
+            {theme === 'dark' ? <Sun className="w-[15px] h-[15px]" /> : <Moon className="w-[15px] h-[15px]" />}
           </button>
+          {/* 语言切换 */}
           <button
             onClick={toggleLang}
             aria-label="Toggle language"
-            className={`p-2 rounded-lg ${themeBtnHover} transition-colors ${langBtnCls}`}
+            className="px-2.5 py-1.5 rounded-md text-xs font-mono font-medium text-eo-dim hover:text-eo-ink hover:bg-white/[0.06] transition-colors min-w-[38px]"
           >
-            {i18n.language === 'zh' ? 'EN' : '中'}
+            {lang === 'zh' ? 'EN' : '中'}
           </button>
           {isMobile && (
             <button
@@ -187,23 +167,23 @@ export function Navbar() {
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              className={`p-2 rounded-lg ${themeBtnHover} transition-colors`}
+              className="p-2 rounded-md text-eo-dim hover:text-eo-ink hover:bg-white/[0.06] transition-colors"
             >
-              {mobileOpen
-                ? <X className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : theme === 'dark' ? 'text-white' : 'text-slate-700'}`} />
-                : <Menu className={`w-4 h-4 ${isScrolled ? 'text-slate-700 dark:text-slate-300' : theme === 'dark' ? 'text-white' : 'text-slate-700'}`} />}
+              {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           )}
         </div>
       </div>
 
+      {/* Mobile menu */}
       {isMobile && mobileOpen && (
         <motion.div
           id="mobile-menu"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          className={`border-t ${isLightNotScrolled ? 'border-slate-200 bg-white/95' : 'border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95'} backdrop-blur-xl px-4 py-4`}
+          className="border-t border-white/10 backdrop-blur-xl px-4 py-4"
+          style={{ backgroundColor: 'rgb(var(--nav-bg) / 0.95)' }}
         >
           <div className="flex flex-col gap-1">
             {navItems.map((item) => (
@@ -214,24 +194,17 @@ export function Navbar() {
                 aria-current={isActive(item) ? 'page' : undefined}
                 className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive(item)
-                    ? 'bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400'
-                    : 'text-slate-700 dark:text-slate-300'
+                    ? 'bg-white/[0.08] text-eo-ink border border-white/10'
+                    : 'text-eo-dim hover:text-eo-ink'
                 }`}
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              className="px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300"
-            >
-              {t('nav.bench')}
-            </a>
           </div>
         </motion.div>
       )}
     </nav>
+    </>
   );
 }

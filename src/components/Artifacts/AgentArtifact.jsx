@@ -2,16 +2,18 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Line, Environment } from '@react-three/drei';
 import * as THREE from 'three';
+import { useThemeColors } from '../../hooks/useThemeColors.js';
 
-const NODE_COLORS = ['#3b82f6', '#22d3ee', '#60a5fa', '#818cf8', '#06b6d4'];
 const SPHERE_RADIUS = 1.8;
 const N_NODES = 28;
 const CONNECT_THRESHOLD = SPHERE_RADIUS * 1.12;
 
 // Hub: nodes with degree >= this get a larger/brighter treatment
 const HUB_DEGREE = 4;
+const COLOR_KEYS = ['--ink', '--ink-2', '--dim'];
 
-function buildNetwork() {
+function buildNetwork(C) {
+  const NODE_COLORS = [C['--ink'], C['--ink-2'], C['--dim'], C['--ink'], C['--ink-2']];
   const phi = Math.PI * (3 - Math.sqrt(5));
   const nodes = Array.from({ length: N_NODES }, (_, i) => {
     const y = 1 - (i / (N_NODES - 1)) * 2;
@@ -51,7 +53,9 @@ function buildNetwork() {
   // Pick edges with at least one hub endpoint for packet travel
   const packetEdges = edges.filter(e => nodes[e.aIdx].isHub || nodes[e.bIdx].isHub).slice(0, 6);
 
-  return { nodes, edges, packetEdges };
+  const hubs = nodes.filter(n => n.isHub);
+
+  return { nodes, edges, packetEdges, hubs };
 }
 
 // A small glowing sphere that travels along an edge
@@ -83,17 +87,26 @@ function DataPacket({ from, to, speed, color }) {
 }
 
 function NetworkSphere() {
+  const C = useThemeColors(COLOR_KEYS);
   const groupRef = useRef();
   const nodeRefs = useRef([]);
   const lineRefs = useRef([]);
+  const spokeRefs = useRef([]);
+  const hubRef = useRef();
+  const pulseRef = useRef();
 
-  const { nodes, edges, packetEdges } = useMemo(() => buildNetwork(), []);
+  const { nodes, edges, packetEdges, hubs } = useMemo(
+    () => buildNetwork(C),
+    // 主题切换时用新色值重建网络（颜色取自 C）
+    [C['--ink'], C['--ink-2'], C['--dim']]
+  );
 
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
     const t = clock.getElapsedTime();
     groupRef.current.rotation.y = t * 0.07;
     groupRef.current.rotation.x = Math.sin(t * 0.18) * 0.1;
+    groupRef.current.position.y = Math.sin(t * 0.5) * 0.07;
 
     nodeRefs.current.forEach((mesh, i) => {
       if (!mesh?.material) return;
@@ -106,9 +119,27 @@ function NetworkSphere() {
     lineRefs.current.forEach((line, i) => {
       if (!line?.material) return;
       const e = edges[i];
-      const v = 0.06 + 0.3 * Math.max(0, Math.sin(t * e.speed + e.phase));
-      line.material.opacity = v;
+      line.material.opacity = 0.06 + 0.3 * Math.max(0, Math.sin(t * e.speed + e.phase));
     });
+
+    // 中枢辐射连线：亮度随中枢脉冲呼吸
+    const hubPulse = 0.5 + 0.5 * Math.sin(t * 1.6);
+    spokeRefs.current.forEach((line, i) => {
+      if (!line?.material) return;
+      line.material.opacity = 0.08 + 0.3 * hubPulse * (0.5 + 0.5 * Math.sin(t * 2 + i));
+    });
+
+    // 中枢缩放脉动
+    if (hubRef.current) {
+      const s = 1 + 0.14 * Math.sin(t * 1.6);
+      hubRef.current.scale.setScalar(s);
+    }
+    // 扩散脉冲环：周期性从中枢炸开
+    if (pulseRef.current) {
+      const pt = (t % 3) / 3;
+      pulseRef.current.scale.setScalar(0.4 + pt * SPHERE_RADIUS * 1.15);
+      pulseRef.current.material.opacity = (1 - pt) * 0.22;
+    }
   });
 
   return (
@@ -118,10 +149,23 @@ function NetworkSphere() {
           key={`e-${i}`}
           ref={el => { lineRefs.current[i] = el; }}
           points={[e.a, e.b]}
-          color="#60a5fa"
+          color={C['--dim']}
           lineWidth={0.7}
           transparent
           opacity={0.12}
+        />
+      ))}
+
+      {/* 中枢 → 各 hub 的辐射连线 */}
+      {hubs.map((h, i) => (
+        <Line
+          key={`s-${i}`}
+          ref={el => { spokeRefs.current[i] = el; }}
+          points={[[0, 0, 0], h.position.toArray()]}
+          color={C['--ink-2']}
+          lineWidth={0.9}
+          transparent
+          opacity={0.2}
         />
       ))}
 
@@ -140,6 +184,23 @@ function NetworkSphere() {
         </mesh>
       ))}
 
+      {/* 中枢指挥节点 */}
+      <mesh ref={hubRef}>
+        <sphereGeometry args={[0.17, 24, 24]} />
+        <meshStandardMaterial
+          color={C['--ink']}
+          emissive={C['--ink']}
+          emissiveIntensity={4}
+          metalness={0.85}
+          roughness={0.1}
+        />
+      </mesh>
+      {/* 中枢脉冲扩散环 */}
+      <mesh ref={pulseRef} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1, 0.012, 8, 96]} />
+        <meshBasicMaterial color={C['--ink-2']} transparent opacity={0.2} depthWrite={false} />
+      </mesh>
+
       {/* Data packets travelling along hub edges */}
       {packetEdges.map((e, i) => (
         <DataPacket
@@ -147,7 +208,7 @@ function NetworkSphere() {
           from={e.a}
           to={e.b}
           speed={0.4 + i * 0.12}
-          color={NODE_COLORS[i % NODE_COLORS.length]}
+          color={nodes[e.aIdx] ? nodes[e.aIdx].color : C['--ink']}
         />
       ))}
     </group>
@@ -164,9 +225,9 @@ export function AgentArtifact() {
         style={{ background: 'transparent' }}
       >
         <ambientLight intensity={0.3} />
-        <pointLight position={[4, 4, 4]} intensity={5} color="#60a5fa" />
-        <pointLight position={[-3, -3, 3]} intensity={4} color="#22d3ee" />
-        <pointLight position={[0, 3, 2]} intensity={2.5} color="#818cf8" />
+        <pointLight position={[4, 4, 4]} intensity={5} color="#9a9aa4" />
+        <pointLight position={[-3, -3, 3]} intensity={4} color="#8a8a94" />
+        <pointLight position={[0, 3, 2]} intensity={2.5} color="#6e6e78" />
         <Environment preset="city" />
         <NetworkSphere />
       </Canvas>

@@ -87,6 +87,19 @@ export function loadPosts() {
   return allPosts;
 }
 
+// slug → 独立短路径。新增 blog 时在这里加一行。
+const SLUG_SHORTCUTS = {
+  'expert-annotation-pipeline': '/blog/1',
+  'survey-difficult-qa-synthesis': '/blog/2',
+  'entropy-order-demo': '/blog/3',
+  'ai4ss4ai': '/blog/4',
+  'scicode-rsi-project': '/blog/5',
+};
+
+export function postPath(post) {
+  return SLUG_SHORTCUTS[post?.slug] ?? `/blog/${post?.slug}`;
+}
+
 export function findPostBySlug(slug) {
   return allPosts.find((p) => p.slug === slug) ?? null;
 }

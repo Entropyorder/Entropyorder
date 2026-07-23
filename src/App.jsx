@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, MotionConfig, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/Navbar.jsx';
 import { Footer } from './components/Footer.jsx';
@@ -7,10 +7,9 @@ import { ContactModal } from './components/ContactModal.jsx';
 import { ErrorBoundary } from './components/ErrorBoundary.jsx';
 import { HomePage } from './pages/HomePage.jsx';
 import { BlogListPage } from './pages/BlogListPage.jsx';
-import { BlogDetailPage } from './pages/BlogDetailPage.jsx';
+import { BlogDetailPage, BlogPostView } from './pages/BlogDetailPage.jsx';
 import { DatasetDetailPage } from './pages/DatasetDetailPage.jsx';
 import { ProductsPage } from './pages/ProductsPage.jsx';
-import { AI4SS4AIPage } from './pages/AI4SS4AIPage.jsx';
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 import './App.css';
 
@@ -35,7 +34,29 @@ function resolveBackgroundLocation(location) {
 }
 
 function isOverlayPath(pathname) {
-  return pathname.startsWith('/blog/') || pathname.startsWith('/datasets/');
+  return pathname.startsWith('/datasets/');
+}
+
+// 每篇 blog 的独立短路径（/blog/N，直接渲染，不重定向）
+const BLOG_SHORTCUTS = {
+  '/blog/1': 'expert-annotation-pipeline',
+  '/blog/2': 'survey-difficult-qa-synthesis',
+  '/blog/3': 'entropy-order-demo',
+  '/blog/4': 'ai4ss4ai',
+  '/blog/5': 'scicode-rsi-project',
+};
+
+/**
+ * 每次导航切换（含点击当前页链接）都滚回页面顶部。
+ * 跳过 overlay 路由（/blog/:slug、/datasets/:id）—— 它们有自己的滚动容器。
+ */
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    if (isOverlayPath(location.pathname)) return;
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname, location.key]);
+  return null;
 }
 
 function App() {
@@ -49,17 +70,16 @@ function App() {
 
   return (
     <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
-      <div className="min-h-screen bg-page-bg dark:bg-page-bg-dark text-slate-800 dark:text-slate-50 transition-colors">
+      <div className="min-h-screen bg-eo-bg text-eo-ink">
+        <ScrollToTop />
         <Navbar />
 
         {/* Background routes — always rendered (using bg location during overlay) */}
         <div
           aria-hidden={overlayActive ? 'true' : undefined}
           style={{
-            // Subtle dim while overlay is open; no full-black backdrop
             transition: 'filter 250ms ease-out',
-            filter: overlayActive ? 'brightness(0.75) saturate(0.9)' : 'none',
-            // prevent background from stealing focus while overlay is open
+            filter: overlayActive ? 'brightness(0.65) saturate(0.9)' : 'none',
             pointerEvents: overlayActive ? 'none' : 'auto',
           }}
         >
@@ -67,8 +87,16 @@ function App() {
             <Route path="/" element={<ErrorBoundary><HomePage /></ErrorBoundary>} />
             <Route path="/products" element={<ErrorBoundary><ProductsPage /></ErrorBoundary>} />
             <Route path="/blog" element={<ErrorBoundary><BlogListPage /></ErrorBoundary>} />
-            <Route path="/ai4ss" element={<ErrorBoundary><AI4SS4AIPage /></ErrorBoundary>} />
-            {/* A safety net for unrecognized direct routes (e.g. random /foo) */}
+            {/* AI4SS4AI 已迁入 blog —— 旧链接重定向 */}
+            <Route path="/ai4ss" element={<Navigate to="/blog/4" replace />} />
+            {/* 每篇 blog 的独立短路径 —— 直接渲染，URL 保持 /blogN */}
+            {Object.entries(BLOG_SHORTCUTS).map(([path, slug]) => (
+              <Route
+                key={path}
+                path={path}
+                element={<ErrorBoundary><BlogPostView slug={slug} /></ErrorBoundary>}
+              />
+            ))}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
 
@@ -79,10 +107,6 @@ function App() {
         <AnimatePresence mode="wait">
           {overlayActive && (
             <Routes location={location} key={location.pathname}>
-              <Route
-                path="/blog/:slug"
-                element={<ErrorBoundary><BlogDetailPage /></ErrorBoundary>}
-              />
               <Route
                 path="/datasets/:id"
                 element={<ErrorBoundary><DatasetDetailPage onContactSample={setContactDataset} /></ErrorBoundary>}

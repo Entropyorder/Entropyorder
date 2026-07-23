@@ -1,115 +1,209 @@
-import { useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useMemo } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
 import logoUrl from '/logo.png';
 import { duration, offset } from '../animations/tokens.js';
-import * as presets from '../animations/presets.js';
 
-// Floating geometric shape - with dark mode glow
-function FloatShape({ className, delay = 0, duration = 8, rotateAmount = 0, type = 'ring', strokeWidth = 2 }) {
-  const prefersReducedMotion = useReducedMotion()
+/* ══════════════════════════════════════════════════════════
+   科技感背景层
+   ══════════════════════════════════════════════════════════ */
 
-  if (type === 'ring') {
-    return (
-      <motion.div
-        className={className}
-        animate={{
-          y: [0, -14, 0],
-          rotate: [0, rotateAmount, 0],
-        }}
-        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        {/* Light mode: simple border */}
-        <div
-          className="absolute inset-0 rounded-full border border-brand-400/12 dark:hidden"
-        />
-        {/* Dark mode: conic-gradient ring with glow */}
-        <div
-          className="hidden dark:block absolute inset-0 rounded-full"
-          style={{
-            background: 'conic-gradient(from 0deg, #3b82f6, #22d3ee, #818cf8, #3b82f6)',
-            mask: `radial-gradient(farthest-side, transparent calc(100% - ${strokeWidth}px), #000 calc(100% - ${strokeWidth}px))`,
-            WebkitMask: `radial-gradient(farthest-side, transparent calc(100% - ${strokeWidth}px), #000 calc(100% - ${strokeWidth}px))`,
-            filter: 'drop-shadow(0 0 12px rgba(59,130,246,0.35)) drop-shadow(0 0 24px rgba(34,211,238,0.18))',
-            animation: prefersReducedMotion ? 'none' : 'ring-spin 18s linear infinite',
-          }}
-        />
-      </motion.div>
-    )
-  }
+/** 透视网格 — 无缝循环流动（无地平线线、抗闪烁） */
+function PerspectiveGrid() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 800], [0, 120]);
+  const opacity = useTransform(scrollY, [0, 700], [1, 0]);
 
-  if (type === 'square') {
-    return (
-      <motion.div
-        className={className}
-        animate={{
-          y: [0, -12, 0],
-          rotate: [45, 45 + rotateAmount, 45],
-        }}
-        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        {/* Light mode */}
-        <div className="absolute inset-0 border border-brand-500/8 dark:hidden" />
-        {/* Dark mode */}
-        <div
-          className="hidden dark:block absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, transparent, rgba(59,130,246,0.18), transparent)',
-            border: '1px solid transparent',
-            borderImage: 'linear-gradient(135deg, #3b82f6, #22d3ee) 1',
-            filter: 'drop-shadow(0 0 8px rgba(59,130,246,0.25))',
-            animation: prefersReducedMotion ? 'none' : 'shimmer 6s ease-in-out infinite',
-          }}
-        />
-      </motion.div>
-    )
-  }
-
-  if (type === 'dot') {
-    return (
-      <motion.div
-        className={className}
-        animate={{
-          y: [0, -8, 0],
-        }}
-        transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        {/* Light mode */}
-        <div className="w-full h-full rounded-full bg-accent-400/40 dark:hidden" />
-        {/* Dark mode */}
-        <div
-          className="hidden dark:block w-full h-full rounded-full"
-          style={{
-            background: 'radial-gradient(circle, #22d3ee 0%, transparent 70%)',
-            boxShadow: '0 0 12px 2px rgba(34,211,238,0.5)',
-          }}
-        />
-      </motion.div>
-    )
-  }
-
-  // Fallback to simple div
   return (
     <motion.div
-      className={className}
-      animate={{
-        y: [0, -14, 0],
-        rotate: [0, rotateAmount, 0],
+      className="pointer-events-none absolute inset-x-0 bottom-0 h-[85vh] overflow-hidden"
+      style={{
+        y,
+        opacity,
+        perspective: '750px',
+        maskImage: 'linear-gradient(to top, black 40%, transparent 92%)',
+        WebkitMaskImage: 'linear-gradient(to top, black 40%, transparent 92%)',
       }}
-      transition={{ duration, delay, repeat: Infinity, ease: 'easeInOut' }}
-    />
-  )
+    >
+      <motion.div
+        className="absolute left-1/2 bottom-[-30%] w-[300vw] h-[150%]"
+        style={{
+          x: '-50%',
+          rotateX: 68,
+          transformOrigin: 'center bottom',
+          backgroundImage:
+            'linear-gradient(rgb(var(--eo-w) / 0.085) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--eo-w) / 0.085) 1px, transparent 1px)',
+          backgroundSize: '80px 80px',
+          // 抗闪烁：GPU 合成 + 亚像素抗锯齿
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          willChange: 'background-position',
+        }}
+        animate={{ backgroundPositionY: ['0px', '80px'] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: 'linear' }}
+      />
+    </motion.div>
+  );
 }
+
+/** 漂浮粒子场 — 随滚动视差上移 */
+function ParticleField({ count = 40 }) {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 800], [0, -160]);
+  const particles = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        x: (i * 73.7) % 100,
+        y: (i * 41.3) % 100,
+        size: 1 + ((i * 7) % 3) * 0.6,
+        dur: 6 + ((i * 13) % 9),
+        delay: (i * 0.43) % 6,
+        drift: 10 + ((i * 11) % 22),
+      })),
+    [count]
+  );
+  return (
+    <motion.div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ y }}>
+      {particles.map((p) => (
+        <motion.span
+          key={p.id}
+          className="absolute rounded-full bg-white"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            boxShadow: '0 0 6px 1px rgb(var(--eo-w) / 0.45)',
+          }}
+          animate={{ y: [0, -p.drift, 0], opacity: [0.12, 0.7, 0.12] }}
+          transition={{ duration: p.dur, delay: p.delay, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      ))}
+    </motion.div>
+  );
+}
+
+/** 角落 HUD 标记 */
+function HudCorners() {
+  const cls = 'absolute w-5 h-5 border-white/25';
+  return (
+    <div className="pointer-events-none absolute inset-6 md:inset-10 z-10 hidden sm:block">
+      <span className={`${cls} top-0 left-0 border-t border-l`} />
+      <span className={`${cls} top-0 right-0 border-t border-r`} />
+      <span className={`${cls} bottom-0 left-0 border-b border-l`} />
+      <span className={`${cls} bottom-0 right-0 border-b border-r`} />
+    </div>
+  );
+}
+
+/** 3D Logo 舞台 — 悬浮自转 + 轨道环 + 滚动时大幅翻转后撤淡出 */
+function LogoStage() {
+  const { scrollY } = useScroll();
+  // 加大 3D 翻转幅度，让旋转肉眼可见
+  const rotateX = useTransform(scrollY, [0, 700], [0, 55]);
+  const rotateY = useTransform(scrollY, [0, 700], [0, -40]);
+  const scale = useTransform(scrollY, [0, 700], [1, 0.72]);
+  const y = useTransform(scrollY, [0, 700], [0, -60]);
+
+  return (
+    <motion.div
+      className="relative mb-9"
+      style={{ y, perspective: 1200 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.0, delay: 0.25 }}
+    >
+      {/* 中心辉光 — 脉动 */}
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full"
+        style={{
+          background:
+            'radial-gradient(circle, rgb(var(--eo-w) / 0.07) 0%, rgb(var(--eo-w) / 0.02) 40%, transparent 70%)',
+        }}
+        animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.06, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+      />
+
+      {/* 轨道环 — 倾斜平面内反向旋转 */}
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[340px] md:h-[340px] rounded-full border border-dashed border-white/[0.14]"
+        style={{ rotateX: 66 }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 36, repeat: Infinity, ease: 'linear' }}
+      >
+        <span
+          className="absolute -top-[3px] left-1/2 w-1.5 h-1.5 rounded-full bg-white/70"
+          style={{ boxShadow: '0 0 8px 2px rgb(var(--eo-w) / 0.5)' }}
+        />
+      </motion.div>
+      <motion.div
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[480px] md:h-[480px] rounded-full border border-white/[0.06]"
+        style={{ rotateX: 74 }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+      >
+        <span
+          className="absolute top-1/2 -right-[2px] w-1 h-1 rounded-full bg-white/50"
+          style={{ boxShadow: '0 0 6px 1px rgb(var(--eo-w) / 0.4)' }}
+        />
+      </motion.div>
+
+      {/* Logo — 常驻 3D 翻转 + 滚动联动（更大幅度） */}
+      <motion.div
+        className="relative"
+        style={{ rotateX, rotateY, scale, transformStyle: 'preserve-3d' }}
+        animate={{ y: [0, -10, 0], rotateZ: [0, 2, 0], rotateX: [0, 14, 0], rotateY: [0, -10, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <motion.img
+          src={logoUrl}
+          alt="EntropyOrder"
+          className="h-16 md:h-[76px] w-auto logo-glow mx-auto"
+          initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 1.1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/** 字符级 stagger 入场 */
+function StaggeredTitle({ text, className }) {
+  const chars = Array.from(text);
+  return (
+    <span className={className} aria-label={text}>
+      {chars.map((ch, i) => (
+        <motion.span
+          key={i}
+          aria-hidden="true"
+          className="inline-block"
+          initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.8, delay: 0.45 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════ */
 
 export function Hero() {
   const { t } = useTranslation();
+  const { scrollY } = useScroll();
+  // 滚动时标题上飘淡出（比 logo 更快，制造纵深）
+  const titleY = useTransform(scrollY, [0, 600], [0, -70]);
+  const titleOpacity = useTransform(scrollY, [0, 450], [1, 0]);
 
   const scrollToExpert = () => {
     const el = document.getElementById('expert-data');
     if (el) {
-      const navbarH = 64;
-      const y = el.getBoundingClientRect().top + window.scrollY - navbarH;
+      const y = el.getBoundingClientRect().top + window.scrollY - 64;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
@@ -117,169 +211,97 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-eo-bg"
     >
-      {/* ── Layer 0: Base gradient ─────────────────────── */}
+      {/* 顶部径向微光 */}
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
-          background: 'linear-gradient(145deg, #f8faff 0%, #eef4ff 40%, #e0ecff 70%, #d8eeff 100%)',
-        }}
-      />
-      <div className="absolute inset-0 hidden dark:block" style={{
-        background: 'linear-gradient(145deg, #060d1a 0%, #0b1628 40%, #0a1932 70%, #071424 100%)',
-      }} />
-
-      {/* ── Layer 1: Ambient blobs ─────────────────────── */}
-      <div
-        className="pointer-events-none absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full opacity-30 dark:opacity-20"
-        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.35) 0%, transparent 65%)', filter: 'blur(60px)' }}
-      />
-      <div
-        className="pointer-events-none absolute -bottom-20 -right-20 w-[600px] h-[600px] rounded-full opacity-25 dark:opacity-15"
-        style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.3) 0%, transparent 65%)', filter: 'blur(60px)' }}
-      />
-      <div
-        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full opacity-20 dark:opacity-10"
-        style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.3) 0%, transparent 65%)', filter: 'blur(80px)' }}
-      />
-
-      {/* ── Layer 2: Grid mesh ─────────────────────────── */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.07]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(37,99,235,1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(37,99,235,1) 1px, transparent 1px)
-          `,
-          backgroundSize: '48px 48px',
+          background:
+            'radial-gradient(ellipse 60% 42% at 50% 0%, rgb(var(--eo-w) / 0.055), transparent 65%)',
         }}
       />
 
-      {/* ── Layer 3: Floating geometric shapes ────────── */}
-      {/* Large ring - top left area */}
-      <FloatShape
-        duration={11}
-        delay={0}
-        rotateAmount={3}
-        type="ring"
-        strokeWidth={2}
-        className="pointer-events-none absolute top-20 left-[8%] w-48 h-48"
-      />
-      {/* Medium ring - bottom right area */}
-      <FloatShape
-        duration={14}
-        delay={2}
-        rotateAmount={-4}
-        type="ring"
-        strokeWidth={1.5}
-        className="pointer-events-none absolute bottom-32 right-[10%] w-36 h-36"
-      />
-      {/* Small ring - top right */}
-      <FloatShape
-        duration={9}
-        delay={1.2}
-        rotateAmount={2}
-        type="ring"
-        strokeWidth={1}
-        className="pointer-events-none absolute top-32 right-[18%] w-20 h-20"
-      />
-      {/* Tilted square - bottom left */}
-      <FloatShape
-        duration={13}
-        delay={0.8}
-        rotateAmount={5}
-        type="square"
-        className="pointer-events-none absolute bottom-28 left-[12%] w-16 h-16"
-      />
-      {/* Tiny accent dot - near logo */}
-      <FloatShape
-        duration={7}
-        delay={1.5}
-        rotateAmount={0}
-        type="dot"
-        className="pointer-events-none absolute top-[40%] right-[25%] w-2.5 h-2.5"
-      />
+      <PerspectiveGrid />
+      <ParticleField />
+      <HudCorners />
 
-      {/* ── Layer 4: Main content ──────────────────────── */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto">
-        {/* Logo */}
+      {/* ── 内容 ── */}
+      <motion.div
+        className="relative z-10 flex flex-col items-center text-center px-6 max-w-6xl mx-auto"
+        style={{ y: titleY, opacity: titleOpacity }}
+      >
+        {/* eyebrow — 极简，仅一条 hairline + mono 小字 */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: duration.slow, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-10"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: duration.normal, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="eo-eyebrow mb-10 flex items-center gap-3"
         >
-          <img
-            src={logoUrl}
-            alt="EntropyOrder"
-            className="h-20 md:h-28 w-auto logo-glow mx-auto"
+          <span className="w-8 h-px bg-white/20" />
+          ENTROPY · ORDER
+          <span className="w-8 h-px bg-white/20" />
+        </motion.div>
+
+        {/* 3D Logo 舞台 */}
+        <LogoStage />
+
+        {/* 大标题 — 字符入场后字间距缓缓展开（高级感呼吸） */}
+        <motion.h1
+          className="font-display font-semibold leading-[1.02] text-[clamp(52px,9vw,118px)] text-eo-ink"
+          initial={{ letterSpacing: '-0.06em' }}
+          animate={{ letterSpacing: '-0.02em' }}
+          transition={{ duration: 2.4, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <StaggeredTitle text="熵基秩序" />
+        </motion.h1>
+
+        {/* 微光扫过标题（一次性，低调） */}
+        <motion.div
+          className="pointer-events-none -mt-[clamp(52px,9vw,118px)] h-[clamp(52px,9vw,118px)] w-full max-w-[7em] overflow-hidden"
+          aria-hidden="true"
+        >
+          <motion.div
+            className="h-full w-1/3"
+            style={{
+              background:
+                'linear-gradient(100deg, transparent 20%, rgb(var(--eo-w) / 0.10) 50%, transparent 80%)',
+              filter: 'blur(4px)',
+            }}
+            initial={{ x: '-120%' }}
+            animate={{ x: '380%' }}
+            transition={{ duration: 2.2, delay: 1.6, ease: 'easeInOut' }}
           />
         </motion.div>
 
-        {/* Main title — very large */}
-        <motion.div
-          initial={{ opacity: 0, y: offset.large }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: duration.slow, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6"
-        >
-          <h1 className="font-display text-7xl sm:text-8xl md:text-[110px] lg:text-[120px] font-bold tracking-tight leading-[1.05]">
-            <span className="gradient-text">熵基</span>
-            <span className="gradient-text">秩序</span>
-          </h1>
-          <div className="mt-3 flex items-center justify-center gap-3">
-            <div className="h-px flex-1 max-w-[80px] bg-gradient-to-l from-brand-400/50 to-transparent" />
-            <span className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.18em] text-slate-400 dark:text-slate-500 uppercase">
-              EntropyOrder
-            </span>
-            <div className="h-px flex-1 max-w-[80px] bg-gradient-to-r from-brand-400/50 to-transparent" />
-          </div>
-        </motion.div>
-
-        {/* Subtitle */}
+        {/* 副标题 — 唯一保留的一行点缀 */}
         <motion.p
           initial={{ opacity: 0, y: offset.medium }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: duration.slow * 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg sm:text-xl md:text-2xl text-slate-500 dark:text-slate-400 max-w-lg leading-relaxed"
+          transition={{ duration: duration.slow * 0.9, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-9 text-lg sm:text-xl md:text-2xl font-light text-eo-dim max-w-xl leading-relaxed tracking-[-0.01em]"
         >
           {t('hero.subtitle')}
         </motion.p>
-
-        {/* Tag line */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: duration.normal, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 flex items-center gap-2"
-        >
-          {['Data', 'Intelligence', 'Future'].map((word, i) => (
-            <span key={word} className="flex items-center gap-2">
-              <span className="text-sm uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500 font-medium">
-                {word}
-              </span>
-              {i < 2 && <span className="w-1 h-1 rounded-full bg-brand-400/50" />}
-            </span>
-          ))}
-        </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll cue */}
       <motion.button
         onClick={scrollToExpert}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 text-slate-400 hover:text-brand-500 dark:text-slate-500 dark:hover:text-brand-400 transition-colors group"
+        transition={{ delay: 2.0, duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-eo-mute hover:text-eo-ink transition-colors group"
         aria-label="Scroll down"
       >
-        <span className="text-xs sm:text-sm uppercase tracking-widest opacity-70 group-hover:opacity-100">{t('hero.scrollHint')}</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.28em] opacity-70 group-hover:opacity-100">
+          {t('hero.scrollHint')}
+        </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ChevronDown className="w-5 h-5" />
+          <ChevronDown className="w-4 h-4" />
         </motion.div>
       </motion.button>
     </section>

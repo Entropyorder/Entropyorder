@@ -1,89 +1,64 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { spring } from '../../animations/tokens.js';
-import { localizedTitle, localizedSummary } from '../../content/blog/index.js';
+import { localizedTitle, localizedSummary, postPath } from '../../content/blog/index.js';
 
-export function BlogCard({ post }) {
+export function BlogCard({ post, index }) {
   const { i18n } = useTranslation();
-  const location = useLocation();
   const lng = i18n.language;
   const title = localizedTitle(post, lng);
   const summary = localizedSummary(post, lng);
+  const num = String((index ?? 0) + 1).padStart(2, '0');
 
   return (
     <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: 'spring', ...spring.snappy }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, delay: (index ?? 0) * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
-        to={`/blog/${post.slug}`}
-        state={{ backgroundLocation: location }}
-        className="block group relative cursor-pointer rounded-2xl overflow-hidden
-          bg-white dark:bg-[#0d1a2d]
-          border border-slate-200/80 dark:border-white/[0.07]
-          shadow-[0_2px_16px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)]
-          dark:shadow-[0_4px_32px_rgba(0,0,0,0.5)]
-          hover:shadow-[0_12px_40px_rgba(37,99,235,0.14),0_4px_12px_rgba(0,0,0,0.08)]
-          dark:hover:shadow-[0_12px_48px_rgba(37,99,235,0.22),0_4px_16px_rgba(0,0,0,0.6)]
-          transition-shadow duration-300"
+        to={postPath(post)}
+        className="group relative grid grid-cols-[auto_1fr_auto] items-baseline gap-5 sm:gap-8
+          border-b border-white/[0.07] px-2 sm:px-4 py-7
+          hover:bg-white/[0.025] transition-colors duration-300"
       >
-        {/* Cover */}
-        <motion.div
-          layoutId={`blog-cover-${post.slug}`}
-          className="aspect-[8.5/11] relative overflow-hidden"
-        >
-          {post.cover ? (
-            <img
-              src={post.cover}
-              alt={title}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
-            />
-          ) : (
-            <>
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-600/90 via-accent-500/80 to-cyan-500/90 dark:from-brand-500/80 dark:via-accent-400/70 dark:to-cyan-400/80" />
-              <div
-                className="absolute inset-0 opacity-25 dark:opacity-10"
-                style={{
-                  backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.3) 1px, transparent 0)',
-                  backgroundSize: '24px 24px',
-                }}
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6">
-                <div
-                  className="font-display text-2xl sm:text-3xl md:text-4xl font-black leading-tight text-center mb-3 drop-shadow-lg"
-                  style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}
-                >
-                  {title.split(' ').slice(0, 3).join(' ')}
-                </div>
-                <div className="h-px w-16 bg-white/40 mb-3" />
-                <div className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-white/70 font-medium">
-                  {post.date}
-                </div>
-              </div>
-            </>
-          )}
-          <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-page-bg dark:from-[#0d1a2d] to-transparent" />
-        </motion.div>
+        {/* 序号 */}
+        <div className="font-mono text-xs text-eo-mute tracking-wider pt-1 w-8 shrink-0 transition-colors group-hover:text-eo-dim">
+          /{num}
+        </div>
 
-        {/* Text */}
-        <div className="relative p-4 sm:p-5 z-[2]">
+        {/* 主内容 */}
+        <div className="min-w-0">
+          <div className="flex items-baseline gap-3 flex-wrap mb-2">
+            <span className="font-mono text-[11px] text-eo-mute">{post.date}</span>
+            {post.tags?.slice(0, 3).map((tag) => (
+              <span key={tag} className="font-mono text-[10px] uppercase tracking-wider text-eo-mute">
+                · {tag}
+              </span>
+            ))}
+          </div>
           <motion.h3
             layoutId={`blog-title-${post.slug}`}
-            className="font-display text-base sm:text-lg font-bold text-slate-800 dark:text-slate-50 leading-snug mb-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors"
+            className="font-display text-xl sm:text-2xl font-semibold text-eo-ink leading-snug tracking-[-0.015em] group-hover:text-white transition-colors"
           >
             {title}
           </motion.h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-3 line-clamp-2">
+          <p className="text-sm text-eo-dim mt-2.5 leading-relaxed font-light line-clamp-2 max-w-2xl">
             {summary}
           </p>
-          <div className="flex items-center gap-1 text-sm font-medium text-brand-600 dark:text-brand-400 group-hover:gap-2 transition-all">
-            <span>阅读全文</span>
-            <ArrowRight className="w-4 h-4" />
+        </div>
+
+        {/* 右侧箭头 */}
+        <div className="shrink-0 self-center">
+          <div className="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-eo-mute group-hover:text-eo-ink group-hover:border-white/40 group-hover:bg-white/[0.04] transition-all duration-300">
+            <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
+
+        {/* hover 左侧指示条 */}
+        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-eo-ink scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
       </Link>
     </motion.div>
   );

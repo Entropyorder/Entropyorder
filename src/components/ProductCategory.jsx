@@ -1,93 +1,60 @@
 import { motion } from 'framer-motion';
 import { DatasetCard } from './DatasetCard.jsx';
 import { offset, duration } from '../animations/tokens.js';
-import * as presets from '../animations/presets.js';
-
-// clip-path parallelogram that tiles all cards flat, each with a staggered float
-function ParallelogramCards({ datasets, onViewDetail }) {
-  return (
-    <div className="relative" style={{ clipPath: 'polygon(4% 0%, 100% 0%, 96% 100%, 0% 100%)' }}>
-      {/* Band background */}
-      <div className="absolute inset-0
-        bg-gradient-to-br from-brand-50 via-page-bg to-cyan-50/50
-        dark:from-[#0d1827] dark:via-page-bg-dark dark:to-page-bg-dark/90" />
-
-      {/* Diagonal edge fades */}
-      <div className="absolute inset-y-0 left-0 w-20 z-10
-        bg-gradient-to-r from-page-bg dark:from-page-bg-dark to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-20 z-10
-        bg-gradient-to-l from-page-bg dark:from-page-bg-dark to-transparent pointer-events-none" />
-
-      {/* Tiled cards — px-12 keeps cards clear of the clipped diagonal edges */}
-      <div className="relative z-[1] grid grid-cols-2 gap-4 px-12 py-8">
-        {datasets.map((ds, i) => (
-          <motion.div
-            key={ds.name}
-            animate={{ y: [0, -10, 0] }}
-            transition={{
-              duration: 3.2 + i * 0.8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.55,
-            }}
-            className="relative z-10"
-          >
-            <DatasetCard dataset={ds} onViewDetail={onViewDetail} />
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export function ProductCategory({ title, artifact: Artifact, datasets, direction, onViewDetail, index = 0 }) {
   const isLeft = direction === 'left';
   const sectionNum = String(index + 1).padStart(2, '0');
 
   return (
-    <div className="py-14 md:py-20">
+    <div className="py-16 md:py-24 border-t border-white/[0.07] first:border-t-0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        {/* Header row: section marker + title  |  3D artifact (no container) */}
-        <div className={`flex flex-col ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 mb-10`}>
+        {/* Header row：序号 + 标题 + 3D artifact */}
+        <div className={`flex flex-col ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-start lg:items-center gap-10 lg:gap-16 mb-12`}>
           <motion.div
-            initial={{ opacity: 0, x: isLeft ? -offset.medium : offset.medium }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: offset.medium }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: duration.normal, ease: [0.16, 1, 0.3, 1] }}
             className="lg:w-1/2"
           >
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-sm font-bold font-mono tracking-[0.35em] text-brand-500/70 dark:text-brand-400/60 uppercase">
+            <div className="flex items-baseline gap-4 mb-4">
+              <span className="font-mono text-sm text-eo-mute tracking-[0.3em]">
                 /{sectionNum}
               </span>
-              <div className="h-px w-10 bg-gradient-to-r from-brand-500/50 to-transparent" />
+              <div className="h-px flex-1 bg-white/10" />
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-50 leading-tight">
+            <h3 className="font-display text-3xl md:text-5xl font-semibold text-eo-ink leading-[1.1] tracking-[-0.03em]">
               {title}
             </h3>
+            <p className="mt-4 font-mono text-xs text-eo-mute uppercase tracking-[0.2em]">
+              {datasets.length} datasets
+            </p>
           </motion.div>
 
-          {/* 3D artifact — no wrapper, transparent canvas */}
+          {/* 3D artifact */}
           <motion.div
-            initial={{ opacity: 0, x: isLeft ? offset.medium : -offset.medium }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.94 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: duration.normal, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: duration.slow, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="w-full lg:w-5/12"
           >
             <Artifact />
           </motion.div>
         </div>
 
-        {/* Parallelogram card band */}
+        {/* Dataset 索引列表 */}
         <motion.div
           initial={{ opacity: 0, y: offset.medium }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: duration.normal, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="border-t border-white/10"
         >
-          <ParallelogramCards datasets={datasets} onViewDetail={onViewDetail} />
+          {datasets.map((ds, i) => (
+            <DatasetCard key={ds.id || ds.name} dataset={ds} index={i} onViewDetail={onViewDetail} />
+          ))}
         </motion.div>
       </div>
     </div>

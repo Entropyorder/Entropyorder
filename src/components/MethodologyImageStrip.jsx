@@ -19,23 +19,20 @@ function MethodologyCard({ image, title, index, delay }) {
       transition={{ duration: duration.normal, delay, ease: [0.16, 1, 0.3, 1] }}
       className="flex-1"
     >
-      <div className="relative rounded-2xl overflow-hidden
-        bg-slate-50/80 dark:bg-[#0a1422]/80
-        border border-slate-200/80 dark:border-white/[0.07]
-        backdrop-blur-sm
-        shadow-[0_4px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+      <div className="group relative overflow-hidden border border-white/10 hover:border-white/25 transition-colors duration-300">
         <div className="aspect-[4/3] relative overflow-hidden">
           <img
             src={image.src}
             alt={title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-700"
             loading="lazy"
           />
         </div>
-        <div className="p-5 text-center">
-          <h3 className="text-base font-bold text-slate-800 dark:text-slate-100">
+        <div className="p-4 border-t border-white/10 flex items-center justify-between">
+          <h3 className="text-sm font-medium text-eo-ink-2">
             {title}
           </h3>
+          <span className="font-mono text-[10px] text-eo-mute">0{index + 1}</span>
         </div>
       </div>
     </motion.div>

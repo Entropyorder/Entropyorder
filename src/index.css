@@ -1,6 +1,15 @@
-/* Global fonts */
-@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.330.0/style.css');
-@import url('https://rsms.me/inter/inter.css');
+/* ============================================================
+   ENTROPY·ORDER — Global styles（暗 / 亮 双主题，单色）
+   ============================================================ */
+
+/* Fonts —— 英文可变字体自托管（@fontsource-variable，同源加载可缓存）。
+   中文不加载 webfont，回退系统字体栈（苹方 / 雅黑 / Noto CJK），
+   彻底消除 Google Fonts CDN 的慢 / 不可达问题。 */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/jetbrains-mono/index.css';
+@import '@fontsource-variable/space-grotesk/index.css';
+/* 设计系统 token + 通用元素 */
+@import './styles/dark-tokens.css';
 
 @tailwind base;
 @tailwind components;
@@ -10,8 +19,38 @@
   html {
     scroll-behavior: smooth;
   }
+  html,
   body {
-    @apply antialiased bg-page-bg text-slate-800 dark:bg-page-bg-dark dark:text-slate-50;
+    background-color: var(--bg);
+    color: var(--ink);
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+  body {
+    @apply antialiased;
+    font-family: theme('fontFamily.sans');
+    letter-spacing: -0.011em;
+    text-rendering: optimizeLegibility;
+  }
+  /* 选中文字 */
+  ::selection {
+    background: var(--marker);
+    color: var(--ink);
+  }
+  /* 滚动条 */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--eo-w) / 0.16);
+    border-radius: 5px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--eo-w) / 0.26);
   }
 }
 
@@ -23,23 +62,15 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-}
-
-@keyframes ring-spin {
-  from {
-    transform: rotate(0deg);
+  /* demo 风格细线分隔 */
+  .eo-hairline {
+    height: 1px;
+    background: var(--line);
+    border: none;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes shimmer {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
+  .eo-hairline-v {
+    width: 1px;
+    background: var(--line);
+    border: none;
   }
 }

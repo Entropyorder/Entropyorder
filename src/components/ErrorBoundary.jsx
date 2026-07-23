@@ -19,15 +19,15 @@ export class ErrorBoundary extends Component {
       return (
         <div className="min-h-[60vh] flex items-center justify-center p-8">
           <div className="max-w-xl text-center">
-            <h2 className="font-display text-2xl font-bold text-slate-800 dark:text-slate-100 mb-3">
+            <h2 className="font-display text-2xl font-semibold text-eo-ink mb-3">
               渲染出错
             </h2>
-            <p className="text-slate-500 dark:text-slate-400 mb-4 text-sm">
+            <p className="text-eo-dim mb-4 text-sm font-mono">
               {String(this.state.error?.message || this.state.error)}
             </p>
             <button
               onClick={() => this.setState({ error: null })}
-              className="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm hover:bg-brand-500 transition-colors"
+              className="px-4 py-2 rounded-lg bg-eo-ink text-eo-bg text-sm font-semibold hover:bg-eo-ink-2 transition-colors"
             >
               重试
             </button>

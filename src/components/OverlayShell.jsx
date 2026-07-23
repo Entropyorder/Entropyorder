@@ -60,7 +60,7 @@ export function OverlayShell({ children, onCloseFallback }) {
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
       onClick={onBackdropClick}
       className="fixed inset-0 z-[90] flex items-start justify-center overflow-y-auto pt-16 pb-16 px-4 sm:px-8
-        bg-black/10 dark:bg-black/30 backdrop-blur-sm"
+        bg-black/60 backdrop-blur-md"
       aria-modal="true"
       role="dialog"
     >
@@ -72,9 +72,9 @@ export function OverlayShell({ children, onCloseFallback }) {
         transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-4xl rounded-2xl
-          bg-white dark:bg-[#0d1a2d]
-          shadow-[0_24px_80px_rgba(0,0,0,0.18)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.6)]
-          border border-slate-200/60 dark:border-white/10
+          bg-eo-bg-2
+          shadow-[0_24px_80px_rgba(0,0,0,0.6)]
+          border border-white/10
           overflow-hidden"
       >
         {children({ close })}
