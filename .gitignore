@@ -17,12 +17,14 @@ dev.log
 .DS_Store
 *.swp
 *.swo
+.cate/
 
 # Project-local stuff (not for repo)
 issues.md
 temp/
 .claude/
 docs/
+products.xlsx
 
 # Env files
 .env
