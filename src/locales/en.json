@@ -906,6 +906,42 @@
     "text",
     "image"
    ]
+  },
+  "swe-atlas-qna": {
+   "name": "SWE Atlas Q&A",
+   "desc": "Deep codebase understanding and Q&A tasks built on real open-source repositories (e.g. grafana/k6). Agents must explore repository structure, trace implementation mechanisms, quantify bottlenecks with profiling evidence, and produce well-supported answers.",
+   "brief": "SWE Atlas Q&A benchmarks deep codebase comprehension: answering mechanism- and performance-oriented questions with source-level evidence.",
+   "tags": [
+    "Code Comprehension",
+    "Code Q&A",
+    "Performance Analysis"
+   ],
+   "scale": "样例 2 道",
+   "structure": "{\"question\": \"...\", \"repository\": \"grafana/k6\", \"answer\": \"...\", \"rubric\": [...]}",
+   "production": [
+    "专家构建"
+   ],
+   "modalities": [
+    "text"
+   ]
+  },
+  "terminalbench": {
+   "name": "Terminal Bench",
+   "desc": "A command-line workflow benchmark for long-horizon terminal-agent capability evaluation: numerical algorithm debugging, binary protocol reverse engineering, spec implementation, and legacy code migration, verified by reproducible container states.",
+   "brief": "Long-horizon terminal engineering tasks: debugging, reverse engineering, spec implementation and legacy migration, verified in containers.",
+   "tags": [
+    "Terminal Tasks",
+    "Debugging",
+    "Reverse Engineering"
+   ],
+   "scale": "样例 5 道",
+   "structure": "{\"task\": {\"name\": \"...\", \"category\": \"...\"}, \"instruction\": \"...\", \"verifier\": {\"timeout_sec\": 900}}",
+   "production": [
+    "专家构建"
+   ],
+   "modalities": [
+    "text"
+   ]
   }
  }
 }
