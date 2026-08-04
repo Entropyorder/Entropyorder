@@ -36,6 +36,7 @@ export const DATASET_CATEGORIES = [
     datasets: [
       'oj-competition',
       'scicode',
+      'swe-atlas-qna',
       'terminalbench',
       'yukicoder-extension',
     ],
