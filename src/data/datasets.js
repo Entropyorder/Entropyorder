@@ -34,6 +34,7 @@ export const DATASET_CATEGORIES = [
     i18nKey: 'products.categories.code',
     artifact: 'CodeArtifact',
     datasets: [
+      'del-test-prod',
       'oj-competition',
       'scicode',
       'swe-atlas-qna',
