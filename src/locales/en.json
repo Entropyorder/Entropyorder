@@ -947,6 +947,50 @@
    ],
    "inventory": "10000",
    "weeklyOutput": "500"
+  },
+  "hard-qa": {
+   "name": "Hard QA",
+   "desc": "High-difficulty QA dataset of competition-level and graduate-level problems across physics, engineering and mathematics, dominated by free-form questions, for evaluating deep scientific reasoning and complex problem solving.",
+   "brief": "Competition- and graduate-level hard QA for deep scientific reasoning.",
+   "tags": [
+    "Competition",
+    "Graduate",
+    "Scientific Reasoning",
+    "Hard"
+   ],
+   "scale": "存量 5,000 题",
+   "inventory": "5000",
+   "weeklyOutput": "200",
+   "structure": "{\"question_id\": \"...\", \"subject\": \"physics\", \"difficulty_tier\": \"hard\", \"question\": \"...\", \"answer\": \"...\"}",
+   "production": [
+    "专家构建（HITL）"
+   ],
+   "modalities": [
+    "text",
+    "image"
+   ]
+  },
+  "standard-qa": {
+   "name": "Standard QA",
+   "desc": "Standard-difficulty QA dataset of high-school and undergraduate problems across mathematics and physics, with complete solutions and step-by-step explanations, suitable for basic reasoning and solution-generation training.",
+   "brief": "High-school and undergraduate standard QA with full step-by-step solutions.",
+   "tags": [
+    "High School",
+    "Undergraduate",
+    "Problem Solving",
+    "Reasoning"
+   ],
+   "scale": "存量 20,000 题",
+   "inventory": "20000",
+   "weeklyOutput": "1000",
+   "structure": "{\"question_id\": \"...\", \"subject\": \"math\", \"difficulty_tier\": \"standard\", \"question\": \"...\", \"answer\": \"...\", \"explanation\": \"...\"}",
+   "production": [
+    "专家构建（HITL）"
+   ],
+   "modalities": [
+    "text",
+    "image"
+   ]
   }
  }
 }
