@@ -883,15 +883,16 @@
   },
   "swe-atlas-qna": {
    "name": "SWE Atlas Q&A",
-   "desc": "基于真实开源代码库（如 grafana/k6）的深层代码理解与问答任务集。要求模型探索仓库结构、结合源码与性能剖析定位实现机制、量化瓶颈并给出证据充分的回答。",
-   "brief": "SWE Atlas Q&A benchmarks deep codebase comprehension: answering mechanism- and performance-oriented questions with source-level evidence.",
+   "desc": "Codebase runtime-reasoning Q&A benchmark for code agents: architecture, root-cause analysis, onboarding, security boundaries, API/library integration and performance optimization. Agents must run real repositories, execute probes and answer with verifiable runtime facts.",
+   "brief": "Runtime-reasoning codebase Q&A across six directions with 5-13 chained sub-questions and verifiable answers.",
    "tags": [
-    "代码理解",
-    "代码问答",
-    "性能分析"
+    "Code Comprehension",
+    "Runtime Reasoning",
+    "Code Q&A",
+    "Root Cause"
    ],
-   "scale": "存量 1000",
-   "structure": "{\"question\": \"...\", \"repository\": \"grafana/k6\", \"answer\": \"...\", \"rubric\": [...]}",
+   "scale": "样例 6 道（全集数百道 / 11 仓库）",
+   "structure": "task-<id>/{task.toml, instruction.md, canary.txt, solution/, tests/}",
    "production": [
     "专家构建"
    ],
@@ -908,10 +909,12 @@
    "tags": [
     "Terminal Tasks",
     "Debugging",
-    "Reverse Engineering"
+    "Reverse Engineering",
+    "Spec Implementation",
+    "Legacy Migration"
    ],
-   "scale": "样例 5 道",
-   "structure": "{\"task\": {\"name\": \"...\", \"category\": \"...\"}, \"instruction\": \"...\", \"verifier\": {\"timeout_sec\": 900}}",
+   "scale": "样例 5 道（四类能力）",
+   "structure": "<task>/{task.toml, instruction.md, environment/, solution/, tests/}",
    "production": [
     "专家构建"
    ],
