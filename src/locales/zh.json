@@ -868,7 +868,8 @@
   "ebooks": {
    "name": "版权电子书",
    "tags": [
-    "电子书"
+    "电子书",
+    "文本理解"
    ],
    "scale": "存量 5,000,000 本",
    "inventory": "100000000",
@@ -879,7 +880,10 @@
    "modalities": [
     "text",
     "image"
-   ]
+   ],
+   "desc": "通过正规采购渠道获取的版权电子书数据，涵盖文学、社科、科技、工具书等多品类，正文与版式元数据完整，适用于大规模文本理解、长文推理与知识问答类任务训练。",
+   "brief": "版权合规电子书语料：多品类出版内容，支持文本理解与知识问答训练。",
+   "structure": "{\"book_id\": \"...\", \"title\": \"...\", \"category\": \"...\", \"content\": \"...\"}"
   },
   "swe-atlas-qna": {
    "name": "SWE Atlas Q&A（代码库运行时推理问答）",
@@ -913,14 +917,16 @@
     "规范实现",
     "遗留代码迁移"
    ],
-   "scale": "样例 5 道（四类能力）",
+   "scale": "存量 300 道（样例 5 道 / 四类能力）",
    "structure": "<task>/{task.toml, instruction.md, environment/, solution/, tests/}",
    "production": [
     "专家构建"
    ],
    "modalities": [
     "text"
-   ]
+   ],
+   "inventory": "300",
+   "weeklyOutput": "30"
   },
   "fable5": {
    "name": "Fable5 带环境带 Rubrics 轨迹数据集",
@@ -931,14 +937,16 @@
     "RL 训练",
     "工具调用"
    ],
-   "scale": "样例 10 道轨迹",
+   "scale": "存量 10,000 条轨迹（样例 10 道）",
    "structure": "data/<task-id>/{metadata.json, evaluation/, trajectory/, workspace/}",
    "production": [
     "模型执行 + 专家评分"
    ],
    "modalities": [
     "text"
-   ]
+   ],
+   "inventory": "10000",
+   "weeklyOutput": "500"
   }
  }
 }
