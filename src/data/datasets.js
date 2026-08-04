@@ -49,7 +49,6 @@ export const DATASET_CATEGORIES = [
       'agentos-trajectory',
       'gdpval-extension',
       'open-challenge',
-      'openclaw',
       'search-retrieval',
       'skillbench',
     ],
