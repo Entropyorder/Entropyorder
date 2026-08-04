@@ -732,32 +732,6 @@
     "url": "https://arxiv.org/abs/2203.07814"
    }
   },
-  "openclaw": {
-   "name": "OpenClaw Trajectories",
-   "desc": "Records OpenClaw operation trajectories in structured tasks, including complete workspace, sessions and more — training and evaluating planning, execution and error-correction for agent capability building.",
-   "scale": "存量 30,000",
-   "tags": [
-    "Tool Calling",
-    "Agent"
-   ],
-   "production": [
-    "多渠道获取",
-    "人工构建"
-   ],
-   "modalities": [
-    "text"
-   ],
-   "inventory": "30,000",
-   "weeklyOutput": "3,000",
-   "brief": "Trajectories fully preserve task context, tool call sequences and intermediate states, supporting multiple agent training paradigms such as behavior cloning and process reward modeling.",
-   "structure": "{\n  \"task\": \"整理下载目录并生成报告\",\n  \"workspace\": {...},\n  \"sessions\": [{\"tool\": \"shell\", \"args\": [...], \"obs\": \"...\"}],\n  \"outcome\": \"success\"\n}",
-   "paper": {
-    "title": "OpenClaw Trajectories Demo",
-    "authors": "OpenClaw",
-    "venue": "2025",
-    "url": "https://github.com/Entropyorder"
-   }
-  },
   "agentos-trajectory": {
    "name": "AgentOS Trajectory",
    "desc": "Multi-turn, long-horizon tool-calling trajectory dataset for AgentOS scenarios — with call-level raw request/response, code session event streams and structured task traces — training and evaluating planning, tool use, execution correction and complex task delivery.",
