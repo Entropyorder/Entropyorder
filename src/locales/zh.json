@@ -942,18 +942,6 @@
    "modalities": [
     "text"
    ]
-  },
-  "del-test-prod": {
-   "name": "删除测试产品",
-   "tags": [
-    "测试"
-   ],
-   "production": [
-    "测试"
-   ],
-   "modalities": [
-    "text"
-   ]
   }
  }
 }
