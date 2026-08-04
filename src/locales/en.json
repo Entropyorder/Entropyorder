@@ -942,6 +942,18 @@
    "modalities": [
     "text"
    ]
+  },
+  "auto-test": {
+   "name": "自动同步测试",
+   "tags": [
+    "测试"
+   ],
+   "production": [
+    "测试"
+   ],
+   "modalities": [
+    "text"
+   ]
   }
  }
 }
