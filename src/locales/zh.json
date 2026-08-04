@@ -899,8 +899,8 @@
    "modalities": [
     "text"
    ],
-   "inventory": "1000",
-   "weeklyOutput": "300"
+   "inventory": "600",
+   "weeklyOutput": "50"
   },
   "terminalbench": {
    "name": "Terminal Bench（终端工程任务集）",
