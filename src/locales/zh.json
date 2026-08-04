@@ -895,7 +895,7 @@
     "代码问答",
     "根因分析"
    ],
-   "scale": "存量 600 道（样例 6 道 / 11 仓库）",
+   "scale": "存量 600 道",
    "structure": "task-<id>/{task.toml, instruction.md, canary.txt, solution/, tests/}",
    "production": [
     "专家构建"
@@ -917,7 +917,7 @@
     "规范实现",
     "遗留代码迁移"
    ],
-   "scale": "存量 300 道（样例 5 道 / 四类能力）",
+   "scale": "存量 300 道",
    "structure": "<task>/{task.toml, instruction.md, environment/, solution/, tests/}",
    "production": [
     "专家构建"
@@ -937,7 +937,7 @@
     "RL 训练",
     "工具调用"
    ],
-   "scale": "存量 10,000 条轨迹（样例 10 道）",
+   "scale": "存量 10,000 条轨迹",
    "structure": "data/<task-id>/{metadata.json, evaluation/, trajectory/, workspace/}",
    "production": [
     "模型执行 + 专家评分"
