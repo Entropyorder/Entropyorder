@@ -909,12 +909,12 @@
   },
   "swe-atlas-qna": {
    "name": "SWE Atlas Q&A",
-   "desc": "Deep codebase understanding and Q&A tasks built on real open-source repositories (e.g. grafana/k6). Agents must explore repository structure, trace implementation mechanisms, quantify bottlenecks with profiling evidence, and produce well-supported answers.",
+   "desc": "基于真实开源代码库（如 grafana/k6）的深层代码理解与问答任务集。要求模型探索仓库结构、结合源码与性能剖析定位实现机制、量化瓶颈并给出证据充分的回答。",
    "brief": "SWE Atlas Q&A benchmarks deep codebase comprehension: answering mechanism- and performance-oriented questions with source-level evidence.",
    "tags": [
-    "Code Comprehension",
-    "Code Q&A",
-    "Performance Analysis"
+    "代码理解",
+    "代码问答",
+    "性能分析"
    ],
    "scale": "样例 2 道",
    "structure": "{\"question\": \"...\", \"repository\": \"grafana/k6\", \"answer\": \"...\", \"rubric\": [...]}",
