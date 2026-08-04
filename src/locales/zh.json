@@ -895,7 +895,7 @@
     "代码问答",
     "根因分析"
    ],
-   "scale": "样例 6 道（全集数百道 / 11 仓库）",
+   "scale": "存量 600 道（样例 6 道 / 11 仓库）",
    "structure": "task-<id>/{task.toml, instruction.md, canary.txt, solution/, tests/}",
    "production": [
     "专家构建"
