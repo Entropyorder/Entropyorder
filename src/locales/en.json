@@ -918,6 +918,24 @@
    "modalities": [
     "text"
    ]
+  },
+  "fable5": {
+   "name": "Fable5 Trajectory with Workspace & Rubrics",
+   "desc": "Long-horizon tool-use trajectory dataset for agent evaluation and RL training, produced by Fable5 in real task environments. Each trajectory ships with full execution environment (workspace initial snapshot, delta & reconstruction manifests) and expert Rubrics scoring (Advanced Rubric v2, 100-point nine-dimension), covering eight domains.",
+   "brief": "Fable5 long-horizon trajectories with full environments and nine-dimension expert Rubrics, for RL training and agent evaluation.",
+   "tags": [
+    "Agent Trajectory",
+    "RL Training",
+    "Tool Use"
+   ],
+   "scale": "样例 10 道轨迹",
+   "structure": "data/<task-id>/{metadata.json, evaluation/, trajectory/, workspace/}",
+   "production": [
+    "模型执行 + 专家评分"
+   ],
+   "modalities": [
+    "text"
+   ]
   }
  }
 }
