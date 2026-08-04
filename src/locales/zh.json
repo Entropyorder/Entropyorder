@@ -732,32 +732,6 @@
     "url": "https://arxiv.org/abs/2203.07814"
    }
   },
-  "openclaw": {
-   "name": "OpenClaw轨迹数据",
-   "desc": "记录 OpenClaw 在结构化任务中的操作轨迹，包含完整的 workspace, sessions 等，用于训练和评估模型的规划、执行与纠错能力，适用于Agent能力建设。",
-   "scale": "存量 30,000",
-   "tags": [
-    "工具调用",
-    "Agent"
-   ],
-   "production": [
-    "多渠道获取",
-    "人工构建"
-   ],
-   "modalities": [
-    "text"
-   ],
-   "inventory": "30,000",
-   "weeklyOutput": "3,000",
-   "brief": "轨迹完整保留任务上下文、工具调用序列与中间状态，支持行为克隆与过程奖励建模等多种 Agent 训练范式。",
-   "structure": "{\n  \"task\": \"整理下载目录并生成报告\",\n  \"workspace\": {...},\n  \"sessions\": [{\"tool\": \"shell\", \"args\": [...], \"obs\": \"...\"}],\n  \"outcome\": \"success\"\n}",
-   "paper": {
-    "title": "OpenClaw Trajectories Demo",
-    "authors": "OpenClaw",
-    "venue": "2025",
-    "url": "https://github.com/Entropyorder"
-   }
-  },
   "agentos-trajectory": {
    "name": "AgentOS Trajectory",
    "desc": "面向 AgentOS 场景的多轮、长程工具调用轨迹数据集，包含 call-level 原始请求响应、代码会话事件流与结构化任务轨迹，可用于训练和评估模型的规划、工具调用、执行纠错和复杂任务交付能力。",
