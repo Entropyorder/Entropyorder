@@ -918,6 +918,24 @@
    "modalities": [
     "text"
    ]
+  },
+  "fable5": {
+   "name": "Fable5 带环境带 Rubrics 轨迹数据集",
+   "desc": "面向 Agent 能力评测与强化学习训练的长程工具调用轨迹数据集，由 Fable5 模型在真实任务环境中执行产生。每条轨迹附带完整执行环境（工作区初始快照、变更增量与重建清单）与专家 Rubrics 评分（Advanced Rubric v2，100 分制九维量化），覆盖软件工程、数据科学、Web、DevOps、游戏开发、区块链等八大领域。",
+   "brief": "Fable5 长程轨迹数据集：完整执行环境 + 九维 Rubrics 专家评分，支持 RL 训练与 Agent 评测。",
+   "tags": [
+    "Agent 轨迹",
+    "RL 训练",
+    "工具调用"
+   ],
+   "scale": "样例 10 道轨迹",
+   "structure": "data/<task-id>/{metadata.json, evaluation/, trajectory/, workspace/}",
+   "production": [
+    "模型执行 + 专家评分"
+   ],
+   "modalities": [
+    "text"
+   ]
   }
  }
 }
