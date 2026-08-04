@@ -949,10 +949,11 @@
    "weeklyOutput": "500"
   },
   "hard-qa": {
-   "name": "Hard QA",
-   "desc": "High-difficulty QA dataset of competition-level and graduate-level problems across physics, engineering and mathematics, dominated by free-form questions, for evaluating deep scientific reasoning and complex problem solving.",
-   "brief": "Competition- and graduate-level hard QA for deep scientific reasoning.",
+   "name": "STEM Hard QA",
+   "desc": "STEM high-difficulty QA dataset covering mathematics, physics, chemistry, biology, engineering and computer science at competition and graduate level, dominated by free-form questions, for deep scientific reasoning and complex problem solving.",
+   "brief": "STEM competition- and graduate-level hard QA across all STEM disciplines.",
    "tags": [
+    "STEM",
     "Competition",
     "Graduate",
     "Scientific Reasoning",
@@ -971,10 +972,11 @@
    ]
   },
   "standard-qa": {
-   "name": "Standard QA",
-   "desc": "Standard-difficulty QA dataset of high-school and undergraduate problems across mathematics and physics, with complete solutions and step-by-step explanations, suitable for basic reasoning and solution-generation training.",
-   "brief": "High-school and undergraduate standard QA with full step-by-step solutions.",
+   "name": "STEM Standard QA",
+   "desc": "STEM standard-difficulty QA dataset of high-school and undergraduate problems across mathematics, physics, chemistry, biology, engineering and computer science, with complete step-by-step solutions, for basic reasoning and solution-generation training.",
+   "brief": "STEM high-school and undergraduate standard QA across all STEM disciplines with full solutions.",
    "tags": [
+    "STEM",
     "High School",
     "Undergraduate",
     "Problem Solving",
