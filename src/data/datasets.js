@@ -47,6 +47,7 @@ export const DATASET_CATEGORIES = [
     artifact: 'AgentArtifact',
     datasets: [
       'agentos-trajectory',
+      'fable5',
       'gdpval-extension',
       'open-challenge',
       'search-retrieval',
