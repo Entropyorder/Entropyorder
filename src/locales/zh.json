@@ -882,16 +882,17 @@
    ]
   },
   "swe-atlas-qna": {
-   "name": "SWE Atlas Q&A",
-   "desc": "基于真实开源代码库（如 grafana/k6）的深层代码理解与问答任务集。要求模型探索仓库结构、结合源码与性能剖析定位实现机制、量化瓶颈并给出证据充分的回答。",
-   "brief": "SWE Atlas Q&A 是面向软件工程代码库的深层问答数据集，模型需结合源码、剖析与基准测试回答关于实现机制与性能瓶颈的问题。",
+   "name": "SWE Atlas Q&A（代码库运行时推理问答）",
+   "desc": "面向代码智能体深度代码库理解与运行时推理能力评测的问答数据集，覆盖架构与系统设计、根因分析、代码上手、安全边界、API 与库集成、性能优化等方向。每道题要求模型在真实大型代码库中通过运行时观察（启动服务、执行探针、捕获真实输出）回答一组递进式子问题，并以可验证的运行时事实作答。",
+   "brief": "真实代码库运行时推理问答：六大方向、5-13 递进子问题、可验证事实作答。",
    "tags": [
     "代码理解",
+    "运行时推理",
     "代码问答",
-    "性能分析"
+    "根因分析"
    ],
-   "scale": "存量 1000",
-   "structure": "{\"question\": \"...\", \"repository\": \"grafana/k6\", \"answer\": \"...\", \"rubric\": [...]}",
+   "scale": "样例 6 道（全集数百道 / 11 仓库）",
+   "structure": "task-<id>/{task.toml, instruction.md, canary.txt, solution/, tests/}",
    "production": [
     "专家构建"
    ],
@@ -908,10 +909,12 @@
    "tags": [
     "终端任务",
     "代码调试",
-    "逆向工程"
+    "逆向工程",
+    "规范实现",
+    "遗留代码迁移"
    ],
-   "scale": "样例 5 道",
-   "structure": "{\"task\": {\"name\": \"...\", \"category\": \"...\"}, \"instruction\": \"...\", \"verifier\": {\"timeout_sec\": 900}}",
+   "scale": "样例 5 道（四类能力）",
+   "structure": "<task>/{task.toml, instruction.md, environment/, solution/, tests/}",
    "production": [
     "专家构建"
    ],
